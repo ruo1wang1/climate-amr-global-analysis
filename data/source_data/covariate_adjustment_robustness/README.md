@@ -11,4 +11,4 @@ Files in `01_csv/` include:
 - top-covariate manifests
 - curve-plot data
 
-The workbook in `02_workbook/` combines the source-data tables used for public release.
+The workbook in `02_workbook/` combines the source-data tables for this analysis.

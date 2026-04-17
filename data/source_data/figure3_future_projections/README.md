@@ -10,4 +10,4 @@ Files in `01_csv/` include:
 - recursive-uncertainty calibration summaries
 - climate-zone and GCM-spread companion exports
 
-The workbook in `02_workbook/` bundles the Figure 3 source-data tables used for public release.
+The workbook in `02_workbook/` bundles the Figure 3 source-data tables.

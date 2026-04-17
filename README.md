@@ -1,6 +1,6 @@
 # Spatiotemporal dynamics between climatic factors and antimicrobial resistance
 
-This folder is a curated GitHub upload package prepared from the larger internal release-staging workspace. It retains the code and derived source-data components that are most directly needed for public presentation of the revised manuscript while omitting duplicated working files, older alternative outputs, and internal merged modeling panels.
+This repository contains analysis code, derived source data, and figure files associated with the manuscript.
 
 ## Included components
 
@@ -35,20 +35,12 @@ This folder is a curated GitHub upload package prepared from the larger internal
 - `figures/`
   - Main figure image files
 
-## Intentionally omitted in this upload package
-
-- Internal merged country-year modeling panels
-- Redundant working versions and intermediate staging folders
-- Additional supporting plotting suites that are not needed for the initial public release
-- Alternative projection source-data branches not used for the current public upload set
-- Editable design files that are not required for the initial public code-and-source-data release
-
 ## How to cite
 
 If you use this repository or the derived source data provided here, please cite the associated manuscript:
 
 *Spatiotemporal dynamics between climatic factors and antimicrobial resistance*.
 
-## Data-sharing note
+## Data availability
 
-This package is designed as a curated, reproducibility-oriented public release. It provides code and publication-style derived source data aligned with the revised manuscript, but it is not intended to function as a one-command full rerun of the entire internal analysis workspace. The package does not redistribute all upstream raw inputs or all internally merged analytical panels.
+This repository provides analysis code, derived source data, and figure files used in the manuscript. Upstream raw climate inputs and some large intermediate analytical files are not redistributed here.
