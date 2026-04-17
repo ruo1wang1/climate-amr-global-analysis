@@ -1,0 +1,73 @@
+"Bacterial_Species","Model","Climate_Code","Climate_Variable","VIF"
+"3GCR-Ec","Model A","HUM","Humidity",2.46932965486498
+"3GCR-Ec","Model A","PREC","Precipitation",1.44106722332485
+"3GCR-Ec","Model A","TMP","Temperature",1.87962091088686
+"3GCR-Ec","Model A","WET","Wet Days",NA
+"3GCR-Ec","Model B","HUM","Humidity",NA
+"3GCR-Ec","Model B","PREC","Precipitation",1.46920339353305
+"3GCR-Ec","Model B","TMP","Temperature",1.6527098636452
+"3GCR-Ec","Model B","WET","Wet Days",2.23749969521406
+"3GCR-Ec","Model C","HUM","Humidity",4.30040311015968
+"3GCR-Ec","Model C","PREC","Precipitation",1.47884488115102
+"3GCR-Ec","Model C","TMP","Temperature",1.8738383078666
+"3GCR-Ec","Model C","WET","Wet Days",4.36403159336096
+"3GCR-Kp","Model A","HUM","Humidity",2.29992460075133
+"3GCR-Kp","Model A","PREC","Precipitation",1.42345360202868
+"3GCR-Kp","Model A","TMP","Temperature",1.75336109045157
+"3GCR-Kp","Model A","WET","Wet Days",NA
+"3GCR-Kp","Model B","HUM","Humidity",NA
+"3GCR-Kp","Model B","PREC","Precipitation",1.52112718113923
+"3GCR-Kp","Model B","TMP","Temperature",1.57534640372007
+"3GCR-Kp","Model B","WET","Wet Days",2.21442229278696
+"3GCR-Kp","Model C","HUM","Humidity",3.93673472402598
+"3GCR-Kp","Model C","PREC","Precipitation",1.51647505474632
+"3GCR-Kp","Model C","TMP","Temperature",1.78203031838769
+"3GCR-Kp","Model C","WET","Wet Days",4.21752007370289
+"CR-Ab","Model A","HUM","Humidity",1.73450001505929
+"CR-Ab","Model A","PREC","Precipitation",1.28784885077559
+"CR-Ab","Model A","TMP","Temperature",1.39752948164673
+"CR-Ab","Model A","WET","Wet Days",NA
+"CR-Ab","Model B","HUM","Humidity",NA
+"CR-Ab","Model B","PREC","Precipitation",1.6208982406639
+"CR-Ab","Model B","TMP","Temperature",1.40878245954601
+"CR-Ab","Model B","WET","Wet Days",2.10788635436637
+"CR-Ab","Model C","HUM","Humidity",3.32345893726586
+"CR-Ab","Model C","PREC","Precipitation",2.27010673818627
+"CR-Ab","Model C","TMP","Temperature",1.6049333107893
+"CR-Ab","Model C","WET","Wet Days",4.97185609898323
+"CR-Ec","Model A","HUM","Humidity",2.20070946884594
+"CR-Ec","Model A","PREC","Precipitation",1.27552493956257
+"CR-Ec","Model A","TMP","Temperature",1.8500549046982
+"CR-Ec","Model A","WET","Wet Days",NA
+"CR-Ec","Model B","HUM","Humidity",NA
+"CR-Ec","Model B","PREC","Precipitation",1.48801138155351
+"CR-Ec","Model B","TMP","Temperature",1.78425072364352
+"CR-Ec","Model B","WET","Wet Days",2.41669367414748
+"CR-Ec","Model C","HUM","Humidity",3.15377817712281
+"CR-Ec","Model C","PREC","Precipitation",2.00934788397256
+"CR-Ec","Model C","TMP","Temperature",2.14941278494331
+"CR-Ec","Model C","WET","Wet Days",4.47612385429649
+"CR-Kp","Model A","HUM","Humidity",2.4267647098006
+"CR-Kp","Model A","PREC","Precipitation",1.41222420028881
+"CR-Kp","Model A","TMP","Temperature",1.87543840332842
+"CR-Kp","Model A","WET","Wet Days",NA
+"CR-Kp","Model B","HUM","Humidity",NA
+"CR-Kp","Model B","PREC","Precipitation",2.0256967471637
+"CR-Kp","Model B","TMP","Temperature",1.85134607893507
+"CR-Kp","Model B","WET","Wet Days",3.15229119475437
+"CR-Kp","Model C","HUM","Humidity",3.17197779787529
+"CR-Kp","Model C","PREC","Precipitation",1.48883028026719
+"CR-Kp","Model C","TMP","Temperature",1.97837497306983
+"CR-Kp","Model C","WET","Wet Days",3.3145547329988
+"CR-Pa","Model A","HUM","Humidity",1.8313564739776
+"CR-Pa","Model A","PREC","Precipitation",1.17763338959215
+"CR-Pa","Model A","TMP","Temperature",1.60881380415334
+"CR-Pa","Model A","WET","Wet Days",NA
+"CR-Pa","Model B","HUM","Humidity",NA
+"CR-Pa","Model B","PREC","Precipitation",2.00075717626132
+"CR-Pa","Model B","TMP","Temperature",1.77303426610179
+"CR-Pa","Model B","WET","Wet Days",2.96819889668733
+"CR-Pa","Model C","HUM","Humidity",3.91362718901246
+"CR-Pa","Model C","PREC","Precipitation",2.05626398921319
+"CR-Pa","Model C","TMP","Temperature",1.88366283370086
+"CR-Pa","Model C","WET","Wet Days",5.48083300404957

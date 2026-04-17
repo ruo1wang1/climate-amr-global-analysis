@@ -1,0 +1,7 @@
+"Bacteria","TMP_lag","PREC_lag","HUM_lag","WET_lag","Source","Original_Lag_Rank_In_Simplified_Search","Delta_AIC_vs_Original","Delta_Dev_pct_vs_Original"
+"3GCR-Ec",3,2,2,3,"Best simplified projection GAMM lag",20,8.265,0.205
+"3GCR-Kp",2,3,2,1,"Best simplified projection GAMM lag",3,4.544,0.124
+"CR-Ab",3,2,3,3,"Best simplified projection GAMM lag",12,18.189,0.883
+"CR-Ec",3,3,2,3,"Best simplified projection GAMM lag",15,3.151,0.115
+"CR-Kp",1,3,3,2,"Best simplified projection GAMM lag",18,15.037,0.83
+"CR-Pa",2,1,2,1,"Best simplified projection GAMM lag",13,17.587,0.668

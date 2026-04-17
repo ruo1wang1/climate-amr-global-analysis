@@ -1,0 +1,7 @@
+"Bacteria","N","Countries","PLS_components_used","PCA_components_used","PCA_cumulative_variance","Theory6_used","Top6_used","TMP_lag","PREC_lag","HUM_lag","WET_lag","A_Rsq","A_Dev","B_Rsq","B_Dev","C_Rsq","C_Dev","D_Rsq","D_Dev"
+"3GCR-Ec",691,60,"PLS_Comp1, PLS_Comp2, PLS_Comp3",8,81.5,"log_AMC, CPI, HEG, UP, log_PMP, WASH","CPI, OPE, UP, log_PMP, HEG, HD",3,3,2,2,0.8656,87.55,0.8713,88.22,0.8463,85.55,0.846,85.52
+"3GCR-Kp",545,62,"PLS_Comp1, PLS_Comp2, PLS_Comp3, PLS_Comp4",8,82,"log_AMC, CPI, HEG, UP, log_PMP, WASH","CPI, UP, HEG, log_PMP, OPE, HD",3,3,1,1,0.903,91.15,0.8899,90.09,0.8973,90.45,0.8927,90.02
+"CR-Ab",294,54,"PLS_Comp1, PLS_Comp2, PLS_Comp3, PLS_Comp4",8,84,"log_AMC, CPI, HEG, UP, log_PMP, WASH","CPI, HEG, log_PMP, UP, OPE, WASH",2,2,3,2,0.934,94.32,0.9418,95.18,0.9184,92.85,0.9217,93.13
+"CR-Ec",621,59,"PLS_Comp1, PLS_Comp2, PLS_Comp3",8,81.4,"log_AMC, CPI, HEG, UP, log_PMP, WASH","CPI, OPE, UP, HEG, log_PMP, WASH",2,3,2,3,0.8142,82.92,0.8122,82.44,0.7742,78.75,0.773,78.63
+"CR-Kp",521,60,"PLS_Comp1, PLS_Comp2, PLS_Comp3",8,81.6,"log_AMC, CPI, HEG, UP, log_PMP, WASH","CPI, OPE, UP, HEG, log_PMP, WASH",2,2,3,1,0.7634,78.47,0.7925,81.33,0.72,74.05,0.7215,74.22
+"CR-Pa",494,47,"PLS_Comp1, PLS_Comp2, PLS_Comp3, PLS_Comp4",8,81.9,"log_AMC, CPI, HEG, UP, log_PMP, WASH","CPI, UP, log_PMP, HEG, OPE, WASH",2,2,2,2,0.8458,85.72,0.8491,86.16,0.8333,84.54,0.833,84.48

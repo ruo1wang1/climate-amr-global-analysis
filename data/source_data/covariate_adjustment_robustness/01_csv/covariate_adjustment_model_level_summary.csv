@@ -1,0 +1,7 @@
+"AMR strain","N","Countries","PLS (Model C) R2","PLS (Model C) Dev%","PCA R2","PCA Dev%","Theory-selected covariates R2","Theory-selected covariates Dev%","PLS-informed top covariates R2","PLS-informed top covariates Dev%","Theory-selected covariates Max VIF","PLS-informed top covariates Max VIF"
+"3GCR-Ec",691,60,0.8656,87.55,0.8713,88.22,0.8463,85.55,0.846,85.52,1.68,1.79
+"3GCR-Kp",545,62,0.903,91.15,0.8899,90.09,0.8973,90.45,0.8927,90.02,1.66,1.78
+"CR-Ab",294,54,0.934,94.32,0.9418,95.18,0.9184,92.85,0.9217,93.13,1.77,1.81
+"CR-Ec",621,59,0.8142,82.92,0.8122,82.44,0.7742,78.75,0.773,78.63,1.6,1.74
+"CR-Kp",521,60,0.7634,78.47,0.7925,81.33,0.72,74.05,0.7215,74.22,1.63,1.74
+"CR-Pa",494,47,0.8458,85.72,0.8491,86.16,0.8333,84.54,0.833,84.48,1.58,1.6

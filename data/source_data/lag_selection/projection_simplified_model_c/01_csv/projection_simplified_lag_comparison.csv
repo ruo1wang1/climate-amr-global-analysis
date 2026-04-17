@@ -1,0 +1,7 @@
+"AMR_Strain","Original_TMP","Original_PREC","Original_HUM","Original_WET","Best_TMP","Best_PREC","Best_HUM","Best_WET","Original_Rank","Delta_AIC","Delta_Dev_pct","Original_AIC","Best_AIC","Original_Dev_pct","Best_Dev_pct","Recommendation"
+"3GCR-Ec",3,3,2,2,3,2,2,3,20,8.265,0.205,1065.127,1056.862,84.551,84.757,"Best simplified lag selected (moderate improvement vs original)"
+"3GCR-Kp",3,3,1,1,2,3,2,1,3,4.544,0.124,178.845,174.3,82.179,82.303,"Best simplified lag selected; original lag still top-5"
+"CR-Ab",2,2,3,2,3,2,3,3,12,18.189,0.883,130.838,112.649,90.13,91.014,"Best simplified lag selected (clear improvement vs original)"
+"CR-Ec",2,3,2,3,3,3,2,3,15,3.151,0.115,-1212.139,-1215.289,77.838,77.953,"Best simplified lag selected (moderate improvement vs original)"
+"CR-Kp",2,2,3,1,1,3,3,2,18,15.037,0.83,430.27,415.233,70.892,71.722,"Best simplified lag selected (clear improvement vs original)"
+"CR-Pa",2,2,2,2,2,1,2,1,13,17.587,0.668,-177.109,-194.696,82.522,83.19,"Best simplified lag selected (clear improvement vs original)"

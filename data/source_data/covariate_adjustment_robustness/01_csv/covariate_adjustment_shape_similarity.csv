@@ -1,0 +1,73 @@
+"Bacteria","Variable","Alt_Spec","rho","Main_direction","Alt_direction","Direction_match"
+"3GCR-Ec","Temperature","PCA",0.986,"-","-",TRUE
+"3GCR-Ec","Temperature","Theory-6",0.993,"-","-",TRUE
+"3GCR-Ec","Temperature","Top6 from PLS1",0.99,"-","-",TRUE
+"3GCR-Ec","Precipitation","PCA",0.992,"+","+",TRUE
+"3GCR-Ec","Precipitation","Theory-6",0.924,"+","+",TRUE
+"3GCR-Ec","Precipitation","Top6 from PLS1",0.919,"+","+",TRUE
+"3GCR-Ec","Relative Humidity","PCA",0.957,"-","-",TRUE
+"3GCR-Ec","Relative Humidity","Theory-6",0.817,"-","-",TRUE
+"3GCR-Ec","Relative Humidity","Top6 from PLS1",0.768,"-","-",TRUE
+"3GCR-Ec","Wet days","PCA",-0.068,"+","-",FALSE
+"3GCR-Ec","Wet days","Theory-6",-0.543,"+","-",FALSE
+"3GCR-Ec","Wet days","Top6 from PLS1",-0.543,"+","-",FALSE
+"3GCR-Kp","Temperature","PCA",0.304,"+","-",FALSE
+"3GCR-Kp","Temperature","Theory-6",0.648,"+","-",FALSE
+"3GCR-Kp","Temperature","Top6 from PLS1",0.93,"+","+",TRUE
+"3GCR-Kp","Precipitation","PCA",0.991,"+","+",TRUE
+"3GCR-Kp","Precipitation","Theory-6",0.994,"+","+",TRUE
+"3GCR-Kp","Precipitation","Top6 from PLS1",0.991,"+","+",TRUE
+"3GCR-Kp","Relative Humidity","PCA",0.219,"+","-",FALSE
+"3GCR-Kp","Relative Humidity","Theory-6",0.971,"+","+",TRUE
+"3GCR-Kp","Relative Humidity","Top6 from PLS1",0.566,"+","+",TRUE
+"3GCR-Kp","Wet days","PCA",0.854,"+","+",TRUE
+"3GCR-Kp","Wet days","Theory-6",0.905,"+","+",TRUE
+"3GCR-Kp","Wet days","Top6 from PLS1",0.897,"+","+",TRUE
+"CR-Ab","Temperature","PCA",0.77,"+","-",FALSE
+"CR-Ab","Temperature","Theory-6",0.998,"+","+",TRUE
+"CR-Ab","Temperature","Top6 from PLS1",0.999,"+","+",TRUE
+"CR-Ab","Precipitation","PCA",-0.489,"+","-",FALSE
+"CR-Ab","Precipitation","Theory-6",0.767,"+","-",FALSE
+"CR-Ab","Precipitation","Top6 from PLS1",0.677,"+","+",TRUE
+"CR-Ab","Relative Humidity","PCA",-0.97,"+","-",FALSE
+"CR-Ab","Relative Humidity","Theory-6",0.794,"+","+",TRUE
+"CR-Ab","Relative Humidity","Top6 from PLS1",0.797,"+","+",TRUE
+"CR-Ab","Wet days","PCA",-0.026,"-","+",FALSE
+"CR-Ab","Wet days","Theory-6",1,"-","-",TRUE
+"CR-Ab","Wet days","Top6 from PLS1",1,"-","-",TRUE
+"CR-Ec","Temperature","PCA",0.133,"+","-",FALSE
+"CR-Ec","Temperature","Theory-6",0.922,"+","-",FALSE
+"CR-Ec","Temperature","Top6 from PLS1",0.939,"+","-",FALSE
+"CR-Ec","Precipitation","PCA",0.971,"+","+",TRUE
+"CR-Ec","Precipitation","Theory-6",1,"+","+",TRUE
+"CR-Ec","Precipitation","Top6 from PLS1",1,"+","+",TRUE
+"CR-Ec","Relative Humidity","PCA",0.997,"-","-",TRUE
+"CR-Ec","Relative Humidity","Theory-6",-0.107,"-","+",FALSE
+"CR-Ec","Relative Humidity","Top6 from PLS1",0.926,"-","-",TRUE
+"CR-Ec","Wet days","PCA",0.47,"-","+",FALSE
+"CR-Ec","Wet days","Theory-6",0.154,"-","+",FALSE
+"CR-Ec","Wet days","Top6 from PLS1",0.178,"-","+",FALSE
+"CR-Kp","Temperature","PCA",0.886,"-","-",TRUE
+"CR-Kp","Temperature","Theory-6",0.794,"-","+",FALSE
+"CR-Kp","Temperature","Top6 from PLS1",0.76,"-","+",FALSE
+"CR-Kp","Precipitation","PCA",-0.517,"+","-",FALSE
+"CR-Kp","Precipitation","Theory-6",-0.331,"+","-",FALSE
+"CR-Kp","Precipitation","Top6 from PLS1",-0.431,"+","-",FALSE
+"CR-Kp","Relative Humidity","PCA",-0.555,"+","-",FALSE
+"CR-Kp","Relative Humidity","Theory-6",-0.242,"+","-",FALSE
+"CR-Kp","Relative Humidity","Top6 from PLS1",-0.208,"+","-",FALSE
+"CR-Kp","Wet days","PCA",0.931,"+","+",TRUE
+"CR-Kp","Wet days","Theory-6",0.867,"+","+",TRUE
+"CR-Kp","Wet days","Top6 from PLS1",0.959,"+","+",TRUE
+"CR-Pa","Temperature","PCA",0.998,"+","+",TRUE
+"CR-Pa","Temperature","Theory-6",-0.766,"+","-",FALSE
+"CR-Pa","Temperature","Top6 from PLS1",-0.876,"+","-",FALSE
+"CR-Pa","Precipitation","PCA",0.903,"+","+",TRUE
+"CR-Pa","Precipitation","Theory-6",0.977,"+","+",TRUE
+"CR-Pa","Precipitation","Top6 from PLS1",0.764,"+","-",FALSE
+"CR-Pa","Relative Humidity","PCA",0.748,"+","+",TRUE
+"CR-Pa","Relative Humidity","Theory-6",0.782,"+","+",TRUE
+"CR-Pa","Relative Humidity","Top6 from PLS1",0.764,"+","+",TRUE
+"CR-Pa","Wet days","PCA",0.949,"+","+",TRUE
+"CR-Pa","Wet days","Theory-6",0.787,"+","+",TRUE
+"CR-Pa","Wet days","Top6 from PLS1",0.591,"+","+",TRUE

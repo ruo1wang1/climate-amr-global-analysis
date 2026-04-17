@@ -1,0 +1,97 @@
+"Bacteria","Spec","Variable","term","EDF","F_stat","p_value","Sig","Retained","OR_range"
+"3GCR-Ec","PLS (main)","Temperature","s(TMP_scaled_lag)",2,2.686,0.00107062179246142,"**","Yes",2.109
+"3GCR-Ec","PLS (main)","Precipitation","s(PREC_scaled_lag)",3.24,2.414,1.91758011778287e-05,"***","Yes",1.967
+"3GCR-Ec","PLS (main)","Relative Humidity","s(HUM_scaled_lag)",0,0,0.473825453124381,"ns","No",1
+"3GCR-Ec","PLS (main)","Wet days","s(WET_scaled_lag)",4.66,2.906,2.37574977515198e-05,"***","Yes",1.5
+"3GCR-Ec","PCA","Temperature","s(TMP_scaled_lag)",1.91,1.967,0.00254713698320974,"**","Yes",2.017
+"3GCR-Ec","PCA","Precipitation","s(PREC_scaled_lag)",3.27,2.871,1.65242047212022e-06,"***","Yes",2.325
+"3GCR-Ec","PCA","Relative Humidity","s(HUM_scaled_lag)",3.51,2.054,4.51146013622505e-05,"***","Yes",3.646
+"3GCR-Ec","PCA","Wet days","s(WET_scaled_lag)",3.48,2.011,7.48043414300348e-05,"***","Yes",1.669
+"3GCR-Ec","Theory-6","Temperature","s(TMP_scaled_lag)",2.13,4.471,4.83712593359886e-05,"***","Yes",2.654
+"3GCR-Ec","Theory-6","Precipitation","s(PREC_scaled_lag)",3.3,1.599,0.00141247051230187,"**","Yes",3.037
+"3GCR-Ec","Theory-6","Relative Humidity","s(HUM_scaled_lag)",4.39,1.729,0.0014204847087238,"**","Yes",2.202
+"3GCR-Ec","Theory-6","Wet days","s(WET_scaled_lag)",0.58,0.157,0.109771985252508,"ns","Yes",1.288
+"3GCR-Ec","Top6 from PLS1","Temperature","s(TMP_scaled_lag)",2.21,5.14,1.35865571987415e-05,"***","Yes",2.797
+"3GCR-Ec","Top6 from PLS1","Precipitation","s(PREC_scaled_lag)",3.49,1.955,0.000323311678470883,"***","Yes",3.702
+"3GCR-Ec","Top6 from PLS1","Relative Humidity","s(HUM_scaled_lag)",4.54,1.789,0.0014604254241235,"**","Yes",2.01
+"3GCR-Ec","Top6 from PLS1","Wet days","s(WET_scaled_lag)",0.57,0.152,0.114870106173699,"ns","Yes",1.282
+"3GCR-Kp","PLS (main)","Temperature","s(TMP_scaled_lag)",2.3,4.724,1.22202699377461e-05,"***","Yes",1.433
+"3GCR-Kp","PLS (main)","Precipitation","s(PREC_scaled_lag)",5.54,8.726,0,"***","Yes",2.967
+"3GCR-Kp","PLS (main)","Relative Humidity","s(HUM_scaled_lag)",2.19,1.038,0.00189562148866362,"**","Yes",1.253
+"3GCR-Kp","PLS (main)","Wet days","s(WET_scaled_lag)",0,0,0.461080775404139,"ns","No",1
+"3GCR-Kp","PCA","Temperature","s(TMP_scaled_lag)",3.57,11.315,0,"***","Yes",3.388
+"3GCR-Kp","PCA","Precipitation","s(PREC_scaled_lag)",4.66,8.334,0,"***","Yes",2.496
+"3GCR-Kp","PCA","Relative Humidity","s(HUM_scaled_lag)",2.66,0.818,0.0134964284015329,"*","Yes",1.167
+"3GCR-Kp","PCA","Wet days","s(WET_scaled_lag)",5.06,2.881,2.13309957279861e-05,"***","Yes",1.663
+"3GCR-Kp","Theory-6","Temperature","s(TMP_scaled_lag)",2.37,2.149,0.00508431064924153,"**","Yes",1.342
+"3GCR-Kp","Theory-6","Precipitation","s(PREC_scaled_lag)",4.71,7.818,0,"***","Yes",3.375
+"3GCR-Kp","Theory-6","Relative Humidity","s(HUM_scaled_lag)",2.52,1.463,0.000566756024550363,"***","Yes",1.3
+"3GCR-Kp","Theory-6","Wet days","s(WET_scaled_lag)",2.87,1.245,0.00222652665846601,"**","Yes",1.339
+"3GCR-Kp","Top6 from PLS1","Temperature","s(TMP_scaled_lag)",1.27,0.774,0.0569274627785707,"†","Yes",1.167
+"3GCR-Kp","Top6 from PLS1","Precipitation","s(PREC_scaled_lag)",4.47,5.306,0,"***","Yes",2.501
+"3GCR-Kp","Top6 from PLS1","Relative Humidity","s(HUM_scaled_lag)",2.06,1.154,0.00331393780080125,"**","Yes",1.329
+"3GCR-Kp","Top6 from PLS1","Wet days","s(WET_scaled_lag)",2.79,1.127,0.00413003769155118,"**","Yes",1.32
+"CR-Ab","PLS (main)","Temperature","s(TMP_scaled_lag)",2.78,23.606,0,"***","Yes",18.832
+"CR-Ab","PLS (main)","Precipitation","s(PREC_scaled_lag)",2.22,1.121,0.00211946498027027,"**","Yes",1.215
+"CR-Ab","PLS (main)","Relative Humidity","s(HUM_scaled_lag)",0,0,0.821736659706093,"ns","No",1
+"CR-Ab","PLS (main)","Wet days","s(WET_scaled_lag)",1.12,0.365,0.0379766937666001,"*","Yes",1.283
+"CR-Ab","PCA","Temperature","s(TMP_scaled_lag)",3.58,23.617,0,"***","Yes",7.087
+"CR-Ab","PCA","Precipitation","s(PREC_scaled_lag)",0,0,0.70155485691878,"ns","No",1
+"CR-Ab","PCA","Relative Humidity","s(HUM_scaled_lag)",0,0,0.507565549488192,"ns","No",1
+"CR-Ab","PCA","Wet days","s(WET_scaled_lag)",3.04,1.338,0.00566724157638443,"**","Yes",1.562
+"CR-Ab","Theory-6","Temperature","s(TMP_scaled_lag)",2.86,26.04,0,"***","Yes",34.026
+"CR-Ab","Theory-6","Precipitation","s(PREC_scaled_lag)",2.52,0.896,0.0155029124881669,"*","Yes",1.29
+"CR-Ab","Theory-6","Relative Humidity","s(HUM_scaled_lag)",0,0,0.869901892312413,"ns","No",1
+"CR-Ab","Theory-6","Wet days","s(WET_scaled_lag)",0.84,0.205,0.086631459950141,"†","Yes",1.207
+"CR-Ab","Top6 from PLS1","Temperature","s(TMP_scaled_lag)",2.86,31.484,0,"***","Yes",42.944
+"CR-Ab","Top6 from PLS1","Precipitation","s(PREC_scaled_lag)",1.66,0.585,0.0218965454877931,"*","Yes",1.208
+"CR-Ab","Top6 from PLS1","Relative Humidity","s(HUM_scaled_lag)",0,0,0.810231311426006,"ns","No",1
+"CR-Ab","Top6 from PLS1","Wet days","s(WET_scaled_lag)",1.27,0.452,0.0247307150834688,"*","Yes",1.343
+"CR-Ec","PLS (main)","Temperature","s(TMP_scaled_lag)",2.21,3.296,0.00081432832292494,"***","Yes",1.113
+"CR-Ec","PLS (main)","Precipitation","s(PREC_scaled_lag)",0.63,0.202,0.0791808101471199,"†","Yes",1.052
+"CR-Ec","PLS (main)","Relative Humidity","s(HUM_scaled_lag)",0,0,0.924840625083034,"ns","No",1
+"CR-Ec","PLS (main)","Wet days","s(WET_scaled_lag)",3.75,3.425,1.69961476337299e-06,"***","Yes",1.174
+"CR-Ec","PCA","Temperature","s(TMP_scaled_lag)",2.07,2.796,0.00156613763531066,"**","Yes",1.098
+"CR-Ec","PCA","Precipitation","s(PREC_scaled_lag)",0,0,0.975845060852854,"ns","No",1
+"CR-Ec","PCA","Relative Humidity","s(HUM_scaled_lag)",0.31,0.043,0.230400758955308,"ns","No",1.019
+"CR-Ec","PCA","Wet days","s(WET_scaled_lag)",4.22,2.118,0.000378167669452312,"***","Yes",1.08
+"CR-Ec","Theory-6","Temperature","s(TMP_scaled_lag)",2.36,4.974,3.05756173204497e-05,"***","Yes",1.121
+"CR-Ec","Theory-6","Precipitation","s(PREC_scaled_lag)",0.32,0.053,0.188216282569925,"ns","No",1.024
+"CR-Ec","Theory-6","Relative Humidity","s(HUM_scaled_lag)",0,0,0.765244997762107,"ns","No",1
+"CR-Ec","Theory-6","Wet days","s(WET_scaled_lag)",3.47,2.209,0.000188241513814358,"***","Yes",1.136
+"CR-Ec","Top6 from PLS1","Temperature","s(TMP_scaled_lag)",2.34,4.787,4.8673942902977e-05,"***","Yes",1.117
+"CR-Ec","Top6 from PLS1","Precipitation","s(PREC_scaled_lag)",0.47,0.098,0.134090322409147,"ns","No",1.039
+"CR-Ec","Top6 from PLS1","Relative Humidity","s(HUM_scaled_lag)",0,0,0.794793205177296,"ns","No",1
+"CR-Ec","Top6 from PLS1","Wet days","s(WET_scaled_lag)",3.3,1.827,0.000526761392138919,"***","Yes",1.12
+"CR-Kp","PLS (main)","Temperature","s(TMP_scaled_lag)",2.82,3.65,0.000564478730873397,"***","Yes",1.438
+"CR-Kp","PLS (main)","Precipitation","s(PREC_scaled_lag)",2.19,0.78,0.0146094189376307,"*","Yes",1.254
+"CR-Kp","PLS (main)","Relative Humidity","s(HUM_scaled_lag)",0.2,0.028,0.222042214183168,"ns","No",1.048
+"CR-Kp","PLS (main)","Wet days","s(WET_scaled_lag)",5.36,4.108,6.77111391844676e-07,"***","Yes",1.641
+"CR-Kp","PCA","Temperature","s(TMP_scaled_lag)",3.53,9.574,0,"***","Yes",2.446
+"CR-Kp","PCA","Precipitation","s(PREC_scaled_lag)",1.35,0.523,0.0167175151724164,"*","Yes",1.278
+"CR-Kp","PCA","Relative Humidity","s(HUM_scaled_lag)",5.74,3.921,3.83923772107053e-07,"***","Yes",1.538
+"CR-Kp","PCA","Wet days","s(WET_scaled_lag)",4.83,2.296,0.000247969964585981,"***","Yes",1.38
+"CR-Kp","Theory-6","Temperature","s(TMP_scaled_lag)",2.59,3.723,0.000623618245149005,"***","Yes",1.426
+"CR-Kp","Theory-6","Precipitation","s(PREC_scaled_lag)",0,0,0.609092085329829,"ns","No",1
+"CR-Kp","Theory-6","Relative Humidity","s(HUM_scaled_lag)",3.22,1.999,4.6060093960576e-05,"***","Yes",1.815
+"CR-Kp","Theory-6","Wet days","s(WET_scaled_lag)",5.92,5.595,8.22638868136494e-07,"***","Yes",2.017
+"CR-Kp","Top6 from PLS1","Temperature","s(TMP_scaled_lag)",2.7,4.804,0.000106876663005906,"***","Yes",1.543
+"CR-Kp","Top6 from PLS1","Precipitation","s(PREC_scaled_lag)",0,0,0.852848041208184,"ns","No",1
+"CR-Kp","Top6 from PLS1","Relative Humidity","s(HUM_scaled_lag)",3.02,2.035,3.09991902083251e-05,"***","Yes",1.751
+"CR-Kp","Top6 from PLS1","Wet days","s(WET_scaled_lag)",5.83,4.993,4.14591661113128e-07,"***","Yes",1.859
+"CR-Pa","PLS (main)","Temperature","s(TMP_scaled_lag)",1,0.707,0.024354157109761,"*","Yes",1.172
+"CR-Pa","PLS (main)","Precipitation","s(PREC_scaled_lag)",3.14,3.086,9.30685475575288e-07,"***","Yes",1.346
+"CR-Pa","PLS (main)","Relative Humidity","s(HUM_scaled_lag)",0,0,0.416677278127158,"ns","No",1
+"CR-Pa","PLS (main)","Wet days","s(WET_scaled_lag)",3.07,2.942,6.82886254432802e-07,"***","Yes",1.811
+"CR-Pa","PCA","Temperature","s(TMP_scaled_lag)",1.09,0.724,0.0423120768815242,"*","Yes",1.207
+"CR-Pa","PCA","Precipitation","s(PREC_scaled_lag)",2.04,0.935,0.00316428309941785,"**","Yes",1.197
+"CR-Pa","PCA","Relative Humidity","s(HUM_scaled_lag)",0.24,0.03,0.276958013970466,"ns","No",1.049
+"CR-Pa","PCA","Wet days","s(WET_scaled_lag)",2.99,1.537,0.000349939698945589,"***","Yes",1.66
+"CR-Pa","Theory-6","Temperature","s(TMP_scaled_lag)",3.01,3.36,0.000437533956706426,"***","Yes",1.956
+"CR-Pa","Theory-6","Precipitation","s(PREC_scaled_lag)",2.39,0.73,0.0168418913720436,"*","Yes",1.144
+"CR-Pa","Theory-6","Relative Humidity","s(HUM_scaled_lag)",3.63,1.698,0.000576517456951864,"***","Yes",2.718
+"CR-Pa","Theory-6","Wet days","s(WET_scaled_lag)",1.54,0.527,0.0167503440894411,"*","Yes",1.365
+"CR-Pa","Top6 from PLS1","Temperature","s(TMP_scaled_lag)",3.51,9.827,0.000461054925636972,"***","Yes",3.588
+"CR-Pa","Top6 from PLS1","Precipitation","s(PREC_scaled_lag)",0,0,0.28361918646412,"ns","No",1
+"CR-Pa","Top6 from PLS1","Relative Humidity","s(HUM_scaled_lag)",4.18,2.396,5.01637117650278e-05,"***","Yes",2.935
+"CR-Pa","Top6 from PLS1","Wet days","s(WET_scaled_lag)",0.78,0.391,0.0278054177097585,"*","Yes",1.241

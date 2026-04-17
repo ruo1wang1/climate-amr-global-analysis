@@ -1,0 +1,7 @@
+"Bacteria","global_persistence","global_innovation_sd","global_series_sd","global_n_years","global_calibrated","zone_persistence","zone_innovation_sd","zone_series_sd","zone_series_count","calibrated_persistence","calibrated_innovation_sd","calibrated_initial_sd","calibration_source","empirical_variation_factor"
+"3GCR-Ec",0.838750906544153,0.05,0.03,21,TRUE,0.455766346050261,0.05,0.03,3,0.70470631037129,0.05,0.03,"zone_historical_residuals",1.3
+"3GCR-Kp",0.55,0.006,0.004,21,TRUE,0.55,0.006,0.004,3,0.55,0.006,0.004,"zone_historical_residuals",0.75
+"CR-Ab",0.55,0.006,0.004,21,TRUE,0.55,0.0076,0.00586666666666667,2,0.55,0.00656,0.00465333333333333,"zone_historical_residuals",0.75
+"CR-Ec",0.699630107427133,0.05,0.03,21,TRUE,0.366998051472285,0.05,0.03,3,0.583208887842937,0.05,0.03,"zone_historical_residuals",1.3
+"CR-Kp",0.05,0.05,0.03,21,TRUE,0.339135796295061,0.05,0.03,3,0.151197528703271,0.05,0.03,"zone_historical_residuals",1.3
+"CR-Pa",0.55,0.006,0.004,22,TRUE,0.55,0.006,0.004,3,0.55,0.006,0.004,"zone_historical_residuals",0.75

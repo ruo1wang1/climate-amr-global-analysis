@@ -1,0 +1,7 @@
+"Bacteria","Code","Input_File","Sample_Size","Available_PLS"
+"3GCR-Ec","3GCREC","3GCREC_data_with_PLS_components_3_with_MERRA2_and_ERA5_climate.csv",691,"PLS_Comp1, PLS_Comp2, PLS_Comp3"
+"3GCR-Kp","3GCRKP","3GCRKP_data_with_PLS_components_4_with_MERRA2_and_ERA5_climate.csv",545,"PLS_Comp1, PLS_Comp2, PLS_Comp3, PLS_Comp4"
+"CR-Ab","CRAB","CRAB_data_with_PLS_components_4_with_MERRA2_and_ERA5_climate.csv",294,"PLS_Comp1, PLS_Comp2, PLS_Comp3, PLS_Comp4"
+"CR-Ec","CREC","CREC_data_with_PLS_components_3_with_MERRA2_and_ERA5_climate.csv",621,"PLS_Comp1, PLS_Comp2, PLS_Comp3"
+"CR-Kp","CRKP","CRKP_data_with_PLS_components_3_with_MERRA2_and_ERA5_climate.csv",521,"PLS_Comp1, PLS_Comp2, PLS_Comp3"
+"CR-Pa","CRPA","CRPA_data_with_PLS_components_4_with_MERRA2_and_ERA5_climate.csv",494,"PLS_Comp1, PLS_Comp2, PLS_Comp3, PLS_Comp4"

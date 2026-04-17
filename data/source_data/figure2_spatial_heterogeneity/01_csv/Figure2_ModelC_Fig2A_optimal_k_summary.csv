@@ -1,0 +1,5 @@
+"Climate_Factor","Optimal_K","K_Min","K_Max","Gap_B","KMeans_NStart","Distance_Method","Heatmap_Distance_Method","Heatmap_Linkage_Method","Selection_Method"
+"Temperature",8,2,10,50,25,"kmeans_gap_on_raw_OR","euclidean","complete","Gap statistic (restricted maxSE)"
+"Relative Humidity",3,2,10,50,25,"kmeans_gap_on_raw_OR","euclidean","complete","Gap statistic (restricted maxSE)"
+"Precipitation",4,2,10,50,25,"kmeans_gap_on_raw_OR","euclidean","complete","Gap statistic (restricted maxSE)"
+"Wet Days",10,2,10,50,25,"kmeans_gap_on_raw_OR","euclidean","complete","Gap statistic (restricted maxSE)"
