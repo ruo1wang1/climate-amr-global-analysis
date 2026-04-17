@@ -1,4 +1,6 @@
-######## Model C Spatial Heterogeneity Appendix Plots (Optimal-K, historical climate inputs) ########
+###############################################################################
+# Spatial-heterogeneity profile analysis with optimal-k clustering
+###############################################################################
 
 suppressPackageStartupMessages({
   required_packages <- c("tidyverse", "cowplot", "viridis", "openxlsx", "scales")
@@ -203,7 +205,7 @@ combined_plot <- cowplot::plot_grid(
 )
 
 ggsave(
-  file.path(output_dirs$figures, "ModelC_SpatialHeterogeneity_appendix_summary.pdf"),
+  file.path(output_dirs$figures, "spatial_heterogeneity_profiles_summary.pdf"),
   combined_plot,
   width = 16,
   height = 12,
@@ -211,7 +213,7 @@ ggsave(
 )
 
 ggsave(
-  file.path(output_dirs$figures, "ModelC_SpatialHeterogeneity_appendix_summary.png"),
+  file.path(output_dirs$figures, "spatial_heterogeneity_profiles_summary.png"),
   combined_plot,
   width = 16,
   height = 12,
@@ -279,7 +281,7 @@ readme_df <- tibble::tibble(
   ),
   Description = c(
     "Country-level term-specific OR estimates from primary model.",
-    "Per-bacteria and per-climate-factor summary table used for the appendix plots.",
+    "Per-bacteria and per-climate-factor summary table used for the spatial-heterogeneity profiles.",
     "CV_OR was calculated as SD(OR) / Mean(OR) × 100 across countries for each bacteria-factor combination.",
     "Mean_OR is the arithmetic mean of country-level OR values for each bacteria-factor combination."
   )
@@ -290,19 +292,19 @@ openxlsx::writeData(wb, "README", readme_df)
 
 openxlsx::saveWorkbook(
   wb,
-  file.path(output_dirs$workbook, "ModelC_SpatialHeterogeneity_appendix_optimal_k_source_data.xlsx"),
+  file.path(output_dirs$workbook, "spatial_heterogeneity_profiles_source_data.xlsx"),
   overwrite = TRUE
 )
 
 writeLines(
   c(
-    "# Model C Spatial Heterogeneity Appendix Plots (Optimal-K)",
+    "# Spatial-heterogeneity profile analysis (optimal-k)",
     "",
-    "- `01_figures`: appendix-ready summary figures for spatial heterogeneity.",
+    "- `01_figures`: summary figures for spatial heterogeneity.",
     "- `02_tables`: summary tables at bacteria-factor, bacteria, and factor levels.",
-    "- `03_workbook`: source-data workbook used for the appendix figure."
+    "- `03_workbook`: source-data workbook used for the profile summaries."
   ),
   con = file.path(output_root, "README.md")
 )
 
-message("Spatial heterogeneity appendix plots completed: ", output_root)
+message("Spatial heterogeneity profile analysis completed: ", output_root)

@@ -13,6 +13,7 @@ This folder is a curated GitHub upload package prepared from the larger internal
   - Climate-zone association analysis
   - Optimal-k clustering workflow
 - `code/03_sensitivity_analyses/`
+  - Basis-dimension sensitivity analysis
   - Alternative climatic-variable specification analysis
   - Climate-specification diagnostic checks
   - Detrended time-series analysis
@@ -38,9 +39,15 @@ This folder is a curated GitHub upload package prepared from the larger internal
 
 - Internal merged country-year modeling panels
 - Redundant working versions and intermediate staging folders
-- Additional appendix-only plotting suites that are not needed for the initial public release
+- Additional supporting plotting suites that are not needed for the initial public release
 - Alternative projection source-data branches not used for the current public upload set
 - Editable design files that are not required for the initial public code-and-source-data release
+
+## How to cite
+
+If you use this repository or the derived source data provided here, please cite the associated manuscript:
+
+*Spatiotemporal dynamics between climatic factors and antimicrobial resistance*.
 
 ## Data-sharing note
 

@@ -1,14 +1,6 @@
-######## Model C Spatial Heterogeneity Figure 2 Suite (Optimal-K, historical climate inputs) ########
-#
-# Purpose:
-# 1. Reuse or rebuild primary model country-level climate effect estimates
-# 2. Draw Figure 2A using manuscript-consistent optimal-k clustering logic
-# 3. Draw Figure 2B climate-zone associations in the reference bar-plot style
-# 4. Draw Figure 2C gap-statistic cluster-selection curves
-# 5. Export publication-ready source data for Figure 2A-2C
-#
-# Author: Codex
-# Date: 2026-03-29
+###############################################################################
+# Figure 2 spatial-heterogeneity workflow with optimal-k clustering
+###############################################################################
 
 suppressPackageStartupMessages({
   required_packages <- c(

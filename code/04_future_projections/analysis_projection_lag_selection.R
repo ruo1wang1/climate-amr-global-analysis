@@ -1,4 +1,6 @@
-######## Model C Projection Preparation: Simplified Lag Selection (S18-S20) ########
+###############################################################################
+# Projection lag-selection analysis for the simplified future-projection model
+###############################################################################
 
 suppressPackageStartupMessages({
   library(tidyverse)

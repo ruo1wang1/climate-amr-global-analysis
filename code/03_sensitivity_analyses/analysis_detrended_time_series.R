@@ -1,20 +1,5 @@
 ###############################################################################
 # Analysis of climate-AMR associations using detrended time series
-# -----------------------------------------------------------------------------
-# Purpose:
-#   Self-contained detrended time-series analysis for the editor request:
-#   "Examine the relationship between climate and AMR using detrended time series."
-#
-# Design principles:
-#   1. Align the primary model with the current historical main Model C.
-#   2. Use the model-ready inputs under revision_root.
-#   3. Use the current optimal lag summary from lag-selection analysis.
-#   4. Retain three analytical layers:
-#        - Primary full Model C
-#        - Common linear detrending (shared time trend removed)
-#        - Country-specific linear detrending (country-level time trend removed)
-#   5. Use raw GAMM term predictions for shape diagnostics; loess is not used
-#      in inference or quantitative robustness classification.
 ###############################################################################
 
 cat("\n============================================================\n")
@@ -31,9 +16,7 @@ suppressPackageStartupMessages({
   library(writexl)
 })
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 1. PATHS AND GLOBAL SETTINGS
-# ═══════════════════════════════════════════════════════════════════════════════
+# 1. Paths and global settings
 script_args <- commandArgs(trailingOnly = FALSE)
 script_file <- sub("^--file=", "", script_args[grep("^--file=", script_args)][1])
 script_dir <- dirname(normalizePath(script_file))
@@ -131,9 +114,7 @@ x_axis_labels <- c(
   "Wet Days" = "Wet days (days)"
 )
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 2. HELPERS
-# ═══════════════════════════════════════════════════════════════════════════════
+# 2. Helpers
 load_lag_settings <- function(summary_csv) {
   if (!file.exists(summary_csv)) {
     stop("Lag summary file not found: ", summary_csv, call. = FALSE)
@@ -441,9 +422,7 @@ compute_common_diagnostics <- function(data, bacteria) {
   bind_rows(out)
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 3. FIGURES
-# ═══════════════════════════════════════════════════════════════════════════════
+# 3. Figures
 build_robustness_lookup <- function(stats_primary_common, shape_all) {
   shape_df <- bind_rows(lapply(names(shape_all), function(b) {
     shape <- shape_all[[b]]
@@ -848,9 +827,7 @@ build_fig_ds3 <- function(diag_all) {
   ggsave(file.path(output_root, "02_figures", "common_detrending_diagnostics.png"), p, width = fig_width_in, height = fig_height_ds3, dpi = 600)
 }
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# 4. MAIN EXECUTION
-# ═══════════════════════════════════════════════════════════════════════════════
+# 4. Main execution
 cat("[START]\n")
 
 all_results <- list()

@@ -1,19 +1,7 @@
-################################################################################
-#
-#   Analysis of climate-AMR associations under alternative reanalysis-product
-#   configurations
-#   ═════════════════════════════════════════════════════════════════════════
-#
-#   Two complementary analytical tracks are used:
-#     Track A (full):   same sample as the primary historical Model C
-#     Track B (common): rows with complete climate coverage across products
-#
-################################################################################
-
-
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  PART 0: SETUP & ALL HELPER FUNCTIONS                                      ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+###############################################################################
+# Analysis of climate-AMR associations under alternative reanalysis-product
+# configurations
+###############################################################################
 
 suppressPackageStartupMessages({
   library(tidyverse); library(mgcv); library(ggplot2); library(patchwork)
@@ -40,7 +28,7 @@ script_dir <- dirname(normalizePath(script_file))
 repo_root <- normalizePath(file.path(script_dir, "..", ".."), mustWork = TRUE)
 revision_root <- Sys.getenv("CLIMATE_AMR_WORKSPACE_ROOT", unset = repo_root)
 input_data_dir <- file.path(revision_root,"outputs/historical_associations","model_ready_inputs")
-lag_summary_path <- file.path(revision_root,"code",
+lag_summary_path <- file.path(revision_root,
   "data",
   "source_data",
   "lag_selection",
@@ -134,9 +122,7 @@ clim_vars <- c("TMP_scaled_lag","PREC_scaled_lag","HUM_scaled_lag","WET_scaled_l
 # Error log
 error_log <- list()
 
-# ══════════════════════════════════════════════════════════════════════════════
-# ALL HELPER FUNCTIONS
-# ══════════════════════════════════════════════════════════════════════════════
+# All helper functions
 
 get_pls <- function(d) {
   cc<-paste0("PLS_Comp",1:4); p<-cc[cc%in%names(d)]
@@ -963,9 +949,7 @@ draw_robustness_figure_table <- function(df, pdf_path, png_path = NULL, mode_lab
 cat("Part 0 complete.\n")
 
 
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  PART 1: RUN ALL MODELS (36 models)                                        ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+# Part 1: Run all models
 cat("\n",strrep("=",70),"\n PART 1: Model Fitting\n",strrep("=",70),"\n\n")
 
 R <- list()
@@ -1027,9 +1011,7 @@ write.csv(pct_all,file.path(dirs$curve,"percentile_contrast.csv"),row.names=FALS
 if(length(error_log)>0) write.csv(bind_rows(error_log),file.path(output_root,"error_log.csv"),row.names=FALSE)
 
 
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  PART 2: EXPOSURE COMPARISON (raw overlap + analysis-sample)               ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+# Part 2: Exposure comparison
 cat("\n",strrep("=",70),"\n PART 2: Exposure Comparison\n",strrep("=",70),"\n\n")
 
 vm <- list(TMP=c(Primary="TMP",ERA5="ERA5_annual_mean_t2m_c",MERRA2="MERRA2_annual_mean_t2m_c"),
@@ -1345,9 +1327,7 @@ if(nrow(exp_df)>0){
 }
 
 
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  PART 3: MODEL PERFORMANCE + BRIDGE TABLE                                 ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+# Part 3: Model performance and bridge table
 cat("\n",strrep("=",70),"\n PART 3: Model Performance\n",strrep("=",70),"\n\n")
 
 pf <- perf_all %>% filter(Mode=="full")
@@ -1416,9 +1396,7 @@ draw_bridge_figure_table(
 )
 
 
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  PART 4: CURVE + PERCENTILE COMPARISON                                    ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+# Part 4: Curve and percentile comparison
 cat("\n",strrep("=",70),"\n PART 4: Curve Comparison\n",strrep("=",70),"\n\n")
 
 curve_stats_list <- list()
@@ -1625,9 +1603,7 @@ for (m in c("full", "common")) {
 }
 
 
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  PART 5: ROBUSTNESS ASSESSMENT                                            ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+# Part 5: Robustness assessment
 cat("\n",strrep("=",70),"\n PART 5: Robustness\n",strrep("=",70),"\n\n")
 
 rob_list<-list(); cvns<-c("Temperature","Precipitation","Humidity","WetDays")
@@ -1705,9 +1681,7 @@ cat("  COMMON:\n"); rf2<-rob_df%>%filter(Mode=="common");rc2<-table(rf2$Robustne
 for(c in names(rc2)) cat(sprintf("    %s: %d\n",c,rc2[c]))
 
 
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  PART 6: COMBINED 6×4 CURVE FIGURES (with proper legends)                  ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+# Part 6: Combined curve figures
 cat("\n",strrep("=",70),"\n PART 6: Combined Figures\n",strrep("=",70),"\n\n")
 
 bo<-c("3GCR-Ec","3GCR-Kp","CR-Ab","CR-Ec","CR-Kp","CR-Pa")
@@ -1798,9 +1772,7 @@ for(m in c("full","common")){
 }
 
 
-# ╔══════════════════════════════════════════════════════════════════════════════╗
-# ║  FINAL: ANALYSIS LOG (safe sink)                                           ║
-# ╚══════════════════════════════════════════════════════════════════════════════╝
+# Final analysis log
 log_file <- file.path(output_root, "analysis_log.txt")
 log_con <- file(log_file, open="wt")
 sink(log_con)

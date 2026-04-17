@@ -1,11 +1,7 @@
 
-#================================================================= 
-# Climate Lag Combination Analysis for Six Bacterial Species (Four Climate Factors)
-# 
-# Purpose: To provide scientific basis for lag combination selection
-# Author: [Your Name]
-# Date: 2025
-#================================================================= 
+#=================================================================
+# Historical lag-selection analysis for six bacterial phenotypes
+#=================================================================
 
 # Install necessary packages (if not already installed)
 required_packages <- c("tidyverse", "mgcv", "viridis", "patchwork", "gridExtra",
