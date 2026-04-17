@@ -282,8 +282,8 @@ readme_df <- tibble::tibble(
   Description = c(
     "Country-level term-specific OR estimates from primary model.",
     "Per-bacteria and per-climate-factor summary table used for the spatial-heterogeneity profiles.",
-    "CV_OR was calculated as SD(OR) / Mean(OR) × 100 across countries for each bacteria-factor combination.",
-    "Mean_OR is the arithmetic mean of country-level OR values for each bacteria-factor combination."
+    "CV_OR was calculated as SD(OR) / Mean(OR) × 100 across countries for each phenotype-climate-factor combination.",
+    "Mean_OR is the arithmetic mean of country-level OR values for each phenotype-climate-factor combination."
   )
 )
 

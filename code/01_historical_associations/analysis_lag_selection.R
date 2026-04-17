@@ -620,7 +620,7 @@ create_facet_aic_heatmap_four_factors <- function(all_metrics, summary_table) {
     # Skip if no data for this WET lag
     if(nrow(plot_data) == 0) next
     
-    # Create relative AIC values for each bacteria
+    # Create relative AIC values for each phenotype
     plot_data <- plot_data %>%
       group_by(bacteria_name) %>%
       mutate(
@@ -872,7 +872,7 @@ create_lag_heatmap_four_factors <- function(summary_table) {
 
 # 5. AIC rank comparison plot for four factors
 create_aic_rank_plot_four_factors <- function(all_metrics, summary_table) {
-  # For four factors, we'll show top 20 combinations for each bacteria
+  # For four factors, show the top 20 combinations for each phenotype
   plot_data <- all_metrics %>%
     left_join(summary_table %>% select(Bacteria, Display_Name), by = c("bacteria_name" = "Bacteria")) %>%
     group_by(bacteria_name) %>%
@@ -889,7 +889,7 @@ create_aic_rank_plot_four_factors <- function(all_metrics, summary_table) {
         include.lowest = TRUE
       )
     ) %>%
-    # Take only top 20 combinations for each bacteria to avoid overcrowding
+    # Take only the top 20 combinations for each phenotype to avoid overcrowding
     filter(combo_rank <= 20) %>%
     ungroup()
   
@@ -1020,7 +1020,7 @@ create_lag_dist_barplot_four_factors <- function(summary_table) {
 
 # 8. Create criteria consistency plot for four factors
 create_criteria_consistency_plot_four_factors <- function(all_metrics, summary_table) {
-  # For each bacteria, find optimal combination based on different criteria
+  # For each phenotype, find the optimal combination based on different criteria
   consistency_data <- all_metrics %>%
     group_by(bacteria_name) %>%
     summarize(
@@ -1198,7 +1198,7 @@ create_lag_report_four_factors <- function(summary_table, output_dir) {
   writeLines("When studying the relationship between climate factors and antimicrobial resistance (AMR), identifying appropriate climate variable lag structures is crucial for revealing true temporal relationships. This analysis extends previous work by including wet days frequency as a fourth climate variable, alongside temperature, precipitation, and relative humidity.\n", con)
   
   writeLines("## Research Methods\n", con)
-  writeLines("For each bacterial species, we systematically tested all combinations of 1-3 year lags for temperature, precipitation, humidity, and wet days variables (81 total combinations), using Generalized Additive Mixed Models (GAMM). To handle correlation between variables (particularly between wet days and other humidity variables), we employed select=TRUE parameter in mgcv which applies additional penalization to smooth terms. Models were evaluated based on AIC, explained deviance, cross-validation RMSE, and multicollinearity diagnostics.\n", con)
+  writeLines("For each AMR phenotype, we systematically tested all combinations of 1-3 year lags for temperature, precipitation, humidity, and wet days variables (81 total combinations) using Generalized Additive Mixed Models (GAMM). To handle correlation between variables, particularly between wet days and other hydrologic variables, we used the mgcv `select=TRUE` option to apply additional penalization to smooth terms. Models were evaluated using AIC, explained deviance, cross-validation RMSE, and multicollinearity diagnostics.\n", con)
   
   writeLines("## Optimal Lag Combination Summary\n", con)
   writeLines("| Bacterial Species | Temp. Lag | Precip. Lag | Humidity Lag | Wet Days Lag | AIC | Expl. Dev. (%) | CV-RMSE | Max VIF |\n", con)
@@ -1223,28 +1223,28 @@ create_lag_report_four_factors <- function(summary_table, output_dir) {
   for(i in 1:3) {
     count <- tmp_counts[as.character(i)]
     if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d bacterial species", i, count), con)
+    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
   }
   
   writeLines("\n### Precipitation Lag Distribution\n", con)
   for(i in 1:3) {
     count <- prec_counts[as.character(i)]
     if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d bacterial species", i, count), con)
+    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
   }
   
   writeLines("\n### Humidity Lag Distribution\n", con)
   for(i in 1:3) {
     count <- hum_counts[as.character(i)]
     if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d bacterial species", i, count), con)
+    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
   }
   
   writeLines("\n### Wet Days Lag Distribution\n", con)
   for(i in 1:3) {
     count <- wet_counts[as.character(i)]
     if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d bacterial species", i, count), con)
+    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
   }
   
   writeLines("\n## Multicollinearity Assessment\n", con)
@@ -1260,7 +1260,7 @@ create_lag_report_four_factors <- function(summary_table, output_dir) {
   }
   
   writeLines("\n## Conclusions\n", con)
-  writeLines("Our analysis indicates that different bacterial species exhibit different temporal lag patterns in response to all four climate factors. The addition of wet days frequency as a fourth climate variable provides complementary information to the other climate factors, despite modest correlation with precipitation and humidity. The optimal lag combinations identified will be used in subsequent AMR modeling to more accurately capture climate-resistance relationships.", con)
+  writeLines("Our analysis indicates that different AMR phenotypes exhibit different temporal lag patterns in response to the four climate factors. The addition of wet-day frequency as a fourth climate variable provides complementary information to the other climate factors, despite modest correlation with precipitation and humidity. The optimal lag combinations identified here are used in the downstream AMR modeling framework to better capture climate-resistance relationships.", con)
   
   close(con)
   
