@@ -143,40 +143,15 @@ write_basis_dimension_outputs <- function(summary_table, model_details, output_r
   xlsx_path <- file.path(workbook_dir, "source_data_basis_dimension_sensitivity.xlsx")
   docx_path <- file.path(doc_dir, "basis_dimension_sensitivity_summary.docx")
   details_csv_path <- file.path(metadata_dir, "basis_dimension_sensitivity_model_formulas.csv")
-  readme_path <- file.path(output_root, "README.md")
 
   write.csv(summary_table, csv_path, row.names = FALSE)
   write.csv(model_details, details_csv_path, row.names = FALSE)
 
   wb <- createWorkbook()
   addWorksheet(wb, "BasisDimension")
-  addWorksheet(wb, "README")
   addWorksheet(wb, "Model_Formulas")
 
   writeData(wb, "BasisDimension", summary_table)
-  writeData(
-    wb,
-    "README",
-    data.frame(
-      Item = c(
-        "Purpose",
-        "Model",
-        "k_values_tested",
-        "Input_data",
-        "Lag_source",
-        "Notes"
-      ),
-      Value = c(
-        "Sensitivity analysis of GAMM model performance across alternative basis dimensions",
-        "Primary historical model with four climate factors and dynamic PLS components",
-        paste(basis_k_values, collapse = ", "),
-        input_data_dir,
-        lag_summary_path,
-        "The same basis dimension k is applied to one-dimensional climate smooths and available PLS components. Spatial k is min(20, 2*k); year k is min(8, k)."
-      ),
-      stringsAsFactors = FALSE
-    )
-  )
   writeData(wb, "Model_Formulas", model_details)
   saveWorkbook(wb, xlsx_path, overwrite = TRUE)
 
@@ -207,21 +182,6 @@ write_basis_dimension_outputs <- function(summary_table, model_details, output_r
   )
 
   save_as_docx(ft, path = docx_path)
-
-  readme_lines <- c(
-    "# basis-dimension sensitivity summary",
-    "",
-    "This folder contains the basis-dimension sensitivity analysis for the primary historical model.",
-    "",
-    "Files:",
-    "- `01_tables/basis_dimension_sensitivity_summary.csv`",
-    "- `02_workbook/source_data_basis_dimension_sensitivity.xlsx`",
-    "- `03_docx/basis_dimension_sensitivity_summary.docx`",
-    "- `04_metadata/basis_dimension_sensitivity_model_formulas.csv`",
-    "",
-    "The analysis varies a common one-dimensional basis dimension k across climate and available PLS smooths using k values 4, 5, 8, 10, and 12."
-  )
-  writeLines(readme_lines, readme_path)
 
   list(
     csv = csv_path,

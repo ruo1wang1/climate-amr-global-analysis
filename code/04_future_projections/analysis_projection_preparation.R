@@ -645,26 +645,6 @@ write_xlsx(
 
 write_response_helper(output_base, file.path(output_base, "05_response_function_helper"))
 
-readme_lines <- c(
-  "# Projection simplified model inputs",
-  "",
-  "This folder contains machine-readable inputs derived from the simplified projection models used for future climate-AMR projections.",
-  "",
-  "Key principles:",
-  "- Lag settings correspond to the lag combination selected for each phenotype in the simplified projection-model lag analysis.",
-  "- Climate weights correspond to the same simplified projection models and are used to aggregate climate-factor-specific effects in downstream projection calculations.",
-  "- Response lookup tables are exported as multiplicative odds-ratio effects (ORs, centered around 1) rather than absolute resistance-prevalence predictions.",
-  "- Scaling parameters are stored by phenotype and climate zone so future CMIP6 climate values can be standardized consistently before applying the response lookup tables.",
-  "",
-  "Important files:",
-  "- `02_curve_lookup_tables/projection_climate_response_lookup_scaled.csv`: scaled-domain response lookup for each phenotype and climate factor.",
-  "- `02_curve_lookup_tables/projection_climate_response_lookup_by_zone.csv`: climate-zone-specific raw-value lookup derived from the scaled-domain response curves.",
-  "- `03_baseline_and_history/projection_baseline_by_zone.csv`: 2010-2019 baseline resistance and climate summaries by phenotype and climate zone.",
-  "- `04_parameter_tables/projection_simplified_final_lag_settings.csv`: final lag settings carried forward into downstream projection modeling.",
-  "- `04_parameter_tables/projection_simplified_climate_weights.csv`: climatic-factor weights used in downstream projection aggregation.",
-  "- `05_response_function_helper/projection_simplified_response_functions.R`: helper functions used by the downstream projection scripts."
-)
-writeLines(readme_lines, file.path(output_base, "07_metadata", "README.md"))
 writeLines(capture.output(sessionInfo()), file.path(output_base, "07_metadata", "sessionInfo.txt"))
 
 cat("Saved final simplified projection GAMM preparation outputs to:\n")

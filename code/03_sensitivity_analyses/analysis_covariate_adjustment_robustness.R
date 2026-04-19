@@ -940,30 +940,6 @@ write_xlsx(
   file.path(source_data_root, "02_workbook", "SourceData_covariate_adjustment_robustness.xlsx")
 )
 
-method_note <- c(
-  "historical climate inputs four-specification covariate robustness analysis",
-  "",
-  "Specifications:",
-  "- Spec A: main full Model C with dynamic phenotype-specific PLS components.",
-  "- Spec B: PCA components derived from the same 14 structural covariates; number of PCs chosen to explain >=80% variance.",
-  "- Spec C: six theory-fixed structural covariates entered linearly (log_AMC, CPI, HEG, UP, log_PMP, WASH).",
-  "- Spec D: six phenotype-specific PLS-informed top covariates preserved from the original analysis summary design and entered linearly.",
-  "",
-  "Constants held fixed across specifications:",
-  "- Same model_ready_inputs.",
-  "- Same phenotype-specific climate lag structure.",
-  "- Same four climate smooth terms.",
-  "- Same spatial/temporal/region/climate-zone adjustment structure.",
-  "",
-  "Outputs:",
-  "- Curve overlay for qualitative shape preservation.",
-  "- EDF / significance heatmap for term retention under selective penalisation.",
-  "- OR-range comparison across the 10th-90th percentile exposure range.",
-  "- VIF table for linear-covariate specifications.",
-  "- Raw shape-concordance table versus the main PLS model."
-)
-writeLines(method_note, file.path(output_root, "04_metadata", "README_covariate_robustness_4specs.txt"))
-
 sink(file.path(output_root, "04_metadata", "SUMMARY.txt"))
 cat("================================================================\n")
 cat("FOUR-SPECIFICATION COVARIATE ROBUSTNESS SUMMARY\n")

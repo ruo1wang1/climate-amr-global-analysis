@@ -316,52 +316,13 @@ export_fig1_source_data <- function(specs_to_run, output_root) {
   addWorksheet(wb, "Fig1A_thresholds")
   addWorksheet(wb, "Fig1B_summary")
   addWorksheet(wb, "Metadata")
-  addWorksheet(wb, "README")
 
   writeData(wb, "Fig1A_curves", curves_df)
   writeData(wb, "Fig1A_density", density_df)
   writeData(wb, "Fig1A_thresholds", thresholds_df)
   writeData(wb, "Fig1B_summary", panel_b_df)
   writeData(wb, "Metadata", metadata_df)
-  writeData(
-    wb,
-    "README",
-    data.frame(
-      Item = c(
-        "Figure",
-        "Panels covered",
-        "Model",
-        "Input data",
-        "Lag source",
-        "How to use"
-      ),
-      Value = c(
-        "Figure 1",
-        "Fig1A response curves, density panels, and threshold annotations; Fig1B summary statistics",
-        "primary model with four climate factors and dynamic PLS components",
-        input_data_dir,
-        lag_summary_path,
-        "This workbook is intended as figure-specific source data for journal submission. The plotted curve and density values correspond to the data actually used to generate the revised Figure 1."
-      ),
-      stringsAsFactors = FALSE
-    )
-  )
   saveWorkbook(wb, workbook_path, overwrite = TRUE)
-
-  readme_lines <- c(
-    "# Figure 1 Source Data",
-    "",
-    "This folder contains a publication-style source data workbook for primary model Figure 1.",
-    "",
-    "Sheets in the workbook:",
-    "- `Fig1A_curves`",
-    "- `Fig1A_density`",
-    "- `Fig1A_thresholds`",
-    "- `Fig1B_summary`",
-    "- `Metadata`",
-    "- `README`"
-  )
-  writeLines(readme_lines, file.path(output_root, "README.md"))
 
   list(
     workbook = workbook_path,

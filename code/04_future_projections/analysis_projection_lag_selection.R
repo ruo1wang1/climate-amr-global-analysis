@@ -792,25 +792,6 @@ combined_doc <- body_add_flextable(combined_doc, value = paginate(s20_ft, init =
 combined_doc <- body_add_par(combined_doc, "Note: Values represent normalized climatic-factor weights derived from the best simplified GAMM for each AMR phenotype using the rule Raw weight = F × EDF × significance adjustment, followed by bounding to the interval 0.05-0.70 and renormalization.", style = "Normal")
 print(combined_doc, target = file.path(output_base, "03_docx_tables", "projection_lag_summaries.docx"))
 
-methods_lines <- c(
-  "# Future Projection Preparation Methods",
-  "",
-  "## Simplified projection model",
-  "The projection-phase simplified GAMM retained the four climatic smooth terms and the same spatiotemporal structure as the full Model C, while removing all PLS components.",
-  "",
-  "## Lag re-selection",
-  "For each AMR phenotype, projection-specific candidate lag combinations were re-estimated within a +/-1 year window around the full historical Model C lag combination, bounded to 1-3 years for each climatic factor. Candidate models were ranked by AIC after fitting the simplified projection GAMM.",
-  "The full historical Model C lag combination was explicitly retained in the evaluated set and its ranking within the simplified-model search space was recorded for comparison.",
-  "Downstream projection modeling uses the AIC-optimal simplified projection lag for each AMR phenotype rather than mechanically retaining the full historical Model C lag.",
-  "",
-  "## Climate factor weights",
-  "Climatic factor weights were derived from the best simplified model using a pragmatic weighting rule aligned with the original methods documentation:",
-  "- Raw weight_i = F_i x EDF_i x S_i",
-  "- Significance adjustment S_i: p < 0.01 -> 1.0; p < 0.05 -> 0.7; p < 0.10 -> 0.3; p >= 0.10 -> 0.1",
-  "- Raw weights were normalized to sum to 1",
-  "- A lower bound of 0.05 and upper bound of 0.70 were imposed for biological plausibility, followed by renormalization"
-)
-writeLines(methods_lines, file.path(output_base, "06_metadata", "METHODS.md"))
 writeLines(capture.output(sessionInfo()), file.path(output_base, "06_metadata", "sessionInfo.txt"))
 
 cat("Saved simplified projection lag-selection outputs to:\n")

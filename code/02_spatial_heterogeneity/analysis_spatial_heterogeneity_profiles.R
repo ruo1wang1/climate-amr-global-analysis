@@ -272,39 +272,10 @@ openxlsx::writeData(wb, "Bacteria_Summary", bacteria_summary)
 openxlsx::addWorksheet(wb, "Factor_Summary")
 openxlsx::writeData(wb, "Factor_Summary", factor_summary)
 
-readme_df <- tibble::tibble(
-  Item = c(
-    "Country_Effects",
-    "Bacteria_Factor_Summary",
-    "CV definition",
-    "Mean_OR definition"
-  ),
-  Description = c(
-    "Country-level term-specific OR estimates from primary model.",
-    "Per-bacteria and per-climate-factor summary table used for the spatial-heterogeneity profiles.",
-    "CV_OR was calculated as SD(OR) / Mean(OR) × 100 across countries for each phenotype-climate-factor combination.",
-    "Mean_OR is the arithmetic mean of country-level OR values for each phenotype-climate-factor combination."
-  )
-)
-
-openxlsx::addWorksheet(wb, "README")
-openxlsx::writeData(wb, "README", readme_df)
-
 openxlsx::saveWorkbook(
   wb,
   file.path(output_dirs$workbook, "spatial_heterogeneity_profiles_source_data.xlsx"),
   overwrite = TRUE
-)
-
-writeLines(
-  c(
-    "# Spatial-heterogeneity profile analysis (optimal-k)",
-    "",
-    "- `01_figures`: summary figures for spatial heterogeneity.",
-    "- `02_tables`: summary tables at bacteria-factor, bacteria, and factor levels.",
-    "- `03_workbook`: source-data workbook used for the profile summaries."
-  ),
-  con = file.path(output_root, "README.md")
 )
 
 message("Spatial heterogeneity profile analysis completed: ", output_root)

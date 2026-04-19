@@ -314,23 +314,6 @@ write_xlsx(
   file.path(workbook_dir, "projection_variance_decomposition_variance_decomposition_source_data.xlsx")
 )
 
-readme_lines <- c(
-  "# analysis figures",
-  "",
-  "This folder contains the variance decomposition analysis under the current Model C data system.",
-  "The full-model specification here is intentionally aligned with the current main Model C used for historical threshold and response analyses, rather than the broader lag-search fitting template used during lag selection.",
-  "",
-  "Definitions:",
-  "- `Full_Model_DevExplained_pct`: explained deviance of the full Model C with dynamic PLS components.",
-  "- `Climate_Only_DevExplained_pct`: explained deviance of the matched climate-only model using the same lag structure and spatiotemporal terms but excluding all PLS components.",
-  "- `Climate_Component_pct_of_total`: climate-only explained deviance expressed as a percentage of the full-model explained deviance, truncated at 100% when the climate-only model slightly exceeds the full-model deviance due to smoothing/penalization differences.",
-  "- `PLS_Component_pct_of_total`: residual contribution attributed to PLS components, defined as the non-negative difference between full-model and climate-only explained deviance.",
-  "",
-  sprintf("Weighted average climate contribution: %.2f%%", weighted_climate_pct),
-  sprintf("Weighted average PLS contribution: %.2f%%", weighted_pls_pct)
-)
-writeLines(readme_lines, file.path(metadata_dir, "README.md"))
-
 session_txt <- capture.output(sessionInfo())
 writeLines(session_txt, file.path(metadata_dir, "sessionInfo.txt"))
 

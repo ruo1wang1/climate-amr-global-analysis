@@ -1048,51 +1048,10 @@ openxlsx::writeData(workbook, "Fig2C_gap_statistics", all_gap_plot_data)
 openxlsx::addWorksheet(workbook, "Metadata")
 openxlsx::writeData(workbook, "Metadata", all_model_metadata)
 
-readme_df <- tibble(
-  Item = c(
-    "Figure 2A",
-    "Figure 2B",
-    "Figure 2C",
-    "Optimal-k logic",
-    "k bound",
-    "Clustering matrix",
-    "Source"
-  ),
-  Description = c(
-    "Country-level climate-effect heatmaps based on primary model term-specific OR values, with row annotations showing optimal-k cluster assignments.",
-    "Climate-zone association estimates (Temperate and Tropical versus Polar reference) shown in the reference bar-plot style.",
-    "Gap-statistic curves used to select the optimal cluster number for each climate factor.",
-    "The main analysis follows the manuscript logic: optimal cluster number determined by gap statistic with kmeans clustering.",
-    sprintf("Candidate k values were restricted to %d-%d to avoid degenerate low-k or over-fragmented solutions under the revised dataset.", cluster_min_k, cluster_max_k),
-    "The clustering matrix for optimal-k selection used raw country-level OR values with column-mean imputation for missing cells, matching the manuscript-era clustering logic.",
-    "All source data were generated from primary model inputs and lag settings."
-  )
-)
-
-openxlsx::addWorksheet(workbook, "README")
-openxlsx::writeData(workbook, "README", readme_df)
 openxlsx::saveWorkbook(
   workbook,
   file.path(source_data_dirs$workbook, "SourceData_figure2_spatial_heterogeneity_profiles.xlsx"),
   overwrite = TRUE
-)
-
-writeLines(
-  c(
-    "# Model C Figure 2 Outputs (Optimal-K, historical climate inputs)",
-    "",
-    "- `01_country_effect_tables`: country-level OR and CI summaries.",
-    "- `02_Figure2A_spatial_heatmaps`: Figure 2A heatmaps, optimal-k cluster assignments, and optimal-k summary.",
-        "- `03_Figure2B_climate_zone_associations`: Figure 2B climate-zone plots and plot-ready data.",
-        "- `04_Figure2C_gap_statistic_selection`: Figure 2C gap-statistic curves and plot-ready data.",
-        "- `05_combined_figure2`: manuscript-style combined Figure 2 panels (A/B) plus an extended A/B/C version.",
-        "- `06_metadata`: metadata describing reused or rebuilt model inputs.",
-    "",
-    sprintf("Optimal-k selection used gap statistic with restricted maxSE over k = %d to %d.", cluster_min_k, cluster_max_k),
-    "source data workbook:",
-    "- `data/source_data/figure2_spatial_heterogeneity_profiles/02_workbook/SourceData_figure2_spatial_heterogeneity_profiles.xlsx`"
-  ),
-  con = file.path(results_root, "README.md")
 )
 
 message("Optimal-k Figure 2 suite completed successfully.")

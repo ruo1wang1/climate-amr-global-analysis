@@ -190,16 +190,4 @@ if (file.exists(figure2a_png)) {
 
 write.csv(climate_effects, file.path(output_dir, "ModelC_Figure2B_climate_zone_oldstyle_optimal_k_plot_ready_data.csv"), row.names = FALSE)
 
-writeLines(
-  c(
-    "# Model C Figure 2B Old-Style Outputs (Optimal-K)",
-    "",
-    "- `ModelC_Figure2B_climate_zone_barplot_oldstyle_optimal_k.*`: legacy-style Figure 2B rendering aligned to the optimal-k clustering suite.",
-    "- `ModelC_Figure2B_climate_zone_forest_oldstyle_optimal_k.*`: alternative forest-style rendering.",
-    "- `ModelC_Figure2_spatial_heterogeneity_panels_oldstyleB_optimal_k.*`: combined Figure 2A+B using the optimal-k Figure 2A and old-style Figure 2B.",
-    "- `ModelC_Figure2_spatial_heterogeneity_panels_oldstyleBC_optimal_k.*`: combined Figure 2A+B+C using the optimal-k clustering suite."
-  ),
-  con = file.path(output_dir, "README.md")
-)
-
 message("Old-style optimal-k Figure 2B outputs completed: ", output_dir)

@@ -1180,105 +1180,6 @@ create_climate_correlation_plot <- function(bacteria_name, pls_components) {
   }
 }
 
-# 11. Create lag analysis report for four factors
-create_lag_report_four_factors <- function(summary_table, output_dir) {
-  # Calculate lag distribution
-  tmp_counts <- table(summary_table$TMP_lag)
-  prec_counts <- table(summary_table$PREC_lag)
-  hum_counts <- table(summary_table$HUM_lag)
-  wet_counts <- table(summary_table$WET_lag)
-  
-  # Create report file
-  report_file <- file.path(output_dir, "lag_analysis_report_four_factors.md")
-  con <- file(report_file, "w", encoding = "UTF-8")
-  
-  writeLines("# Climate Lag Analysis Report for Six Bacterial Species (Four Climate Factors)\n", con)
-  
-  writeLines("## Research Background\n", con)
-  writeLines("When studying the relationship between climate factors and antimicrobial resistance (AMR), identifying appropriate climate variable lag structures is crucial for revealing true temporal relationships. This analysis extends previous work by including wet days frequency as a fourth climate variable, alongside temperature, precipitation, and relative humidity.\n", con)
-  
-  writeLines("## Research Methods\n", con)
-  writeLines("For each AMR phenotype, we systematically tested all combinations of 1-3 year lags for temperature, precipitation, humidity, and wet days variables (81 total combinations) using Generalized Additive Mixed Models (GAMM). To handle correlation between variables, particularly between wet days and other hydrologic variables, we used the mgcv `select=TRUE` option to apply additional penalization to smooth terms. Models were evaluated using AIC, explained deviance, cross-validation RMSE, and multicollinearity diagnostics.\n", con)
-  
-  writeLines("## Optimal Lag Combination Summary\n", con)
-  writeLines("| Bacterial Species | Temp. Lag | Precip. Lag | Humidity Lag | Wet Days Lag | AIC | Expl. Dev. (%) | CV-RMSE | Max VIF |\n", con)
-  writeLines("|----------|-------|-------|-------|-------|-----|-----------|--------|--------|", con)
-  
-  for(i in 1:nrow(summary_table)) {
-    writeLines(sprintf("| %s | %d | %d | %d | %d | %.2f | %.2f | %.4f | %.2f |", 
-                      summary_table$Display_Name[i], 
-                      summary_table$TMP_lag[i], 
-                      summary_table$PREC_lag[i], 
-                      summary_table$HUM_lag[i],
-                      summary_table$WET_lag[i],
-                      summary_table$AIC[i], 
-                      summary_table$Dev_explained[i], 
-                      summary_table$CV_RMSE[i],
-                      summary_table$Max_VIF[i]), con)
-  }
-  
-  writeLines("\n## Lag Pattern Analysis\n", con)
-  
-  writeLines("### Temperature Lag Distribution\n", con)
-  for(i in 1:3) {
-    count <- tmp_counts[as.character(i)]
-    if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
-  }
-  
-  writeLines("\n### Precipitation Lag Distribution\n", con)
-  for(i in 1:3) {
-    count <- prec_counts[as.character(i)]
-    if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
-  }
-  
-  writeLines("\n### Humidity Lag Distribution\n", con)
-  for(i in 1:3) {
-    count <- hum_counts[as.character(i)]
-    if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
-  }
-  
-  writeLines("\n### Wet Days Lag Distribution\n", con)
-  for(i in 1:3) {
-    count <- wet_counts[as.character(i)]
-    if(is.na(count)) count <- 0
-    writeLines(sprintf("- %d year lag: %d phenotypes", i, count), con)
-  }
-  
-  writeLines("\n## Multicollinearity Assessment\n", con)
-  writeLines("The Maximum Variance Inflation Factor (VIF) was calculated for each model to assess potential multicollinearity issues between the four climate variables. Values below 5 generally indicate acceptable levels of correlation between predictors.\n", con)
-  
-  max_vif_table <- summary_table$Max_VIF
-  names(max_vif_table) <- summary_table$Display_Name
-  
-  writeLines("| Bacterial Species | Maximum VIF |\n", con)
-  writeLines("|------------------|------------|", con)
-  for(i in 1:nrow(summary_table)) {
-    writeLines(sprintf("| %s | %.2f |", summary_table$Display_Name[i], summary_table$Max_VIF[i]), con)
-  }
-  
-  writeLines("\n## Conclusions\n", con)
-  writeLines("Our analysis indicates that different AMR phenotypes exhibit different temporal lag patterns in response to the four climate factors. The addition of wet-day frequency as a fourth climate variable provides complementary information to the other climate factors, despite modest correlation with precipitation and humidity. The optimal lag combinations identified here are used in the downstream AMR modeling framework to better capture climate-resistance relationships.", con)
-  
-  close(con)
-  
-  # Try rendering to PDF if rmarkdown is available
-  if(requireNamespace("rmarkdown", quietly = TRUE)) {
-    try(
-      rmarkdown::render(
-        report_file,
-        output_format = "pdf_document",
-        output_file = file.path(output_dir, "lag_analysis_report_four_factors.pdf")
-      ),
-      silent = TRUE
-    )
-  } else {
-    debug_print("rmarkdown package not installed, cannot convert to PDF", "WARNING")
-  }
-}
-
 #------------------------------------------------------------------------
 # Main function - Run analysis and create all visualizations
 #------------------------------------------------------------------------
@@ -1329,9 +1230,6 @@ main <- function() {
   
   debug_print("Creating summary table for four factors...")
   create_summary_table_with_metrics_four_factors(summary_table)
-  
-  debug_print("Creating analysis report for four factors...")
-  create_lag_report_four_factors(summary_table, output_dir)
   
   debug_print("All analyses and visualizations for four climate factors completed!")
   cat(paste("\nAnalysis complete!\nAll results saved to:", output_dir, "\n"))

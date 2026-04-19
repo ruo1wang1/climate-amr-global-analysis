@@ -159,26 +159,11 @@ main <- function() {
   plot_data_csv <- file.path(fig1b_output_dir, "ModelC_GAMM_Figure1B_plot_ready_data.csv")
   pdf_path <- file.path(fig1b_output_dir, "ModelC_GAMM_Figure1B_statistical_summary.pdf")
   png_path <- file.path(fig1b_output_dir, "ModelC_GAMM_Figure1B_statistical_summary.png")
-  readme_path <- file.path(fig1b_output_dir, "README.md")
 
   write.csv(plot_data, plot_data_csv, row.names = FALSE)
 
   ggsave(pdf_path, plot = plot_obj, width = 20, height = 5.8, device = cairo_pdf, dpi = 300)
   ggsave(png_path, plot = plot_obj, width = 20, height = 5.8, dpi = 300)
-
-  readme_lines <- c(
-    "# Figure 1B Statistical Summary",
-    "",
-    "This folder contains the Figure 1B rerender based on the updated Model C summary statistics.",
-    "",
-    "Files:",
-    "- `ModelC_GAMM_Figure1B_statistical_summary.pdf`",
-    "- `ModelC_GAMM_Figure1B_statistical_summary.png`",
-    "- `ModelC_GAMM_Figure1B_plot_ready_data.csv`",
-    "",
-    "Labels are formatted with two decimal places for both F statistics and EDF."
-  )
-  writeLines(readme_lines, readme_path)
 
   cat("Saved Figure 1B to:\n")
   cat(pdf_path, "\n")

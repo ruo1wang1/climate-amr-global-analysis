@@ -878,25 +878,9 @@ write_climate_specification_summary_outputs <- function(summary_table, vif_df, m
   addWorksheet(wb, "Summary")
   addWorksheet(wb, "VIF_Values")
   addWorksheet(wb, "Model_Manifest")
-  addWorksheet(wb, "README")
   writeData(wb, "Summary", summary_table)
   writeData(wb, "VIF_Values", vif_df)
   writeData(wb, "Model_Manifest", manifest_df)
-  writeData(
-    wb,
-    "README",
-    data.frame(
-      Item = c("Purpose", "Table", "Figures covered", "Input path", "Lag source"),
-      Value = c(
-        "Model refits for climate specification checks",
-        "climate specification comparison summary",
-        "Climate collinearity heatmap and model-specific climate-response figures",
-        input_data_dir,
-        "Best lag combinations imported from the model-specific lag summaries for Models A, B, and C."
-      ),
-      stringsAsFactors = FALSE
-    )
-  )
   saveWorkbook(wb, xlsx_path, overwrite = TRUE)
 
   docx_table <- summary_table %>%
@@ -925,19 +909,6 @@ write_climate_specification_summary_outputs <- function(summary_table, vif_df, m
     )
   )
   save_as_docx(ft, path = docx_path)
-
-  readme_lines <- c(
-    "# climate specification comparison summary",
-    "",
-    "This folder contains the smooth-term comparison across Models A, B, and C.",
-    "",
-    "Files:",
-    "- `01_tables/climate_specification_summary.csv`",
-    "- `02_workbook/climate_specification_summary.xlsx`",
-    "- `03_docx/climate_specification_summary.docx`",
-    "- `06_metadata/climate_specification_model_manifest.csv`"
-  )
-  writeLines(readme_lines, file.path(output_root, "README.md"))
 
   invisible(list(csv = csv_path, xlsx = xlsx_path, docx = docx_path, manifest = manifest_path))
 }
@@ -1012,35 +983,12 @@ write_vif_outputs <- function(vif_df, output_root, source_data_root) {
 
   wb <- createWorkbook()
   addWorksheet(wb, "VIF_Heatmap")
-  addWorksheet(wb, "README")
   writeData(wb, "VIF_Heatmap", vif_df)
-  writeData(
-    wb,
-    "README",
-    data.frame(
-      Item = c("Figure", "Content", "Input path"),
-      Value = c(
-        "climate collinearity figure",
-        "VIF heatmap values across Models A, B, and C for the six AMR phenotypes",
-        input_data_dir
-      ),
-      stringsAsFactors = FALSE
-    )
-  )
   saveWorkbook(
     wb,
     file.path(source_wb_dir, "source_data_climate_collinearity_heatmap.xlsx"),
     overwrite = TRUE
   )
-
-  readme_lines <- c(
-    "# climate collinearity heatmap source data",
-    "",
-    "Files:",
-    "- `01_csv/climate_collinearity_heatmap_values.csv`",
-    "- `02_workbook/source_data_climate_collinearity_heatmap.xlsx`"
-  )
-  writeLines(readme_lines, file.path(source_data_root, "climate_collinearity_heatmap", "README.md"))
 
   invisible(list(pdf = pdf_path, png = png_path, csv = csv_path))
 }
@@ -1198,42 +1146,15 @@ build_model_curve_figure <- function(model_key, fitted_results, output_root, sou
   addWorksheet(wb, "Density")
   addWorksheet(wb, "Thresholds")
   addWorksheet(wb, "PanelB")
-  addWorksheet(wb, "README")
   writeData(wb, "Curves", curves_df)
   writeData(wb, "Density", density_df)
   writeData(wb, "Thresholds", thresholds_df)
   writeData(wb, "PanelB", panel_b_df)
-  writeData(
-    wb,
-    "README",
-    data.frame(
-      Item = c("Figure", "Model", "Input path", "Lag source"),
-      Value = c(
-        paste("Climate-response figure", model_spec$figure_id),
-        model_spec$display_label,
-        input_data_dir,
-        model_spec$lag_summary_path
-      ),
-      stringsAsFactors = FALSE
-    )
-  )
   saveWorkbook(
     wb,
     file.path(source_wb_dir, paste0("source_data_", model_spec$figure_basename, ".xlsx")),
     overwrite = TRUE
   )
-
-  readme_lines <- c(
-    paste0("# ", model_spec$display_label, " source data"),
-    "",
-    "Files:",
-    paste0("- `01_csv/", model_spec$figure_basename, "_curves.csv`"),
-    paste0("- `01_csv/", model_spec$figure_basename, "_density.csv`"),
-    paste0("- `01_csv/", model_spec$figure_basename, "_thresholds.csv`"),
-    paste0("- `01_csv/", model_spec$figure_basename, "_panelB_stats.csv`"),
-    paste0("- `02_workbook/source_data_", model_spec$figure_basename, ".xlsx`")
-  )
-  writeLines(readme_lines, file.path(source_model_root, "README.md"))
 
   invisible(
     list(

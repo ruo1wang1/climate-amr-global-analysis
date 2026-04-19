@@ -562,7 +562,6 @@ run_single_model_spec <- function(spec) {
   summary_csv_path <- file.path(tables_dir, paste0("bacteria_", spec$key, "_lag_summary.csv"))
   workbook_path <- file.path(workbook_dir, paste0("LagSelection_", spec$key, "_historical.xlsx"))
   manifest_path <- file.path(metadata_dir, paste0("LagSelection_", spec$key, "_manifest.csv"))
-  readme_path <- file.path(metadata_dir, "README.md")
 
   write.csv(all_metrics_df, metrics_csv_path, row.names = FALSE)
   write.csv(summary_df, summary_csv_path, row.names = FALSE)
@@ -570,34 +569,8 @@ run_single_model_spec <- function(spec) {
   wb <- createWorkbook()
   addWorksheet(wb, "Optimal_Summary")
   addWorksheet(wb, "All_Metrics")
-  addWorksheet(wb, "README")
   writeData(wb, "Optimal_Summary", summary_df)
   writeData(wb, "All_Metrics", all_metrics_df)
-  writeData(
-    wb,
-    "README",
-    data.frame(
-      Item = c("Purpose", "Model", "Climate_Variables", "Max_Lag", "Input_Path", "Notes"),
-      Value = c(
-        paste("Lag-search results for", spec$display_label),
-        spec$display_label,
-        paste(spec$climate_vars, collapse = ", "),
-        max_lag_to_run,
-        input_data_dir,
-        paste(
-          "All included climate variables were searched over 1-3 year lags.",
-          if (cv_scope == "all") {
-            "Grouped country-level 5-fold CV was computed for every lag combination using deterministic country folds shared within each pathogen."
-          } else if (cv_scope == "best_only") {
-            "Grouped country-level 5-fold CV was computed only for the lowest-AIC lag combination within each pathogen-model specification, using deterministic country folds shared across Models A, B, and C for the same pathogen."
-          } else {
-            "CV was skipped for this run."
-          }
-        )
-      ),
-      stringsAsFactors = FALSE
-    )
-  )
   saveWorkbook(wb, workbook_path, overwrite = TRUE)
 
   bacteria_lookup <- tibble(
@@ -616,23 +589,6 @@ run_single_model_spec <- function(spec) {
       Model_Formula
     )
   write.csv(manifest_df, manifest_path, row.names = FALSE)
-
-  readme_lines <- c(
-    paste0("# ", spec$short_label, " Lag Selection"),
-    "",
-    paste("This folder contains lag-search outputs for", spec$display_label, "under the historical climate inputs-based historical input system."),
-    "",
-    "Files:",
-    paste0("- `01_tables/", basename(summary_csv_path), "`: optimal lag combination per AMR phenotype."),
-    paste0("- `01_tables/", basename(metrics_csv_path), "`: all fitted lag combinations and performance metrics."),
-    paste0("- `02_workbook/", basename(workbook_path), "`: workbook export of summary and all metrics."),
-    paste0("- `03_metadata/", basename(manifest_path), "`: model manifest and formulas."),
-    "",
-    paste("Included climate variables:", paste(spec$climate_vars, collapse = ", ")),
-    paste("Maximum lag searched:", max_lag_to_run, "years"),
-    paste("CV scope:", cv_scope)
-  )
-  writeLines(readme_lines, readme_path)
 
   list(
     summary = summary_df,
@@ -782,29 +738,12 @@ write_model_structure_outputs <- function(summary_table, model_results, output_r
   xlsx_path <- file.path(workbook_dir, "model_structure_comparison_ThreeClimateModels_OptimalLag_Comparison.xlsx")
   docx_path <- file.path(doc_dir, "model_structure_comparison_ThreeClimateModels_OptimalLag_Comparison.docx")
   manifest_path <- file.path(metadata_dir, "model_structure_comparison_run_manifest.csv")
-  readme_path <- file.path(output_root, "README.md")
 
   write.csv(summary_table, csv_path, row.names = FALSE)
 
   wb <- createWorkbook()
   addWorksheet(wb, "Summary")
-  addWorksheet(wb, "README")
   writeData(wb, "Summary", summary_table)
-  writeData(
-    wb,
-    "README",
-    data.frame(
-      Item = c("Purpose", "Models", "Input_Path", "ModelC_Source", "Notes"),
-      Value = c(
-        "Comparison of three climate models' optimal lag structures and performance metrics for AMR resistance prediction",
-        "Model A (TMP, PREC, HUM); Model B (TMP, PREC, WET); Model C (TMP, PREC, HUM, WET)",
-        input_data_dir,
-        if (reuse_existing_modelc) existing_modelc_root else "Recomputed within this script",
-        "Best AIC, Best ED, and Best RMSE are evaluated within each AMR phenotype across the three model specifications."
-      ),
-      stringsAsFactors = FALSE
-    )
-  )
 
   manifest_rows <- list()
   for (model_key in names(model_results)) {
@@ -863,24 +802,6 @@ write_model_structure_outputs <- function(summary_table, model_results, output_r
     values = "Note: Model A includes temperature, precipitation, and relative humidity; Model B includes temperature, precipitation, and wet days; Model C includes all four climate factors. Best AIC, Best ED, and Best RMSE are indicated within each AMR phenotype across the three model specifications."
   )
   save_as_docx(ft, path = docx_path)
-
-  readme_lines <- c(
-    "# model-structure comparison summary",
-    "",
-    "This folder contains the model-specification sensitivity comparison across Models A, B, and C.",
-    "",
-    "Files:",
-    "- `01_tables/model_structure_comparison_ThreeClimateModels_OptimalLag_Comparison.csv`",
-    "- `02_workbook/model_structure_comparison_ThreeClimateModels_OptimalLag_Comparison.xlsx`",
-    "- `03_docx/model_structure_comparison_ThreeClimateModels_OptimalLag_Comparison.docx`",
-    "- `04_metadata/model_structure_comparison_run_manifest.csv`",
-    "",
-    "Model definitions:",
-    "- Model A: TMP + PREC + HUM",
-    "- Model B: TMP + PREC + WET",
-    "- Model C: TMP + PREC + HUM + WET"
-  )
-  writeLines(readme_lines, readme_path)
 
   list(
     csv = csv_path,

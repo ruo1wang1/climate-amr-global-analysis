@@ -974,37 +974,6 @@ write_xlsx(
   file.path(source_data_root, "02_workbook", "SourceData_detrended_time_series.xlsx")
 )
 
-method_note <- c(
-  "analysis of climate-AMR associations using detrended time series",
-  "",
-  "Primary model:",
-  "- Full main Model C aligned to the current historical analysis pipeline.",
-  "- Uses model_ready_inputs and public lag-selection source data for the primary historical model.",
-  "- Dynamically includes all available PLS components (3 or 4 depending on phenotype).",
-  "",
-  "Common detrending:",
-  "- Removes a shared linear year trend from logit_R and climate variables using year + country fixed effects.",
-  "- Refits the same model structure but replaces s(year) with year_factor to avoid reintroducing the common trend.",
-  "",
-  "Country-specific detrending:",
-  "- Removes within-country linear trends from logit_R and climate variables.",
-  "- Uses the same lag settings and same broad adjustment structure as the detrended sensitivity model.",
-  "",
-  "Shape diagnostics and figures:",
-  "- Response-shape comparisons are computed from raw GAMM term predictions.",
-  "- No loess or post-estimation curve smoothing is used in the robustness metrics.",
-  "- The common-detrending diagnostics figure reports pooled fixed-effects year-trend t-statistics before and after common detrending.",
-  "",
-  "Current optimal lags:",
-  paste(
-    apply(model_manifest[, c("Bacteria", "TMP_lag", "PREC_lag", "HUM_lag", "WET_lag")], 1, function(x) {
-      sprintf("%s: TMP=%s, PREC=%s, HUM=%s, WET=%s", x[1], x[2], x[3], x[4], x[5])
-    }),
-    collapse = "\n"
-  )
-)
-writeLines(method_note, file.path(output_root, "04_metadata", "README_detrending_sensitivity.txt"))
-
 cat("\n", strrep("=", 60), "\n", sep = "")
 cat("DONE\n")
 cat(output_root, "\n")
