@@ -34,7 +34,7 @@ output_base <- file.path(
   "outputs",
   "ModelC_Full",
   "projection_preparation",
-  "02_simplified_model_lag_selection_S18_S19_S20"
+  "projection_simplified_lag_selection"
 )
 
 dir.create(file.path(output_base, "01_full_results"), recursive = TRUE, showWarnings = FALSE)
@@ -220,6 +220,7 @@ perform_cv <- function(data, lag_config, k = 5) {
 }
 
 create_lag_combinations <- function(reference_lag, search_range = 1, max_lag = 3) {
+  # Projection models use a local search around the full historical Model C lag.
   temp_range <- max(1, reference_lag$TMP_lag - search_range):min(max_lag, reference_lag$TMP_lag + search_range)
   prec_range <- max(1, reference_lag$PREC_lag - search_range):min(max_lag, reference_lag$PREC_lag + search_range)
   hum_range <- max(1, reference_lag$HUM_lag - search_range):min(max_lag, reference_lag$HUM_lag + search_range)
@@ -455,7 +456,7 @@ build_s19_flextable <- function(df) {
   ft <- flextable(display_df, col_keys = names(display_df))
   ft <- add_header_row(
     ft,
-    values = c("", "ORIGINAL OPTIMAL LAG", "BEST SIMPLIFIED MODEL LAG", "PERFORMANCE COMPARISON"),
+    values = c("", "FULL MODEL LAG", "AIC-OPTIMAL PROJECTION LAG", "PERFORMANCE COMPARISON"),
     colwidths = c(1, 4, 4, 8)
   )
   ft <- set_header_labels(
@@ -682,12 +683,12 @@ write.csv(
 
 write_xlsx(
   list(
-    S18_All_Results = full_results_df,
-    S18_Top10 = s18_df,
-    S19_Comparison = s19_df,
+    All_Lag_Results = full_results_df,
+    Top_Lag_Results = s18_df,
+    Lag_Comparison = s19_df,
     Projection_Final_Lags = projection_lag_settings_df,
-    S20_Weights = s20_df,
-    S20_Derivation = weights_long
+    Climate_Weights = s20_df,
+    Weight_Derivation = weights_long
   ),
   file.path(output_base, "04_workbook", "source_data_projection_simplified_lag_selection.xlsx")
 )
@@ -732,21 +733,21 @@ s20_display <- s20_df %>%
 render_table_pdf(
   s18_display,
   file.path(output_base, "03_pdf_figure_tables", "projection_lag_validation_simplified_lag_results_figurestyle.pdf"),
-  "projection lag validation summary. Validation Results of Climate Lag Combinations for Simplified Model C",
-  "Note: Rows are ranked by AIC within each AMR phenotype. CV_RMSE is reported for the top-ranked combinations and the original main-model lag when evaluated in the simplified model."
+  "Projection lag validation summary for the simplified projection model",
+  "Note: Rows are ranked by AIC within each AMR phenotype. CV_RMSE is reported for the top-ranked combinations and the full historical Model C lag when evaluated in the simplified projection model."
 )
 
 render_table_pdf(
   s19_display,
   file.path(output_base, "03_pdf_figure_tables", "projection_lag_comparison_simplified_vs_original_lag_comparison_figurestyle.pdf"),
-  "projection lag comparison summary. Climate Lag Comparison Between Full Model C and Simplified Projection Model",
-  "Note: Delta_AIC is calculated as Original AIC minus Best Simplified AIC. Positive values indicate improved fit for the best simplified-model lag, which is the lag setting used in downstream projection modeling."
+  "Projection lag comparison between full historical Model C and the simplified projection model",
+  "Note: Delta_AIC is calculated as the AIC of the full-model lag minus the AIC of the best simplified projection lag. Positive values indicate improved fit for the lag setting used in downstream projection modeling."
 )
 
 render_table_pdf(
   s20_display,
   file.path(output_base, "03_pdf_figure_tables", "projection_climate_weight_climate_factor_weights_figurestyle.pdf"),
-  "projection climate-weight summary. Climatic Factor Weights for Different AMR Pathogens Based on Simplified GAMM Analysis",
+  "Projection climate-weight summary based on the simplified projection model",
   "Note: Final weights are normalized from F-statistic x EDF x significance-adjustment scores, then bounded to the biologically plausible interval 0.05-0.70 with renormalization."
 )
 
@@ -756,21 +757,21 @@ s20_ft <- build_s20_flextable(s20_display)
 
 save_table_docx(
   s18_ft,
-  "projection lag validation summary. Validation Results of Climate Lag Combinations for Various Bacterial AMR Strains (Model C - Four Climatic Variables Simplified Model Lag)",
-  "Note: Rows are ranked by AIC within each AMR phenotype. CV_RMSE is reported for the top-ranked combinations and for the original main-model lag when evaluated in the simplified model.",
+  "Projection lag validation summary for the simplified projection model",
+  "Note: Rows are ranked by AIC within each AMR phenotype. CV_RMSE is reported for the top-ranked combinations and for the full historical Model C lag when evaluated in the simplified projection model.",
   file.path(output_base, "03_docx_tables", "projection_lag_validation_simplified_lag_results.docx")
 )
 
 save_table_docx(
   s19_ft,
-  "projection lag comparison summary. Climate Lag Combination Comparison and Validation in Simplified Models",
-  "Note: This table compares optimal climate lag combinations and performance differences between the original GAMM model C and the simplified projection model C (with PLS components removed). Positive ΔAIC values indicate improved fit for the best simplified-model lag combination. The BEST SIMPLIFIED MODEL LAG column is the lag setting carried forward into downstream projection modeling.",
+  "Projection lag comparison between full historical Model C and the simplified projection model",
+  "Note: This table compares the full historical Model C lag combination with the AIC-optimal lag combination from the simplified projection model. Positive Delta_AIC values indicate improved fit for the simplified projection lag carried forward into downstream projection modeling.",
   file.path(output_base, "03_docx_tables", "projection_lag_comparison_simplified_vs_original_lag_comparison.docx")
 )
 
 save_table_docx(
   s20_ft,
-  "projection climate-weight summary. Climatic Factor Weights for Different AMR Pathogens Based on GAMM Analysis",
+  "Projection climate-weight summary based on the simplified projection model",
   "Note: Values represent normalized climatic-factor weights derived from the best simplified GAMM for each AMR phenotype using the rule Raw weight = F × EDF × significance adjustment, followed by bounding to the interval 0.05-0.70 and renormalization.",
   file.path(output_base, "03_docx_tables", "projection_climate_weight_climate_factor_weights.docx")
 )
@@ -778,15 +779,15 @@ save_table_docx(
 combined_doc <- read_docx()
 combined_doc <- body_add_par(combined_doc, "projection lag summaries", style = "heading 1")
 combined_doc <- body_add_par(combined_doc, "", style = "Normal")
-combined_doc <- body_add_par(combined_doc, "projection lag validation summary. Validation Results of Climate Lag Combinations for Various Bacterial AMR Strains (Model C - Four Climatic Variables Simplified Model Lag)", style = "heading 2")
+combined_doc <- body_add_par(combined_doc, "Projection lag validation summary for the simplified projection model", style = "heading 2")
 combined_doc <- body_add_flextable(combined_doc, value = paginate(s18_ft, init = TRUE, hdr_ftr = TRUE))
-combined_doc <- body_add_par(combined_doc, "Note: Rows are ranked by AIC within each AMR phenotype. CV_RMSE is reported for the top-ranked combinations and for the original main-model lag when evaluated in the simplified model.", style = "Normal")
+combined_doc <- body_add_par(combined_doc, "Note: Rows are ranked by AIC within each AMR phenotype. CV_RMSE is reported for the top-ranked combinations and for the full historical Model C lag when evaluated in the simplified projection model.", style = "Normal")
 combined_doc <- body_add_break(combined_doc)
-combined_doc <- body_add_par(combined_doc, "projection lag comparison summary. Climate Lag Combination Comparison and Validation in Simplified Models", style = "heading 2")
+combined_doc <- body_add_par(combined_doc, "Projection lag comparison between full historical Model C and the simplified projection model", style = "heading 2")
 combined_doc <- body_add_flextable(combined_doc, value = paginate(s19_ft, init = TRUE, hdr_ftr = TRUE))
-combined_doc <- body_add_par(combined_doc, "Note: This table compares optimal climate lag combinations and performance differences between the original GAMM model C and the simplified projection model C (with PLS components removed). Positive ΔAIC values indicate improved fit for the best simplified-model lag combination. The BEST SIMPLIFIED MODEL LAG column is the lag setting carried forward into downstream projection modeling.", style = "Normal")
+combined_doc <- body_add_par(combined_doc, "Note: This table compares the full historical Model C lag combination with the AIC-optimal lag combination from the simplified projection model. Positive Delta_AIC values indicate improved fit for the simplified projection lag carried forward into downstream projection modeling.", style = "Normal")
 combined_doc <- body_add_break(combined_doc)
-combined_doc <- body_add_par(combined_doc, "projection climate-weight summary. Climatic Factor Weights for Different AMR Pathogens Based on GAMM Analysis", style = "heading 2")
+combined_doc <- body_add_par(combined_doc, "Projection climate-weight summary based on the simplified projection model", style = "heading 2")
 combined_doc <- body_add_flextable(combined_doc, value = paginate(s20_ft, init = TRUE, hdr_ftr = TRUE))
 combined_doc <- body_add_par(combined_doc, "Note: Values represent normalized climatic-factor weights derived from the best simplified GAMM for each AMR phenotype using the rule Raw weight = F × EDF × significance adjustment, followed by bounding to the interval 0.05-0.70 and renormalization.", style = "Normal")
 print(combined_doc, target = file.path(output_base, "03_docx_tables", "projection_lag_summaries.docx"))
@@ -798,9 +799,9 @@ methods_lines <- c(
   "The projection-phase simplified GAMM retained the four climatic smooth terms and the same spatiotemporal structure as the full Model C, while removing all PLS components.",
   "",
   "## Lag re-selection",
-  "For each AMR phenotype, candidate lag combinations were searched within a +/-1 year window around the full-model lag combination, bounded to 1-3 years for each climatic factor. Candidate models were ranked by AIC after fitting the simplified GAMM.",
-  "The original full-model lag combination was explicitly retained in the evaluated set and its ranking within the simplified-model search space was recorded for comparison only.",
-  "Downstream projection modeling uses the AIC-optimal BEST SIMPLIFIED MODEL LAG for each AMR phenotype rather than mechanically retaining the original full-model lag.",
+  "For each AMR phenotype, projection-specific candidate lag combinations were re-estimated within a +/-1 year window around the full historical Model C lag combination, bounded to 1-3 years for each climatic factor. Candidate models were ranked by AIC after fitting the simplified projection GAMM.",
+  "The full historical Model C lag combination was explicitly retained in the evaluated set and its ranking within the simplified-model search space was recorded for comparison.",
+  "Downstream projection modeling uses the AIC-optimal simplified projection lag for each AMR phenotype rather than mechanically retaining the full historical Model C lag.",
   "",
   "## Climate factor weights",
   "Climatic factor weights were derived from the best simplified model using a pragmatic weighting rule aligned with the original methods documentation:",

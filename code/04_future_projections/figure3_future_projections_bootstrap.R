@@ -68,12 +68,12 @@ variance_decomposition_path <- file.path(
 
 lag_uncertainty_results_path <- file.path(
   revision_root,
-  "outputs",
-  "ModelC_Full",
-  "projection_preparation",
-  "02_simplified_model_lag_selection_S18_S19_S20",
-  "01_full_results",
-  "projection_lag_validation_all_simplified_lag_results.csv"
+  "data",
+  "source_data",
+  "lag_selection",
+  "projection_simplified_model_c",
+  "01_csv",
+  "projection_simplified_all_lag_results.csv"
 )
 
 projection_version_tag <- "bootstrap_constraints"
