@@ -1,8 +1,8 @@
-# Climate and antimicrobial resistance: current and projected global spatiotemporal dynamics
+# Spatiotemporal dynamics between climatic factors and antimicrobial resistance
 
 This repository contains the code, derived source-data files, and figure assets prepared for the revised manuscript:
 
-**Climate and antimicrobial resistance: current and projected global spatiotemporal dynamics**
+**Spatiotemporal dynamics between climatic factors and antimicrobial resistance**
 
 The repository has been reorganized to match the revised analytical workflow used in the current revision. It includes materials for the historical multi-country analysis, spatial-heterogeneity analyses, robustness and sensitivity analyses, and future climate-driven projection analyses.
 
