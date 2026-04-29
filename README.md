@@ -1,10 +1,10 @@
 # Spatiotemporal dynamics between climatic factors and antimicrobial resistance
 
-This repository contains the code, derived source-data files, and figure assets prepared for the revised manuscript:
+This repository contains the code, derived source-data files, and figure assets associated with the manuscript:
 
 **Spatiotemporal dynamics between climatic factors and antimicrobial resistance**
 
-The repository has been reorganized to match the revised analytical workflow used in the current revision. It includes materials for the historical multi-country analysis, spatial-heterogeneity analyses, robustness and sensitivity analyses, and future climate-driven projection analyses.
+It includes materials for the historical multi-country analysis, spatial-heterogeneity analyses, robustness and sensitivity analyses, and future climate-driven projection analyses.
 
 This repository is intended as a reproducibility-oriented analysis companion rather than as a packaged end-user software product. It provides the R scripts used for the main analytical modules, together with manuscript-oriented derived source data and figure assets. Some large upstream climate archives, internal model-ready inputs, and restricted-access surveillance inputs are not redistributed here.
 
@@ -19,15 +19,15 @@ This repository is intended as a reproducibility-oriented analysis companion rat
 - `data/source_data/`
   - Publication-oriented derived source data used for main figures and selected additional analyses.
 - `figures/`
-  - Current main-figure image files, additional figure exports, and editable figure source files.
+  - Main-figure image files, additional figure exports, and editable figure source files.
 - `docs/`
   - Release inventory and documentation related to repository preparation.
 
 ## Data-sharing scope
 
-This repository currently provides **derived, publication-oriented source data** and analysis code for reproducibility of the revised manuscript.
+This repository provides **derived, publication-oriented source data** and analysis code for reproducibility of the manuscript.
 
-It does **not** currently redistribute the full merged country-year analytical panel datasets used internally to fit the models, because these files require an additional review of data-sharing constraints, upstream source permissions, and release format. Some upstream AMR surveillance and covariate sources were obtained from public or research-access platforms with their own access conditions.
+It does **not** redistribute the full merged country-year analytical panel datasets used internally to fit the models, because these files require an additional review of data-sharing constraints, upstream source permissions, and release format. Some upstream AMR surveillance and covariate sources were obtained from public or research-access platforms with their own access conditions.
 
 Accordingly:
 
@@ -35,17 +35,7 @@ Accordingly:
 - it excludes the internal merged phenotype-level modelling panels at this stage;
 - it should be interpreted as a reproducibility-oriented code and derived-data repository rather than a redistribution point for all upstream input datasets.
 
-## Notes on the current revision
-
-During manuscript revision, the historical climate-data provenance was updated to reflect the mixed-source primary configuration used in the main historical analyses: CRU TS for annual mean temperature, total precipitation, and wet-day frequency, and ERA5 for annual mean relative humidity. A processing error affecting the temperature series for a subset of countries was also resolved, and the historical analyses, sensitivity analyses, and future projections were rerun using the revised dataset.
-
-## Planned repository updates
-
-This repository is being updated step by step to reflect the revised manuscript. The current staging package already includes:
-
-- the current code modules used for the revised historical, spatial, sensitivity, and projection analyses;
-- the curated submission source-data package for main figures and additional robustness analyses;
-- current main-figure exports and editable figure assets.
+The repository includes code modules for the historical, spatial, sensitivity, and projection analyses, together with the curated source-data package for the main figures and additional robustness analyses, and the corresponding figure exports and editable figure assets.
 
 ## System requirements
 
@@ -62,7 +52,7 @@ This repository is being updated step by step to reflect the revised manuscript.
 
 ### Software
 
-- `R 4.3.3` was used for the tested local run documented in this repository update.
+- `R 4.3.3` was used for the tested local run documented in this repository.
 - Base or recommended R components used by the scripts include `grid` and `splines`.
 - Additional R package dependencies used across the repository include:
   - `tidyverse`
