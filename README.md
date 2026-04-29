@@ -6,7 +6,7 @@ This repository contains the code, derived source-data files, and figure assets 
 
 It includes materials for the historical multi-country analysis, spatial-heterogeneity analyses, robustness and sensitivity analyses, and future climate-driven projection analyses.
 
-This repository is intended as a reproducibility-oriented analysis companion rather than as a packaged end-user software product. It provides the R scripts used for the main analytical modules, together with manuscript-oriented derived source data and figure assets. Some large upstream climate archives, internal model-ready inputs, and restricted-access surveillance inputs are not redistributed here.
+This repository is intended as a reproducibility-oriented analysis companion rather than as a packaged end-user software product. It provides the R scripts used for the main analytical modules, together with manuscript-oriented derived source data and figure assets.
 
 ## Repository structure
 
@@ -25,15 +25,7 @@ This repository is intended as a reproducibility-oriented analysis companion rat
 
 ## Data-sharing scope
 
-This repository provides **derived, publication-oriented source data** and analysis code for reproducibility of the manuscript.
-
-It does **not** redistribute the full merged country-year analytical panel datasets used internally to fit the models, because these files require an additional review of data-sharing constraints, upstream source permissions, and release format. Some upstream AMR surveillance and covariate sources were obtained from public or research-access platforms with their own access conditions.
-
-Accordingly:
-
-- the repository includes processed figure- and table-level source data suitable for public release;
-- it excludes the internal merged phenotype-level modelling panels at this stage;
-- it should be interpreted as a reproducibility-oriented code and derived-data repository rather than a redistribution point for all upstream input datasets.
+This repository provides **derived, publication-oriented source data** and analysis code for reproducibility of the manuscript. It includes processed figure- and table-level source data suitable for public release, but it does not include the full internal country-year modelling panels or all upstream input datasets used to assemble them. The repository should therefore be interpreted as a reproducibility-oriented code and derived-data repository rather than a redistribution point for all upstream inputs.
 
 The repository includes code modules for the historical, spatial, sensitivity, and projection analyses, together with the curated source-data package for the main figures and additional robustness analyses, and the corresponding figure exports and editable figure assets.
 
@@ -195,7 +187,7 @@ This repository is not a general-purpose packaged application. To adapt the work
 5. Set `CLIMATE_AMR_WORKSPACE_ROOT` if you want inputs or outputs to be resolved relative to a directory other than the repository root.
 6. Run the relevant module script with `Rscript`.
 
-Because the manuscript workflow uses model-ready analytical panels generated from multi-source surveillance, climate, and covariate preprocessing, adapting the workflow to external data may require additional preprocessing beyond what is redistributed here.
+Because the manuscript workflow uses model-ready analytical panels generated from multi-source surveillance, climate, and covariate preprocessing, adapting the workflow to external data may require additional preprocessing to match the expected input structure.
 
 ## Reproduction instructions
 
@@ -205,11 +197,7 @@ The easiest verified reproduction step is the Figure 1B demo described above.
 
 ### Broader manuscript reproduction
 
-This repository provides the code for the main analytical modules and the manuscript source-data exports. Full end-to-end reproduction of every intermediate result requires access to:
-
-- the upstream surveillance inputs described in the manuscript and Supplementary Tables S1 and S2,
-- the climate archives used to construct the model-ready country-year panels,
-- and selected large intermediate analytical inputs that are not redistributed in this repository.
+This repository provides the code for the main analytical modules and the manuscript source-data exports. Full end-to-end reproduction of every intermediate result also requires access to the surveillance and climate inputs described in the manuscript and Supplementary Tables S1 and S2, together with selected large intermediate analytical inputs that are not distributed in this repository.
 
 Within those constraints, the recommended execution order is:
 
@@ -234,7 +222,7 @@ Within those constraints, the recommended execution order is:
 
 ## Versions tested
 
-The quick-start demo in this repository update was tested with:
+The quick-start demo in this repository was tested with:
 
 - `macOS 26.1`
 - `R 4.3.3`
