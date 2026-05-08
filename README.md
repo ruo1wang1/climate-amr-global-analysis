@@ -15,7 +15,6 @@ This repository is intended as a reproducibility-oriented analysis companion rat
   - `02_spatial_heterogeneity/`: scripts for Figure 2, cluster-based spatial heterogeneity analyses, and clustering-sensitivity analyses.
   - `03_sensitivity_analyses/`: scripts for detrending, reanalysis-product comparison, covariate-robustness, model-specification, and country-effect robustness analyses.
   - `04_future_projections/`: scripts for simplified historical-model preparation, projection framework, variance decomposition, and Figure 3 generation.
-  - `05_helpers/`: auxiliary plotting and helper scripts used for source-data or additional analysis outputs.
 - `data/source_data/`
   - Publication-oriented derived source data used for main figures and selected additional analyses.
 - `figures/`
