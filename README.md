@@ -13,20 +13,18 @@ This repository is intended as a reproducibility-oriented analysis companion rat
 - `code/`
   - `01_historical_associations/`: primary historical Model C scripts, lag-selection scripts, and source-data/table-generation scripts.
   - `02_spatial_heterogeneity/`: scripts for Figure 2, cluster-based spatial heterogeneity analyses, and clustering-sensitivity analyses.
-  - `03_sensitivity_analyses/`: scripts for detrending, reanalysis-product comparison, covariate-robustness, model-specification, and country-effect robustness analyses.
+  - `03_sensitivity_analyses/`: scripts for basis-dimension, climate-variable-specification, detrending, reanalysis-product, and covariate-adjustment sensitivity analyses.
   - `04_future_projections/`: scripts for simplified historical-model preparation, projection framework, variance decomposition, and Figure 3 generation.
 - `data/source_data/`
   - Publication-oriented derived source data used for main figures and selected additional analyses.
 - `figures/`
-  - Main-figure image files, additional figure exports, and editable figure source files.
-- `docs/`
-  - Release inventory and documentation related to repository preparation.
+  - Main-figure image files.
 
 ## Data-sharing scope
 
 This repository provides **derived, publication-oriented source data** and analysis code for reproducibility of the manuscript. It includes processed figure- and table-level source data suitable for public release, but it does not include the full internal country-year modelling panels or all upstream input datasets used to assemble them. The repository should therefore be interpreted as a reproducibility-oriented code and derived-data repository rather than a redistribution point for all upstream inputs.
 
-The repository includes code modules for the historical, spatial, sensitivity, and projection analyses, together with the curated source-data package for the main figures and additional robustness analyses, and the corresponding figure exports and editable figure assets.
+The repository includes code modules for the historical, spatial, sensitivity, and projection analyses, together with the curated source-data package for the main figures and additional robustness analyses, and the corresponding main-figure image assets.
 
 ## System requirements
 
@@ -62,6 +60,8 @@ The repository includes code modules for the historical, spatial, sensitivity, a
   - `openxlsx`
   - `readxl`
   - `ggrepel`
+  - `htmltools`
+  - `pagedown`
   - `png`
   - `writexl`
   - `forcats`
@@ -70,7 +70,10 @@ The repository includes code modules for the historical, spatial, sensitivity, a
   - `extrafont`
   - `flextable`
   - `officer`
+  - `tinytex`
   - `ComplexHeatmap`
+- Selected export scripts use `pagedown` for HTML-to-PDF rendering and may require a local Chrome-, Chromium-, or Microsoft Edge-based browser.
+- Selected table-export scripts use `tinytex`; TeX-based PDF rendering may require a local TinyTeX or compatible TeX installation.
 
 ## Installation guide
 
@@ -91,8 +94,9 @@ The example below installs the main non-base dependencies used across the reposi
 cran_packages <- c(
   "tidyverse", "mgcv", "patchwork", "scales", "zoo", "gridExtra",
   "cowplot", "viridis", "kableExtra", "tidytext", "cluster", "digest",
-  "openxlsx", "readxl", "ggrepel", "png", "writexl", "forcats",
-  "RColorBrewer", "circlize", "extrafont", "flextable", "officer"
+  "openxlsx", "readxl", "ggrepel", "htmltools", "pagedown", "png",
+  "writexl", "forcats", "RColorBrewer", "circlize", "extrafont",
+  "flextable", "officer", "tinytex"
 )
 install.packages(cran_packages)
 
@@ -149,7 +153,7 @@ The script reads the provided Figure 1B source-data summary table and writes:
 
 ### Expected demo run time
 
-- The demo run was verified locally on a normal desktop computer and completed in about `2-3 seconds` after package installation.
+- The demo run was verified locally on a normal desktop computer and completed in about `20 seconds` after package installation.
 
 ## Instructions for use
 
@@ -208,16 +212,15 @@ Within those constraints, the recommended execution order is:
 6. `code/02_spatial_heterogeneity/figure2_spatial_heterogeneity_optimal_k.R`
 7. `code/02_spatial_heterogeneity/figure2_climate_zone_associations.R`
 8. `code/03_sensitivity_analyses/analysis_basis_dimension_sensitivity.R`
-9. `code/03_sensitivity_analyses/analysis_climate_specification_checks.R`
-10. `code/03_sensitivity_analyses/analysis_covariate_adjustment_robustness.R`
-11. `code/03_sensitivity_analyses/analysis_detrended_time_series.R`
-12. `code/03_sensitivity_analyses/analysis_reanalysis_product_configurations.R`
-13. `code/03_sensitivity_analyses/analysis_model_structure_comparison.R`
-14. `code/03_sensitivity_analyses/analysis_country_effect_robustness.R`
-15. `code/04_future_projections/analysis_projection_preparation.R`
-16. `code/04_future_projections/analysis_projection_lag_selection.R`
-17. `code/04_future_projections/analysis_projection_variance_decomposition.R`
-18. `code/04_future_projections/figure3_future_projections_bootstrap.R`
+9. `code/03_sensitivity_analyses/analysis_climate_variable_specification.R`
+10. `code/03_sensitivity_analyses/analysis_climate_specification_checks.R`
+11. `code/03_sensitivity_analyses/analysis_covariate_adjustment_robustness.R`
+12. `code/03_sensitivity_analyses/analysis_detrended_time_series.R`
+13. `code/03_sensitivity_analyses/analysis_reanalysis_product_configurations.R`
+14. `code/04_future_projections/analysis_projection_preparation.R`
+15. `code/04_future_projections/analysis_projection_lag_selection.R`
+16. `code/04_future_projections/analysis_projection_variance_decomposition.R`
+17. `code/04_future_projections/figure3_future_projections_bootstrap.R`
 
 ## Versions tested
 
