@@ -1,16 +1,5 @@
 #!/usr/bin/env Rscript
 
-# Core functions for Figure 1 v3.
-#
-# Scientific contract:
-#   * retain the fitted Model C definition and term-centred OR convention;
-#   * search only the observed phenotype-specific P2.5-P97.5 domain on the
-#     model-input (within-climate-zone standardized) scale;
-#   * identify internal extrema from derivative sign changes without any
-#     phenotype/exposure-specific priority score, whitelist, or target value;
-#   * use full parametric response simulation plus identical REML bam refits
-#     to assess candidate stability.
-
 suppressPackageStartupMessages({
   library(mgcv)
   library(dplyr)
