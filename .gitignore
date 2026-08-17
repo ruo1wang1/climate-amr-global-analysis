@@ -1,2 +1,7 @@
-# Ignore system-generated macOS metadata files
 .DS_Store
+.Rhistory
+.RData
+.Rproj.user/
+outputs/
+~$*
+.~lock.*#
