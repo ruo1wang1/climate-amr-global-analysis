@@ -20,7 +20,7 @@ revision_root <- Sys.getenv("CLIMATE_AMR_WORKSPACE_ROOT", unset = repo_root)
 input_csv <- file.path(
   revision_root,
   "outputs/historical_associations",
-  "figure2_spatial_heterogeneity_optimal_k",
+  "figure3_spatial_heterogeneity_optimal_k",
   "01_country_effect_tables",
   "ModelC_all_bacteria_country_level_climate_effects_with_or_ci.csv"
 )

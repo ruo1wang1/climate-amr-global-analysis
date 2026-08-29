@@ -1731,13 +1731,13 @@ combine_all_bacterial_plots <- function(paths, output_dirs) {
 
   final_path <- file.path(
     output_dirs$combined_panels,
-    "ModelC_GAMM_MainFigure1_all_bacteria_four_climate_panels.pdf"
+    "ModelC_GAMM_MainFigure2_all_bacteria_four_climate_panels.pdf"
   )
   ggsave(final_path, final_plot, width = 16, height = 16, dpi = 300)
 
   png_path <- file.path(
     output_dirs$combined_panels,
-    "ModelC_GAMM_MainFigure1_all_bacteria_four_climate_panels.png"
+    "ModelC_GAMM_MainFigure2_all_bacteria_four_climate_panels.png"
   )
   ggsave(png_path, final_plot, width = 16, height = 16, dpi = 300)
 
@@ -1770,7 +1770,7 @@ main <- function() {
   output_root <- file.path(
     revision_root,
     "outputs/historical_associations",
-    paste0("historical_associations_figure1_results", output_suffix)
+    paste0("historical_associations_figure2_results", output_suffix)
   )
 
   output_dirs <- list(

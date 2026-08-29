@@ -81,12 +81,12 @@ projection_version_tag <- "bootstrap_constraints"
 results_root <- file.path(
   revision_root,
   "outputs/historical_associations",
-  paste0("10_Figure3_FutureProjection_Simplified_", projection_version_tag)
+  paste0("10_Figure4_FutureProjection_Simplified_", projection_version_tag)
 )
 source_data_root <- file.path(
   revision_root,
   "data/source_data",
-  paste0("Figure3_ModelC_Projection_", projection_version_tag)
+  paste0("Figure4_ModelC_Projection_", projection_version_tag)
 )
 
 dir.create(file.path(results_root, "01_tables"), recursive = TRUE, showWarnings = FALSE)
@@ -2937,7 +2937,7 @@ build_method_alignment_audit <- function(parameter_manifest) {
       "Now propagated by Akaike-weighted sampling of near-optimal lag combinations; this is stronger than the original best-lag-only description and must be added to Methods documentation.",
       "Recursive stochasticity is now calibrated from historical observed-versus-fitted residual series and should be described explicitly as an empirical uncertainty calibration step.",
       "CR-Kp-specific smoothing and growth-limit controls are reasonable as a phenotype-specific stabilization treatment, but must be transparently described in Methods documentation.",
-      "Temperature-direction constraints are now applied only to phenotypes with independent Figure 2B support (CR-Ab increasing, 3GCR-Kp increasing, CR-Ec decreasing) and must be explicitly stated if retained in the main result.",
+      "Temperature-direction constraints are now applied only to phenotypes with independent Figure 3B support (CR-Ab increasing, 3GCR-Kp increasing, CR-Ec decreasing) and must be explicitly stated if retained in the main result.",
       "Global OR clipping improves robustness but should be described as a stricter numerical guardrail in Methods documentation.",
       "Support-edge log-SE regularization reduces boundary spikes without altering central response estimates and should be documented as a projection-stability safeguard."
     )
@@ -3018,9 +3018,9 @@ write_result_tables <- function(
     lag_candidates_df = projection_artifacts$lag_candidates
   )
 
-  annual_csv <- file.path(results_root, "01_tables", "Figure3A_annual_global_trajectories.csv")
-  endpoint_csv <- file.path(results_root, "01_tables", "Figure3A_2100_endpoint_labels.csv")
-  period_csv <- file.path(results_root, "01_tables", "Figure3B_period_relative_changes.csv")
+  annual_csv <- file.path(results_root, "01_tables", "Figure4A_annual_global_trajectories.csv")
+  endpoint_csv <- file.path(results_root, "01_tables", "Figure4A_2100_endpoint_labels.csv")
+  period_csv <- file.path(results_root, "01_tables", "Figure4B_period_relative_changes.csv")
   zone_annual_csv <- file.path(results_root, "01_tables", "climate_zone_annual_trajectories.csv")
   zone_period_csv <- file.path(results_root, "01_tables", "climate_zone_period_relative_changes.csv")
   gcm_annual_csv <- file.path(results_root, "01_tables", "gcm_spread_annual_trajectories.csv")
@@ -3037,8 +3037,8 @@ write_result_tables <- function(
   write.csv(bind_rows(
     central_predictions$global_model_predictions %>% mutate(trajectory_type = "central_model"),
     central_predictions$ensemble_predictions %>% mutate(trajectory_type = "central_ensemble")
-  ), file.path(results_root, "03_diagnostics", "Figure3_global_projection_predictions.csv"), row.names = FALSE)
-  write.csv(central_predictions$zone_predictions, file.path(results_root, "03_diagnostics", "Figure3_zone_projection_predictions.csv"), row.names = FALSE)
+  ), file.path(results_root, "03_diagnostics", "Figure4_global_projection_predictions.csv"), row.names = FALSE)
+  write.csv(central_predictions$zone_predictions, file.path(results_root, "03_diagnostics", "Figure4_zone_projection_predictions.csv"), row.names = FALSE)
   write.csv(projection_artifacts$effect_components, file.path(results_root, "03_diagnostics", "projection_effect_components_by_zone.csv"), row.names = FALSE)
   write.csv(projection_artifacts$recursive_parameters, file.path(results_root, "03_diagnostics", "projection_recursive_parameters.csv"), row.names = FALSE)
   write.csv(model_artifacts$weights_df, file.path(results_root, "03_diagnostics", "projection_climate_weights_used.csv"), row.names = FALSE)
@@ -3131,21 +3131,21 @@ write_result_tables <- function(
       "TRUE; CI-width and lag-ambiguity diagnostics exported to projection_uncertainty_audit_by_bacteria.csv"
     )
   )
-  write.csv(metadata_df, file.path(results_root, "05_metadata", paste0("Figure3_", tolower(projection_version_tag), "_metadata.csv")), row.names = FALSE)
+  write.csv(metadata_df, file.path(results_root, "05_metadata", paste0("Figure4_", tolower(projection_version_tag), "_metadata.csv")), row.names = FALSE)
 
   source_csv_map <- list(
-    Figure3_ModelC_Fig3A_annual_trajectories = annual_summary,
-    Figure3_ModelC_Fig3A_2100_labels = endpoint_labels,
-    Figure3_ModelC_Fig3B_period_changes = period_summary,
+    Figure4_ModelC_Fig4A_annual_trajectories = annual_summary,
+    Figure4_ModelC_Fig4A_2100_labels = endpoint_labels,
+    Figure4_ModelC_Fig4B_period_changes = period_summary,
     climate_zone_annual_trajectories = zone_annual_summary,
     climate_zone_period_bars = zone_period_summary,
     gcm_spread_annual_trajectories = gcm_annual_summary,
     gcm_spread_period_changes = gcm_period_summary,
-    Figure3_ModelC_metadata = metadata_df,
-    Figure3_ModelC_recursive_uncertainty_calibration = model_artifacts$recursive_uncertainty_df,
-    Figure3_ModelC_parameter_manifest = parameter_manifest,
-    Figure3_ModelC_method_alignment_audit = method_alignment_audit,
-    Figure3_ModelC_uncertainty_audit = uncertainty_audit
+    Figure4_ModelC_metadata = metadata_df,
+    Figure4_ModelC_recursive_uncertainty_calibration = model_artifacts$recursive_uncertainty_df,
+    Figure4_ModelC_parameter_manifest = parameter_manifest,
+    Figure4_ModelC_method_alignment_audit = method_alignment_audit,
+    Figure4_ModelC_uncertainty_audit = uncertainty_audit
   )
 
   purrr::iwalk(source_csv_map, function(df, nm) {
@@ -3153,12 +3153,12 @@ write_result_tables <- function(
   })
 
   wb <- createWorkbook()
-  addWorksheet(wb, "Figure3A_Annual")
-  writeData(wb, "Figure3A_Annual", annual_summary)
-  addWorksheet(wb, "Figure3A_2100")
-  writeData(wb, "Figure3A_2100", endpoint_labels)
-  addWorksheet(wb, "Figure3B_Period")
-  writeData(wb, "Figure3B_Period", period_summary)
+  addWorksheet(wb, "Figure4A_Annual")
+  writeData(wb, "Figure4A_Annual", annual_summary)
+  addWorksheet(wb, "Figure4A_2100")
+  writeData(wb, "Figure4A_2100", endpoint_labels)
+  addWorksheet(wb, "Figure4B_Period")
+  writeData(wb, "Figure4B_Period", period_summary)
   addWorksheet(wb, "Zone_Annual")
   writeData(wb, "Zone_Annual", zone_annual_summary)
   addWorksheet(wb, "Zone_Bars")
@@ -3190,12 +3190,12 @@ write_result_tables <- function(
 
   saveWorkbook(
     wb,
-    file.path(results_root, "04_workbook", paste0("Figure3_ModelC_Projection_", projection_version_tag, "_source_tables.xlsx")),
+    file.path(results_root, "04_workbook", paste0("Figure4_ModelC_Projection_", projection_version_tag, "_source_tables.xlsx")),
     overwrite = TRUE
   )
   saveWorkbook(
     wb,
-    file.path(source_data_root, "02_workbook", paste0("SourceData_Figure3_ModelC_Projection_", projection_version_tag, ".xlsx")),
+    file.path(source_data_root, "02_workbook", paste0("SourceData_Figure4_ModelC_Projection_", projection_version_tag, ".xlsx")),
     overwrite = TRUE
   )
 }
@@ -3217,29 +3217,29 @@ mc_outputs <- run_projection_monte_carlo(
 
 endpoint_labels <- build_endpoint_labels(mc_outputs$annual_summary)
 
-fig3a <- plot_resistance_time_trends(mc_outputs$annual_summary)
-fig3b <- plot_relative_changes_grid_with_errorbars(mc_outputs$period_summary)
+fig4a <- plot_resistance_time_trends(mc_outputs$annual_summary)
+fig4b <- plot_relative_changes_grid_with_errorbars(mc_outputs$period_summary)
 zone_barplot <- plot_climate_zone_bar_panels(mc_outputs$zone_period_summary)
-combined_figure <- fig3a / fig3b + plot_layout(heights = c(1.15, 1.0))
+combined_figure <- fig4a / fig4b + plot_layout(heights = c(1.15, 1.0))
 
 ggsave(
-  file.path(results_root, "02_figures", "Figure3A_annual_global_trajectories.pdf"),
-  fig3a,
+  file.path(results_root, "02_figures", "Figure4A_annual_global_trajectories.pdf"),
+  fig4a,
   width = model_settings$plot_settings$fig_width,
   height = model_settings$plot_settings$fig_height,
   dpi = model_settings$plot_settings$fig_dpi,
   device = cairo_pdf
 )
 ggsave(
-  file.path(results_root, "02_figures", "Figure3B_period_relative_changes.pdf"),
-  fig3b,
+  file.path(results_root, "02_figures", "Figure4B_period_relative_changes.pdf"),
+  fig4b,
   width = model_settings$plot_settings$fig_width,
   height = model_settings$plot_settings$fig_height,
   dpi = model_settings$plot_settings$fig_dpi,
   device = cairo_pdf
 )
 ggsave(
-  file.path(results_root, "02_figures", "Figure3_combined.pdf"),
+  file.path(results_root, "02_figures", "Figure4_combined.pdf"),
   combined_figure,
   width = 12,
   height = 14,
@@ -3247,7 +3247,7 @@ ggsave(
   device = cairo_pdf
 )
 ggsave(
-  file.path(results_root, "02_figures", "Figure3_combined.png"),
+  file.path(results_root, "02_figures", "Figure4_combined.png"),
   combined_figure,
   width = 12,
   height = 14,
@@ -3283,4 +3283,4 @@ write_result_tables(
   projection_artifacts = c(projection_artifacts, list(draw_parameter_summary = mc_outputs$draw_parameter_summary))
 )
 
-message(projection_version_tag, " Figure 3 projection pipeline completed: ", results_root)
+message(projection_version_tag, " Figure 4 projection pipeline completed: ", results_root)

@@ -1,4 +1,4 @@
-# Figure 3 source data
+# Figure 4 source data
 
 This folder contains the publication-style source data exported for the main future-projection figure.
 
@@ -10,4 +10,4 @@ Files in `01_csv/` include:
 - recursive-uncertainty calibration summaries
 - climate-zone and GCM-spread companion exports
 
-The workbook in `02_workbook/` bundles the Figure 3 source-data tables.
+The workbook in `02_workbook/` bundles the Figure 4 source-data tables.

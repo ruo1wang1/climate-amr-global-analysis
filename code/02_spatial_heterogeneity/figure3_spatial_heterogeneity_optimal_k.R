@@ -1,5 +1,5 @@
 ###############################################################################
-# Figure 2 spatial-heterogeneity workflow with optimal-k clustering
+# Figure 3 spatial-heterogeneity workflow with optimal-k clustering
 ###############################################################################
 
 suppressPackageStartupMessages({
@@ -344,29 +344,29 @@ source_main_script <- file.path(code_dir, "01_historical_associations", "analysi
 existing_results_root <- file.path(
   revision_root,
   "outputs/historical_associations",
-  "figure2_spatial_heterogeneity"
+  "figure3_spatial_heterogeneity"
 )
 
 results_root <- file.path(
   revision_root,
   "outputs/historical_associations",
-  "figure2_spatial_heterogeneity_optimal_k"
+  "figure3_spatial_heterogeneity_optimal_k"
 )
 
 results_dirs <- list(
   model_summaries = file.path(results_root, "00_model_summaries"),
   country_effects = file.path(results_root, "01_country_effect_tables"),
-  fig2a = file.path(results_root, "02_Figure2A_spatial_heatmaps"),
-  fig2b = file.path(results_root, "03_Figure2B_climate_zone_associations"),
-  fig2c = file.path(results_root, "04_Figure2C_gap_statistic_selection"),
-  combined = file.path(results_root, "05_combined_figure2"),
+  fig3a = file.path(results_root, "02_Figure3A_spatial_heatmaps"),
+  fig3b = file.path(results_root, "03_Figure3B_climate_zone_associations"),
+  fig3c = file.path(results_root, "04_Figure3C_gap_statistic_selection"),
+  combined = file.path(results_root, "05_combined_figure3"),
   metadata = file.path(results_root, "06_metadata")
 )
 
 source_data_root <- file.path(
   revision_root,
   "data/source_data",
-  "figure2_spatial_heterogeneity_profiles"
+  "figure3_spatial_heterogeneity_profiles"
 )
 
 source_data_dirs <- list(
@@ -377,12 +377,12 @@ source_data_dirs <- list(
 invisible(lapply(c(results_dirs, source_data_dirs), dir.create, recursive = TRUE, showWarnings = FALSE))
 
 force_refit <- identical(tolower(Sys.getenv("MODELC_FORCE_REFIT", unset = "0")), "1")
-cluster_distance_method <- trimws(Sys.getenv("MODELC_FIG2_CLUSTER_DISTANCE", unset = "euclidean"))
-cluster_linkage_method <- trimws(Sys.getenv("MODELC_FIG2_CLUSTER_METHOD", unset = "complete"))
-cluster_min_k <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG2_CLUSTER_MIN_K", unset = "2")))
-cluster_max_k <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG2_CLUSTER_MAX_K", unset = "10")))
-gap_b <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG2_GAP_B", unset = "50")))
-kmeans_nstart <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG2_KMEANS_NSTART", unset = "25")))
+cluster_distance_method <- trimws(Sys.getenv("MODELC_FIG3_CLUSTER_DISTANCE", unset = "euclidean"))
+cluster_linkage_method <- trimws(Sys.getenv("MODELC_FIG3_CLUSTER_METHOD", unset = "complete"))
+cluster_min_k <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG3_CLUSTER_MIN_K", unset = "2")))
+cluster_max_k <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG3_CLUSTER_MAX_K", unset = "10")))
+gap_b <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG3_GAP_B", unset = "50")))
+kmeans_nstart <- suppressWarnings(as.integer(Sys.getenv("MODELC_FIG3_KMEANS_NSTART", unset = "25")))
 run_only <- trimws(Sys.getenv("MODELC_RUN_ONLY", unset = ""))
 
 if (!cluster_distance_method %in% c("euclidean", "maximum", "manhattan", "canberra", "binary", "minkowski")) {
@@ -429,13 +429,13 @@ region_colors <- c(
 existing_input_candidates <- list(
   legacy_results_aliases = c(
     file.path(existing_results_root, "01_country_effect_tables", "ModelC_all_bacteria_country_level_climate_effects_with_or_ci.csv"),
-    file.path(existing_results_root, "03_Figure2B_climate_zone_associations", "ModelC_Figure2B_climate_zone_effects.csv"),
-    file.path(existing_results_root, "05_metadata", "ModelC_Figure2_model_metadata.csv")
+    file.path(existing_results_root, "03_Figure3B_climate_zone_associations", "ModelC_Figure3B_climate_zone_effects.csv"),
+    file.path(existing_results_root, "05_metadata", "ModelC_Figure3_model_metadata.csv")
   ),
   current_optimal_k = c(
     file.path(results_dirs$country_effects, "ModelC_all_bacteria_country_level_climate_effects_with_or_ci.csv"),
-    file.path(results_dirs$fig2b, "ModelC_Figure2B_climate_zone_effects.csv"),
-    file.path(results_dirs$metadata, "ModelC_Figure2_model_metadata.csv")
+    file.path(results_dirs$fig3b, "ModelC_Figure3B_climate_zone_effects.csv"),
+    file.path(results_dirs$metadata, "ModelC_Figure3_model_metadata.csv")
   )
 )
 
@@ -445,7 +445,7 @@ if (!force_refit) {
     candidate_paths <- existing_input_candidates[[candidate_name]]
     if (all(file.exists(candidate_paths))) {
       selected_existing_inputs <- candidate_paths
-      message("Reusing existing country-level inputs for the optimal-k Figure 2 suite from: ", candidate_name)
+      message("Reusing existing country-level inputs for the optimal-k Figure 3 suite from: ", candidate_name)
       break
     }
   }
@@ -472,7 +472,7 @@ if (!is.null(selected_existing_inputs)) {
     bacteria_specs <- Filter(function(x) x$code %in% run_only_values || x$title %in% run_only_values, bacteria_specs)
   }
   if (length(bacteria_specs) == 0) {
-    stop("No bacteria matched MODELC_RUN_ONLY for optimal-k Figure 2 analysis.", call. = FALSE)
+    stop("No bacteria matched MODELC_RUN_ONLY for optimal-k Figure 3 analysis.", call. = FALSE)
   }
 
   country_effect_list <- list()
@@ -530,13 +530,13 @@ write.csv(
 
 write.csv(
   all_climate_zone_effects,
-  file.path(results_dirs$fig2b, "ModelC_Figure2B_climate_zone_effects.csv"),
+  file.path(results_dirs$fig3b, "ModelC_Figure3B_climate_zone_effects.csv"),
   row.names = FALSE
 )
 
 write.csv(
   all_model_metadata,
-  file.path(results_dirs$metadata, "ModelC_Figure2_model_metadata.csv"),
+  file.path(results_dirs$metadata, "ModelC_Figure3_model_metadata.csv"),
   row.names = FALSE
 )
 
@@ -624,19 +624,19 @@ all_gap_plot_data <- bind_rows(gap_plot_tables) %>%
 
 write.csv(
   all_cluster_assignments,
-  file.path(results_dirs$fig2a, "ModelC_Figure2A_country_cluster_assignments_optimal_k.csv"),
+  file.path(results_dirs$fig3a, "ModelC_Figure3A_country_cluster_assignments_optimal_k.csv"),
   row.names = FALSE
 )
 
 write.csv(
   all_optimal_k_summary,
-  file.path(results_dirs$fig2a, "ModelC_Figure2A_optimal_k_summary.csv"),
+  file.path(results_dirs$fig3a, "ModelC_Figure3A_optimal_k_summary.csv"),
   row.names = FALSE
 )
 
 write.csv(
   all_gap_plot_data,
-  file.path(results_dirs$fig2c, "ModelC_Figure2C_gap_statistic_plot_data.csv"),
+  file.path(results_dirs$fig3c, "ModelC_Figure3C_gap_statistic_plot_data.csv"),
   row.names = FALSE
 )
 
@@ -681,8 +681,8 @@ for (factor_name in climate_factor_order) {
     rel_widths = c(1, 0.16)
   )
   factor_prefix <- file.path(
-    results_dirs$fig2a,
-    paste0("ModelC_Figure2A_", sanitize_file_stem(factor_name), "_spatial_heatmap_optimalk_nature")
+    results_dirs$fig3a,
+    paste0("ModelC_Figure3A_", sanitize_file_stem(factor_name), "_spatial_heatmap_optimalk_nature")
   )
 
   ggsave(
@@ -702,37 +702,37 @@ for (factor_name in climate_factor_order) {
   )
 }
 
-figure2a_panel_grid <- cowplot::plot_grid(
+figure3a_panel_grid <- cowplot::plot_grid(
   plotlist = heatmap_panels,
   nrow = 1,
   align = "h",
   rel_widths = c(1.02, 0.95, 0.98, 1.02)
 )
 
-figure2a_combined <- cowplot::plot_grid(
+figure3a_combined <- cowplot::plot_grid(
   legend_row,
-  figure2a_panel_grid,
+  figure3a_panel_grid,
   ncol = 1,
   rel_heights = c(0.10, 1)
 )
 
 ggsave(
-  file.path(results_dirs$fig2a, "ModelC_Figure2A_spatial_heterogeneity_heatmaps_optimal_k.pdf"),
-  plot = figure2a_combined,
+  file.path(results_dirs$fig3a, "ModelC_Figure3A_spatial_heterogeneity_heatmaps_optimal_k.pdf"),
+  plot = figure3a_combined,
   width = 10,
   height = 14,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$fig2a, "ModelC_Figure2A_spatial_heterogeneity_heatmaps_optimal_k.png"),
-  plot = figure2a_combined,
+  file.path(results_dirs$fig3a, "ModelC_Figure3A_spatial_heterogeneity_heatmaps_optimal_k.png"),
+  plot = figure3a_combined,
   width = 10,
   height = 14,
   dpi = 320
 )
 
-fig2b_plot_data <- all_climate_zone_effects %>%
+fig3b_plot_data <- all_climate_zone_effects %>%
   mutate(
     OR = as.numeric(OR),
     OR_lower = as.numeric(CI_Lower),
@@ -741,7 +741,7 @@ fig2b_plot_data <- all_climate_zone_effects %>%
     label = sprintf("%.2f (%.2f-%.2f)%s", OR, OR_lower, OR_upper, significance)
   )
 
-figure2b_plot <- ggplot(fig2b_plot_data, aes(x = Climate_Zone, y = OR, fill = Climate_Zone)) +
+figure3b_plot <- ggplot(fig3b_plot_data, aes(x = Climate_Zone, y = OR, fill = Climate_Zone)) +
   geom_col(position = position_dodge(width = 0.6), width = 0.48) +
   geom_errorbar(aes(ymin = OR_lower, ymax = OR_upper), width = 0.12, linewidth = 0.45) +
   geom_hline(yintercept = 1, linetype = "dashed", color = "gray55", linewidth = 0.5) +
@@ -752,7 +752,7 @@ figure2b_plot <- ggplot(fig2b_plot_data, aes(x = Climate_Zone, y = OR, fill = Cl
     ),
     size = 2.6,
     hjust = 0.5,
-    vjust = ifelse(fig2b_plot_data$OR >= 1, 0, 1)
+    vjust = ifelse(fig3b_plot_data$OR >= 1, 0, 1)
   ) +
   scale_y_log10(
     breaks = c(0.25, 0.5, 1, 2, 4, 8),
@@ -765,7 +765,7 @@ figure2b_plot <- ggplot(fig2b_plot_data, aes(x = Climate_Zone, y = OR, fill = Cl
     x = "Climate Zone",
     y = "Odds Ratio (OR)",
     fill = "Climate Zone",
-    title = "Figure 2B. Climate zone associations with AMR strains"
+    title = "Figure 3B. Climate zone associations with AMR strains"
   ) +
   theme_bw(base_size = 10) +
   theme(
@@ -785,22 +785,22 @@ figure2b_plot <- ggplot(fig2b_plot_data, aes(x = Climate_Zone, y = OR, fill = Cl
   )
 
 ggsave(
-  file.path(results_dirs$fig2b, "ModelC_Figure2B_climate_zone_associations_optimal_k.pdf"),
-  plot = figure2b_plot,
+  file.path(results_dirs$fig3b, "ModelC_Figure3B_climate_zone_associations_optimal_k.pdf"),
+  plot = figure3b_plot,
   width = 12,
   height = 4.8,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$fig2b, "ModelC_Figure2B_climate_zone_associations_optimal_k.png"),
-  plot = figure2b_plot,
+  file.path(results_dirs$fig3b, "ModelC_Figure3B_climate_zone_associations_optimal_k.png"),
+  plot = figure3b_plot,
   width = 12,
   height = 4.8,
   dpi = 320
 )
 
-fig2c_label_data <- all_optimal_k_summary %>%
+fig3c_label_data <- all_optimal_k_summary %>%
   left_join(
     all_gap_plot_data %>%
       group_by(Climate_Factor) %>%
@@ -811,10 +811,10 @@ fig2c_label_data <- all_optimal_k_summary %>%
     by = "Climate_Factor"
   )
 
-fig2c_selected_points <- all_gap_plot_data %>%
+fig3c_selected_points <- all_gap_plot_data %>%
   filter(Selected)
 
-figure2c_plot <- ggplot(
+figure3c_plot <- ggplot(
   all_gap_plot_data,
   aes(x = k, y = gap, group = 1)
 ) +
@@ -832,7 +832,7 @@ figure2c_plot <- ggplot(
   geom_line(aes(color = Climate_Factor), linewidth = 0.8) +
   geom_point(aes(color = Climate_Factor), size = 2.2) +
   geom_point(
-    data = fig2c_selected_points,
+    data = fig3c_selected_points,
     aes(x = k, y = gap),
     inherit.aes = FALSE,
     shape = 21,
@@ -842,14 +842,14 @@ figure2c_plot <- ggplot(
     color = "black"
   ) +
   geom_vline(
-    data = fig2c_label_data,
+    data = fig3c_label_data,
     aes(xintercept = Optimal_K),
     linetype = "dashed",
     color = "grey45",
     linewidth = 0.45
   ) +
   geom_label(
-    data = fig2c_label_data,
+    data = fig3c_label_data,
     aes(x = Optimal_K, y = label_y, label = paste0("k=", Optimal_K)),
     inherit.aes = FALSE,
     size = 3.1,
@@ -866,7 +866,7 @@ figure2c_plot <- ggplot(
   labs(
     x = "Candidate cluster number (k)",
     y = "Gap statistic",
-    title = "Figure 2C. Bounded gap-statistic selection of optimal cluster number",
+    title = "Figure 3C. Bounded gap-statistic selection of optimal cluster number",
     subtitle = sprintf(
       "Points and ribbons show clusGap estimate ± 1 SE; selection rule = restricted maxSE over k = %d to %d",
       cluster_min_k,
@@ -888,93 +888,93 @@ figure2c_plot <- ggplot(
   )
 
 ggsave(
-  file.path(results_dirs$fig2c, "ModelC_Figure2C_gap_statistic_selection.pdf"),
-  plot = figure2c_plot,
+  file.path(results_dirs$fig3c, "ModelC_Figure3C_gap_statistic_selection.pdf"),
+  plot = figure3c_plot,
   width = 10.5,
   height = 6.8,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$fig2c, "ModelC_Figure2C_gap_statistic_selection.png"),
-  plot = figure2c_plot,
+  file.path(results_dirs$fig3c, "ModelC_Figure3C_gap_statistic_selection.png"),
+  plot = figure3c_plot,
   width = 10.5,
   height = 6.8,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$fig2b, "ModelC_Figure2B_climate_zone_associations_optimal_k_singlepanel.pdf"),
-  plot = figure2b_plot,
+  file.path(results_dirs$fig3b, "ModelC_Figure3B_climate_zone_associations_optimal_k_singlepanel.pdf"),
+  plot = figure3b_plot,
   width = 11.2,
   height = 4.4,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$fig2b, "ModelC_Figure2B_climate_zone_associations_optimal_k_singlepanel.png"),
-  plot = figure2b_plot,
+  file.path(results_dirs$fig3b, "ModelC_Figure3B_climate_zone_associations_optimal_k_singlepanel.png"),
+  plot = figure3b_plot,
   width = 11.2,
   height = 4.4,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$fig2c, "ModelC_Figure2C_gap_statistic_selection_singlepanel.pdf"),
-  plot = figure2c_plot,
+  file.path(results_dirs$fig3c, "ModelC_Figure3C_gap_statistic_selection_singlepanel.pdf"),
+  plot = figure3c_plot,
   width = 8.6,
   height = 6.4,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$fig2c, "ModelC_Figure2C_gap_statistic_selection_singlepanel.png"),
-  plot = figure2c_plot,
+  file.path(results_dirs$fig3c, "ModelC_Figure3C_gap_statistic_selection_singlepanel.png"),
+  plot = figure3c_plot,
   width = 8.6,
   height = 6.4,
   dpi = 320
 )
 
-figure2a_panel <- cowplot::ggdraw() +
-  cowplot::draw_plot(figure2a_combined) +
+figure3a_panel <- cowplot::ggdraw() +
+  cowplot::draw_plot(figure3a_combined) +
   cowplot::draw_label("A", x = 0.01, y = 0.99, hjust = 0, vjust = 1, size = 26, fontface = "bold")
 
-figure2b_panel <- cowplot::ggdraw() +
-  cowplot::draw_plot(figure2b_plot) +
+figure3b_panel <- cowplot::ggdraw() +
+  cowplot::draw_plot(figure3b_plot) +
   cowplot::draw_label("B", x = 0.01, y = 0.99, hjust = 0, vjust = 1, size = 22, fontface = "bold")
 
-figure2c_panel <- cowplot::ggdraw() +
-  cowplot::draw_plot(figure2c_plot) +
+figure3c_panel <- cowplot::ggdraw() +
+  cowplot::draw_plot(figure3c_plot) +
   cowplot::draw_label("C", x = 0.01, y = 0.99, hjust = 0, vjust = 1, size = 22, fontface = "bold")
 
-figure2_combined <- cowplot::plot_grid(
-  figure2a_panel,
-  figure2b_panel,
+figure3_combined <- cowplot::plot_grid(
+  figure3a_panel,
+  figure3b_panel,
   ncol = 1,
   rel_heights = c(1.22, 0.78)
 )
 
 ggsave(
-  file.path(results_dirs$combined, "ModelC_Figure2_spatial_heterogeneity_panels_optimal_k.pdf"),
-  plot = figure2_combined,
+  file.path(results_dirs$combined, "ModelC_Figure3_spatial_heterogeneity_panels_optimal_k.pdf"),
+  plot = figure3_combined,
   width = 18,
   height = 24,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$combined, "ModelC_Figure2_spatial_heterogeneity_panels_optimal_k.png"),
-  plot = figure2_combined,
+  file.path(results_dirs$combined, "ModelC_Figure3_spatial_heterogeneity_panels_optimal_k.png"),
+  plot = figure3_combined,
   width = 18,
   height = 24,
   dpi = 320
 )
 
-figure2_combined_with_gap <- cowplot::plot_grid(
-  figure2a_panel,
+figure3_combined_with_gap <- cowplot::plot_grid(
+  figure3a_panel,
   cowplot::plot_grid(
-    figure2b_panel,
-    figure2c_panel,
+    figure3b_panel,
+    figure3c_panel,
     ncol = 2,
     rel_widths = c(1.15, 1)
   ),
@@ -983,16 +983,16 @@ figure2_combined_with_gap <- cowplot::plot_grid(
 )
 
 ggsave(
-  file.path(results_dirs$combined, "ModelC_Figure2_spatial_heterogeneity_panels_with_gap_optimal_k.pdf"),
-  plot = figure2_combined_with_gap,
+  file.path(results_dirs$combined, "ModelC_Figure3_spatial_heterogeneity_panels_with_gap_optimal_k.pdf"),
+  plot = figure3_combined_with_gap,
   width = 18,
   height = 26,
   dpi = 320
 )
 
 ggsave(
-  file.path(results_dirs$combined, "ModelC_Figure2_spatial_heterogeneity_panels_with_gap_optimal_k.png"),
-  plot = figure2_combined_with_gap,
+  file.path(results_dirs$combined, "ModelC_Figure3_spatial_heterogeneity_panels_with_gap_optimal_k.png"),
+  plot = figure3_combined_with_gap,
   width = 18,
   height = 26,
   dpi = 320
@@ -1000,60 +1000,60 @@ ggsave(
 
 write.csv(
   all_country_effects,
-  file.path(source_data_dirs$csv, "Figure2_ModelC_Fig2A_country_effects.csv"),
+  file.path(source_data_dirs$csv, "Figure3_ModelC_Fig3A_country_effects.csv"),
   row.names = FALSE
 )
 
 write.csv(
   all_cluster_assignments,
-  file.path(source_data_dirs$csv, "Figure2_ModelC_Fig2A_optimal_k_cluster_assignments.csv"),
+  file.path(source_data_dirs$csv, "Figure3_ModelC_Fig3A_optimal_k_cluster_assignments.csv"),
   row.names = FALSE
 )
 
 write.csv(
   all_optimal_k_summary,
-  file.path(source_data_dirs$csv, "Figure2_ModelC_Fig2A_optimal_k_summary.csv"),
+  file.path(source_data_dirs$csv, "Figure3_ModelC_Fig3A_optimal_k_summary.csv"),
   row.names = FALSE
 )
 
 write.csv(
-  fig2b_plot_data,
-  file.path(source_data_dirs$csv, "Figure2_ModelC_Fig2B_climate_zone_effects.csv"),
+  fig3b_plot_data,
+  file.path(source_data_dirs$csv, "Figure3_ModelC_Fig3B_climate_zone_effects.csv"),
   row.names = FALSE
 )
 
 write.csv(
   all_gap_plot_data,
-  file.path(source_data_dirs$csv, "Figure2_ModelC_Fig2C_gap_statistics.csv"),
+  file.path(source_data_dirs$csv, "Figure3_ModelC_Fig3C_gap_statistics.csv"),
   row.names = FALSE
 )
 
 write.csv(
   all_model_metadata,
-  file.path(source_data_dirs$csv, "Figure2_ModelC_metadata.csv"),
+  file.path(source_data_dirs$csv, "Figure3_ModelC_metadata.csv"),
   row.names = FALSE
 )
 
 workbook <- openxlsx::createWorkbook()
-openxlsx::addWorksheet(workbook, "Fig2A_country_effects")
-openxlsx::writeData(workbook, "Fig2A_country_effects", all_country_effects)
-openxlsx::addWorksheet(workbook, "Fig2A_cluster_assignments")
-openxlsx::writeData(workbook, "Fig2A_cluster_assignments", all_cluster_assignments)
-openxlsx::addWorksheet(workbook, "Fig2A_optimal_k_summary")
-openxlsx::writeData(workbook, "Fig2A_optimal_k_summary", all_optimal_k_summary)
-openxlsx::addWorksheet(workbook, "Fig2B_climate_zone_effects")
-openxlsx::writeData(workbook, "Fig2B_climate_zone_effects", fig2b_plot_data)
-openxlsx::addWorksheet(workbook, "Fig2C_gap_statistics")
-openxlsx::writeData(workbook, "Fig2C_gap_statistics", all_gap_plot_data)
+openxlsx::addWorksheet(workbook, "Fig3A_country_effects")
+openxlsx::writeData(workbook, "Fig3A_country_effects", all_country_effects)
+openxlsx::addWorksheet(workbook, "Fig3A_cluster_assignments")
+openxlsx::writeData(workbook, "Fig3A_cluster_assignments", all_cluster_assignments)
+openxlsx::addWorksheet(workbook, "Fig3A_optimal_k_summary")
+openxlsx::writeData(workbook, "Fig3A_optimal_k_summary", all_optimal_k_summary)
+openxlsx::addWorksheet(workbook, "Fig3B_climate_zone_effects")
+openxlsx::writeData(workbook, "Fig3B_climate_zone_effects", fig3b_plot_data)
+openxlsx::addWorksheet(workbook, "Fig3C_gap_statistics")
+openxlsx::writeData(workbook, "Fig3C_gap_statistics", all_gap_plot_data)
 openxlsx::addWorksheet(workbook, "Metadata")
 openxlsx::writeData(workbook, "Metadata", all_model_metadata)
 
 openxlsx::saveWorkbook(
   workbook,
-  file.path(source_data_dirs$workbook, "SourceData_figure2_spatial_heterogeneity_profiles.xlsx"),
+  file.path(source_data_dirs$workbook, "SourceData_figure3_spatial_heterogeneity_profiles.xlsx"),
   overwrite = TRUE
 )
 
-message("Optimal-k Figure 2 suite completed successfully.")
+message("Optimal-k Figure 3 suite completed successfully.")
 message("Results root: ", results_root)
 message("Source data root: ", source_data_root)

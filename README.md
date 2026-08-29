@@ -4,17 +4,18 @@ This repository contains the code, derived source-data files, and figure assets 
 
 **Spatiotemporal dynamics between climatic factors and antimicrobial resistance**
 
-It includes materials for the historical multi-country analysis, spatial-heterogeneity analyses, multiple-testing control, observation- and country-level influence analyses, other sensitivity analyses, and future climate-driven projection analyses.
+It includes materials for the descriptive global landscape, historical multi-country analysis, spatial-heterogeneity analyses, sensitivity analyses and future climate-driven projections.
 
 This repository is intended as a reproducibility-oriented analysis companion rather than as a packaged end-user software product. It provides the R scripts used for the main analytical modules, together with manuscript-oriented derived source data and figure assets.
 
 ## Repository structure
 
 - `code/`
-  - `01_historical_associations/`: primary historical Model C scripts, lag selection, Figure 1 turning-point analysis, observation-level influence diagnostics and source-data checks.
-  - `02_spatial_heterogeneity/`: scripts for Figure 2, cluster-based spatial heterogeneity analyses, and clustering-sensitivity analyses.
+  - `00_descriptive_landscape/`: Figure 1 global geographical and temporal summaries.
+  - `01_historical_associations/`: primary historical Model C scripts, lag selection, Figure 2 turning-point analysis, observation-level influence diagnostics and source-data checks.
+  - `02_spatial_heterogeneity/`: scripts for Figure 3, cluster-based spatial heterogeneity analyses, and clustering-sensitivity analyses.
   - `03_sensitivity_analyses/`: scripts for BH–FDR control, leave-one-country-out refitting and summaries, basis-dimension, climate-variable-specification, detrending, reanalysis-product and covariate-adjustment analyses.
-  - `04_future_projections/`: scripts for simplified historical-model preparation, projection framework, variance decomposition, and Figure 3 generation.
+  - `04_future_projections/`: scripts for simplified historical-model preparation, projection framework, variance decomposition, and Figure 4 generation.
 - `data/source_data/`
   - Publication-oriented derived source data used for main figures and selected additional analyses.
 - `figures/`
@@ -22,9 +23,9 @@ This repository is intended as a reproducibility-oriented analysis companion rat
 
 ## Data-sharing scope
 
-This repository provides **derived, publication-oriented source data** and analysis code for reproducibility of the manuscript. It includes processed figure- and table-level source data suitable for public release, but it does not include the full internal country-year modelling panels or all upstream input datasets used to assemble them. The repository should therefore be interpreted as a reproducibility-oriented code and derived-data repository rather than a redistribution point for all upstream inputs.
+This repository provides **derived, publication-oriented source data** and analysis code for reproducibility of the manuscript. It includes selected processed figure- and table-level source data suitable for public release, but it does not distribute the Figure 1 country-year input, the full internal modelling panels or all upstream datasets. The repository should therefore be interpreted as a reproducibility-oriented code and derived-data repository rather than a redistribution point for upstream inputs.
 
-The repository includes code modules for the historical, spatial, sensitivity and projection analyses, together with curated derived source data and the three main-figure image assets. Supplementary analyses are represented by code and derived source data rather than duplicated figure or table files.
+The repository includes code modules for the descriptive, historical, spatial, sensitivity and projection analyses, together with curated derived source data and four main-figure image assets. Supplementary analyses are represented by code and derived source data rather than duplicated figure or table files.
 
 ## System requirements
 
@@ -47,6 +48,7 @@ The repository includes code modules for the historical, spatial, sensitivity an
   - `tidyverse`
   - `mgcv`
   - `ggplot2`
+  - `ggh4x`
   - `patchwork`
   - `scales`
   - `zoo`
@@ -65,6 +67,9 @@ The repository includes code modules for the historical, spatial, sensitivity an
   - `png`
   - `svglite`
   - `ragg`
+  - `sf`
+  - `rnaturalearth`
+  - `systemfonts`
   - `pdftools`
   - `writexl`
   - `forcats`
@@ -95,10 +100,10 @@ The example below installs the main non-base dependencies used across the reposi
 
 ```r
 cran_packages <- c(
-  "tidyverse", "mgcv", "patchwork", "scales", "zoo", "gridExtra",
+  "tidyverse", "mgcv", "ggh4x", "patchwork", "scales", "zoo", "gridExtra",
   "cowplot", "viridis", "kableExtra", "tidytext", "cluster", "digest",
   "openxlsx", "readxl", "ggrepel", "htmltools", "pagedown", "png",
-  "svglite", "ragg", "pdftools",
+  "svglite", "ragg", "pdftools", "sf", "rnaturalearth", "systemfonts",
   "writexl", "forcats", "RColorBrewer", "circlize", "extrafont",
   "flextable", "officer", "tinytex"
 )
@@ -124,12 +129,16 @@ Most scripts detect the repository root automatically. If needed, the following 
   - Overrides the CMIP6 archive path for projection scripts.
 - `CLIMATE_AMR_WET_DAYS_INPUT`
   - Overrides the yearly wet-days panel path for projection scripts.
-- `FIGURE1_INPUT_ROOT`
-  - Points the Figure 1 workflow to the fitted models, model-ready panels and required analysis inputs.
+- `FIGURE1_INPUT_FILE`
+  - Points the Figure 1 workflow to the local country-year input CSV; this input is not distributed in the repository.
 - `FIGURE1_OUTPUT_ROOT`
   - Overrides the repository-local Figure 1 output directory.
+- `FIGURE2_INPUT_ROOT`
+  - Points the Figure 2 workflow to the fitted models, model-ready panels and required analysis inputs.
+- `FIGURE2_OUTPUT_ROOT`
+  - Overrides the repository-local Figure 2 output directory.
 - `MODEL_C_LOCO_INPUT_ROOT`
-  - Points the full LOCO refitting workflow to the Figure 1 analysis output containing the frozen Model C objects, model-ready panels and turning-point inputs.
+  - Points the full LOCO refitting workflow to the Figure 2 analysis output containing the frozen Model C objects, model-ready panels and turning-point inputs.
 - `MODEL_C_LOCO_REFIT_OUTPUT_ROOT`
   - Overrides the output directory for the full country-deletion refits.
 - `MODEL_C_LOCO_CORES`
@@ -150,14 +159,16 @@ Most scripts detect the repository root automatically. If needed, the following 
 
 The repository is organised by analytical module:
 
-1. `code/01_historical_associations`
-   - Historical lag selection, primary GAMM fitting, Figure 1 turning-point analysis and observation-level influence diagnostics.
-2. `code/02_spatial_heterogeneity`
-   - Country-level OR profiling, clustering, and climate-zone analyses for Figure 2.
-3. `code/03_sensitivity_analyses`
+1. `code/00_descriptive_landscape`
+   - Global geographical distributions and temporal summaries for Figure 1.
+2. `code/01_historical_associations`
+   - Historical lag selection, primary GAMM fitting, Figure 2 turning-point analysis and observation-level influence diagnostics.
+3. `code/02_spatial_heterogeneity`
+   - Country-level OR profiling, clustering, and climate-zone analyses for Figure 3.
+4. `code/03_sensitivity_analyses`
    - BH–FDR control, country-level influence refitting and summaries, basis-dimension, model-specification, detrending, reanalysis-product and covariate-adjustment analyses.
-4. `code/04_future_projections`
-   - Projection preparation, lag uncertainty, variance decomposition, and Figure 3 future trajectories.
+5. `code/04_future_projections`
+   - Projection preparation, lag uncertainty, variance decomposition, and Figure 4 future trajectories.
 
 Scripts write their outputs under repository-local `outputs/` folders. Source-data folders under `data/source_data/` provide the manuscript-exported tables used for reporting and figure source data.
 
@@ -189,27 +200,30 @@ This repository provides the code for the main analytical modules and the manusc
 
 Within those constraints, the recommended execution order is:
 
-1. `code/01_historical_associations/analysis_lag_selection.R`
-2. `code/01_historical_associations/analysis_historical_associations_main_model.R`
-3. `code/01_historical_associations/figure1_turning_point_analysis.R`
-4. `code/02_spatial_heterogeneity/analysis_spatial_heterogeneity_profiles.R`
-5. `code/02_spatial_heterogeneity/figure2_spatial_heterogeneity_optimal_k.R`
-6. `code/02_spatial_heterogeneity/figure2_climate_zone_associations.R`
-7. `code/03_sensitivity_analyses/analysis_basis_dimension_sensitivity.R`
-8. `code/03_sensitivity_analyses/analysis_climate_variable_specification.R`
-9. `code/03_sensitivity_analyses/analysis_climate_specification_checks.R`
-10. `code/03_sensitivity_analyses/analysis_covariate_adjustment_robustness.R`
-11. `code/03_sensitivity_analyses/analysis_detrended_time_series.R`
-12. `code/03_sensitivity_analyses/analysis_reanalysis_product_configurations.R`
-13. `code/03_sensitivity_analyses/analysis_multiple_testing_bh_fdr.R`
-14. `code/03_sensitivity_analyses/analysis_country_level_influence_loco.R`
-15. `code/03_sensitivity_analyses/summarise_country_level_influence_loco.R`
-16. `code/04_future_projections/analysis_projection_preparation.R`
-17. `code/04_future_projections/analysis_projection_lag_selection.R`
-18. `code/04_future_projections/analysis_projection_variance_decomposition.R`
-19. `code/04_future_projections/figure3_future_projections_bootstrap.R`
+Before running Figure 1, set `FIGURE1_INPUT_FILE` to the local country-year input CSV described in the script. The workflow validates the expected rows, keys, phenotypes, countries and year range before analysis.
 
-The LOCO refitting workflow uses the phenotype-specific frozen Model C objects and model-ready country–year panels generated by the Figure 1 workflow. These inputs are supplied through `MODEL_C_LOCO_INPUT_ROOT`; the downstream summary script reads the resulting refit outputs through `MODEL_C_LOCO_SOURCE_ROOT`.
+1. `code/00_descriptive_landscape/figure1_descriptive_landscape.R`
+2. `code/01_historical_associations/analysis_lag_selection.R`
+3. `code/01_historical_associations/analysis_historical_associations_main_model.R`
+4. `code/01_historical_associations/figure2_turning_point_analysis.R`
+5. `code/02_spatial_heterogeneity/analysis_spatial_heterogeneity_profiles.R`
+6. `code/02_spatial_heterogeneity/figure3_spatial_heterogeneity_optimal_k.R`
+7. `code/02_spatial_heterogeneity/figure3_climate_zone_associations.R`
+8. `code/03_sensitivity_analyses/analysis_basis_dimension_sensitivity.R`
+9. `code/03_sensitivity_analyses/analysis_climate_variable_specification.R`
+10. `code/03_sensitivity_analyses/analysis_climate_specification_checks.R`
+11. `code/03_sensitivity_analyses/analysis_covariate_adjustment_robustness.R`
+12. `code/03_sensitivity_analyses/analysis_detrended_time_series.R`
+13. `code/03_sensitivity_analyses/analysis_reanalysis_product_configurations.R`
+14. `code/03_sensitivity_analyses/analysis_multiple_testing_bh_fdr.R`
+15. `code/03_sensitivity_analyses/analysis_country_level_influence_loco.R`
+16. `code/03_sensitivity_analyses/summarise_country_level_influence_loco.R`
+17. `code/04_future_projections/analysis_projection_preparation.R`
+18. `code/04_future_projections/analysis_projection_lag_selection.R`
+19. `code/04_future_projections/analysis_projection_variance_decomposition.R`
+20. `code/04_future_projections/figure4_future_projections_bootstrap.R`
+
+The LOCO refitting workflow uses the phenotype-specific frozen Model C objects and model-ready country–year panels generated by the Figure 2 workflow. These inputs are supplied through `MODEL_C_LOCO_INPUT_ROOT`; the downstream summary script reads the resulting refit outputs through `MODEL_C_LOCO_SOURCE_ROOT`.
 
 ## Versions tested
 

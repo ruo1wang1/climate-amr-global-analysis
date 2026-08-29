@@ -1,4 +1,4 @@
-# Figure 2 source data
+# Figure 3 source data
 
 This folder contains the publication-style source data exported for the main spatial-heterogeneity figure.
 
@@ -10,4 +10,4 @@ Files in `01_csv/` provide:
 - gap-statistic values
 - figure metadata
 
-The workbook in `02_workbook/` bundles the same Figure 2 source-data tables for inspection.
+The workbook in `02_workbook/` bundles the same Figure 3 source-data tables for inspection.

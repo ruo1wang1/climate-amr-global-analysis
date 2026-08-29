@@ -27,7 +27,7 @@ repo_root <- normalizePath(file.path(script_dir, "..", ".."), mustWork = TRUE)
 
 analysis_root <- Sys.getenv(
   "MODEL_C_LOCO_INPUT_ROOT",
-  unset = file.path(repo_root, "outputs", "historical_associations", "figure1_current")
+  unset = file.path(repo_root, "outputs", "historical_associations", "figure2_current")
 )
 output_root <- Sys.getenv(
   "MODEL_C_LOCO_REFIT_OUTPUT_ROOT",
@@ -74,7 +74,7 @@ if (length(script_arg) == 1L) {
 
 log_line("Starting Model C country-deletion analysis with ", n_cores, " worker(s).")
 source(file.path(
-  repo_root, "code", "01_historical_associations", "figure1_turning_point_core.R"
+  repo_root, "code", "01_historical_associations", "figure2_turning_point_core.R"
 ))
 v3_load_lags_cache <- v3_load_lags(
   file.path(analysis_root, "00_inputs", "bacteria_four_factors_lag_summary.csv")
@@ -171,13 +171,13 @@ if (!all(data_validation$passed)) {
 }
 
 archived_curves <- read_csv(
-  file.path(analysis_root, "03_source_data", "Figure1_termcentred_curve_source_data.csv"),
+  file.path(analysis_root, "03_source_data", "Figure2_termcentred_curve_source_data.csv"),
   show_col_types = FALSE
 )
 full_candidates <- read_csv(
   file.path(
     analysis_root, "04_tables",
-    "Figure1_all_observed_turning_points_with_1000_refit_support.csv"
+    "Figure2_all_observed_turning_points_with_1000_refit_support.csv"
   ),
   show_col_types = FALSE
 )
@@ -854,7 +854,7 @@ envelope_figure <- wrap_plots(envelope_panels, ncol = 4) +
     caption = paste0(
       "Curves are restricted to the phenotype–exposure-specific P2.5–P97.5 range. ",
       "The grey country-deletion envelope is descriptive and is not a confidence interval. ",
-      "Physical-unit axes use the same phenotype-specific temperate-zone crosswalk as Figure 1."
+      "Physical-unit axes use the same phenotype-specific temperate-zone crosswalk as Figure 2."
     ),
     theme = theme(
       plot.title = element_text(face = "bold", size = 13, family = "Arial"),
@@ -1175,10 +1175,10 @@ contract_text <- c(
   "For every phenotype, all rows from one country were removed and the complete model was re-estimated. The full-sample phenotype-exposure P2.5–P97.5 range was held fixed for every comparison.",
   "",
   "## Curve comparison",
-  "Both raw term-centred changes and shape changes are reported. Shape comparisons align each LOCO smooth to the frozen smooth at the full-sample median exposure because mgcv imposes a separate centering constraint in every refit. This alignment is diagnostic only and does not alter the term-centred primary Figure 1.",
+  "Both raw term-centred changes and shape changes are reported. Shape comparisons align each LOCO smooth to the frozen smooth at the full-sample median exposure because mgcv imposes a separate centering constraint in every refit. This alignment is diagnostic only and does not alter the term-centred primary Figure 2.",
   "",
   "## Turning-point comparison",
-  "Turning points were redetected with the same fixed geometry and EDF rules used for Figure 1 and matched to full-sample extrema by direction within 10% of the fixed P2.5–P97.5 search width. The LOCO match fraction is a deterministic deletion diagnostic, not a P value or bootstrap probability.",
+  "Turning points were redetected with the same fixed geometry and EDF rules used for Figure 2 and matched to full-sample extrema by direction within 10% of the fixed P2.5–P97.5 search width. The LOCO match fraction is a deterministic deletion diagnostic, not a P value or bootstrap probability.",
   "",
   "## Interpretation limits",
   "The country-deletion envelope is descriptive and must not be called a confidence interval. LOCO influence analysis does not replace clustered uncertainty estimation, observation-level leverage diagnostics, residual checks or external predictive validation."

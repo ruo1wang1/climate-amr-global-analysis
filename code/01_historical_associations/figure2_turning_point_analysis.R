@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-# Figure 1 turning-point analysis and observation-level influence diagnostics.
+# Figure 2 turning-point analysis and observation-level influence diagnostics.
 
 suppressPackageStartupMessages({
   library(mgcv)
@@ -25,29 +25,29 @@ script_dir <- dirname(normalizePath(script_file))
 repo_root <- normalizePath(file.path(script_dir, "..", ".."), mustWork = TRUE)
 
 input_root <- Sys.getenv(
-  "FIGURE1_INPUT_ROOT",
-  unset = file.path(repo_root, "outputs", "historical_associations", "figure1_inputs")
+  "FIGURE2_INPUT_ROOT",
+  unset = file.path(repo_root, "outputs", "historical_associations", "figure2_inputs")
 )
 analysis_input_dir <- input_root
 model_input_root <- input_root
 output_root <- Sys.getenv(
-  "FIGURE1_OUTPUT_ROOT",
-  unset = file.path(repo_root, "outputs", "historical_associations", "figure1_current")
+  "FIGURE2_OUTPUT_ROOT",
+  unset = file.path(repo_root, "outputs", "historical_associations", "figure2_current")
 )
 
-source(file.path(script_dir, "figure1_turning_point_core.R"), local = FALSE)
+source(file.path(script_dir, "figure2_turning_point_core.R"), local = FALSE)
 
 required_public_inputs <- c(
   "bacteria_four_factors_lag_summary.csv",
-  "Figure1_v3_main_figure_strict_thresholds_max2.csv",
-  "Figure1_v3_bootstrap_support_for_observed_turning_points.csv",
-  "Figure1_reference_termcentred_curve_source_data.csv"
+  "Figure2_v3_main_figure_strict_thresholds_max2.csv",
+  "Figure2_v3_bootstrap_support_for_observed_turning_points.csv",
+  "Figure2_reference_termcentred_curve_source_data.csv"
 )
 missing_public_inputs <- required_public_inputs[
   !file.exists(file.path(analysis_input_dir, required_public_inputs))
 ]
 if (length(missing_public_inputs) > 0L) {
-  stop("Missing Figure 1 analysis inputs: ", paste(missing_public_inputs, collapse = ", "), call. = FALSE)
+  stop("Missing Figure 2 analysis inputs: ", paste(missing_public_inputs, collapse = ", "), call. = FALSE)
 }
 
 required_model_inputs <- c(
@@ -59,7 +59,7 @@ missing_model_inputs <- required_model_inputs[
 ]
 if (length(missing_model_inputs) > 0L) {
   stop(
-    "Model-ready panels or fitted Model C objects are missing. Set FIGURE1_INPUT_ROOT ",
+    "Model-ready panels or fitted Model C objects are missing. Set FIGURE2_INPUT_ROOT ",
     "to a directory containing frozen_models/, model_ready_inputs/ and the required CSV inputs.",
     call. = FALSE
   )
@@ -83,7 +83,7 @@ dirs <- list(
 )
 walk(dirs, dir.create, recursive = TRUE, showWarnings = FALSE)
 
-log_file <- file.path(dirs$logs, "Figure1_threshold_ORCI_supplementary_features_v9_two_decimal_turning_point_labels_run.log")
+log_file <- file.path(dirs$logs, "Figure2_threshold_ORCI_supplementary_features_v9_two_decimal_turning_point_labels_run.log")
 log_con <- file(log_file, open = "wt")
 sink(log_con, type = "output", split = TRUE)
 sink(log_con, type = "message", append = TRUE)
@@ -93,7 +93,7 @@ on.exit({
   close(log_con)
 }, add = TRUE)
 
-cat("Figure 1 zero-cascade redraw started:", format(Sys.time()), "\n")
+cat("Figure 2 zero-cascade redraw started:", format(Sys.time()), "\n")
 cat("R:", R.version.string, "\n")
 cat("Model input root:", model_input_root, "\n")
 cat("Output:", output_root, "\n\n")
@@ -105,18 +105,18 @@ file.copy(
   overwrite = TRUE
 )
 file.copy(
-  file.path(script_dir, "figure1_turning_point_core.R"),
-  file.path(dirs$code, "figure1_turning_point_core.R"),
+  file.path(script_dir, "figure2_turning_point_core.R"),
+  file.path(dirs$code, "figure2_turning_point_core.R"),
   overwrite = TRUE
 )
 file.copy(
-  file.path(analysis_input_dir, "Figure1_v3_main_figure_strict_thresholds_max2.csv"),
-  file.path(dirs$inputs, "Figure1_v3_main_figure_strict_thresholds_max2.csv"),
+  file.path(analysis_input_dir, "Figure2_v3_main_figure_strict_thresholds_max2.csv"),
+  file.path(dirs$inputs, "Figure2_v3_main_figure_strict_thresholds_max2.csv"),
   overwrite = TRUE
 )
 file.copy(
-  file.path(analysis_input_dir, "Figure1_v3_bootstrap_support_for_observed_turning_points.csv"),
-  file.path(dirs$inputs, "Figure1_v3_bootstrap_support_for_observed_turning_points.csv"),
+  file.path(analysis_input_dir, "Figure2_v3_bootstrap_support_for_observed_turning_points.csv"),
+  file.path(dirs$inputs, "Figure2_v3_bootstrap_support_for_observed_turning_points.csv"),
   overwrite = TRUE
 )
 
@@ -154,7 +154,7 @@ model_data_qa <- map_dfr(v3_specs$phenotype, function(phenotype) {
 })
 write.csv(
   model_data_qa,
-  file.path(dirs$diagnostics, "Figure1_model_frame_exact_match_QA.csv"),
+  file.path(dirs$diagnostics, "Figure2_model_frame_exact_match_QA.csv"),
   row.names = FALSE
 )
 if (any(!model_data_qa$passed)) {
@@ -876,7 +876,7 @@ sensitivity_curve_qa <- map_dfr(v3_specs$phenotype, function(phenotype_value) {
 # Exact curve preservation against the archived source data.
 v3_curve_source <- read.csv(
   file.path(
-    analysis_input_dir, "Figure1_reference_termcentred_curve_source_data.csv"
+    analysis_input_dir, "Figure2_reference_termcentred_curve_source_data.csv"
   ),
   check.names = FALSE
 )
@@ -918,7 +918,7 @@ if (any(curve_qa$n_compared != 801L) ||
 }
 
 bootstrap_turning_points <- read.csv(
-  file.path(dirs$inputs, "Figure1_v3_bootstrap_support_for_observed_turning_points.csv"),
+  file.path(dirs$inputs, "Figure2_v3_bootstrap_support_for_observed_turning_points.csv"),
   check.names = FALSE
 ) %>%
   left_join(
@@ -2141,35 +2141,35 @@ save_pub <- function(plot, stem, width_mm, height_mm, dpi = 600) {
 
 stem_a_clean <- file.path(
   dirs$figures,
-  "Figure1a_physical_axes_support_influence_clean"
+  "Figure2a_physical_axes_support_influence_clean"
 )
 stem_a_thresholds <- file.path(
   dirs$figures,
-  "Figure1a_turning_points_termcentred_OR_95CI_with_support_symbols"
+  "Figure2a_turning_points_termcentred_OR_95CI_with_support_symbols"
 )
 stem_combined_clean <- file.path(
   dirs$figures,
-  "Figure1_physical_axes_support_influence_clean"
+  "Figure2_physical_axes_support_influence_clean"
 )
 stem_combined_thresholds <- file.path(
   dirs$figures,
-  "Figure1_turning_points_termcentred_OR_95CI_with_support_symbols"
+  "Figure2_turning_points_termcentred_OR_95CI_with_support_symbols"
 )
 stem_a_clean_no_partial_bins <- file.path(
   dirs$figures,
-  "Figure1a_physical_axes_support_clean_without_partial_residual_bins"
+  "Figure2a_physical_axes_support_clean_without_partial_residual_bins"
 )
 stem_a_thresholds_no_partial_bins <- file.path(
   dirs$figures,
-  "Figure1a_main_turning_points_ORCI_without_partial_residual_bins"
+  "Figure2a_main_turning_points_ORCI_without_partial_residual_bins"
 )
 stem_combined_clean_no_partial_bins <- file.path(
   dirs$figures,
-  "Figure1_physical_axes_support_clean_without_partial_residual_bins"
+  "Figure2_physical_axes_support_clean_without_partial_residual_bins"
 )
 stem_combined_thresholds_no_partial_bins <- file.path(
   dirs$figures,
-  "Figure1_main_turning_points_ORCI_without_partial_residual_bins"
+  "Figure2_main_turning_points_ORCI_without_partial_residual_bins"
 )
 stem_influence <- file.path(
   dirs$figures,
@@ -2181,7 +2181,7 @@ stem_sensitivity <- file.path(
 )
 
 # v9 is a focused manuscript-figure update. Companion and diagnostic graphics
-# remain available in v8; only the recommended Figure 1 is re-exported here.
+# remain available in v8; only the recommended Figure 2 is re-exported here.
 save_pub(combined_thresholds_no_partial_bins, stem_combined_thresholds_no_partial_bins, 183, 245)
 
 # Reproduce the recommended primary figure's y-axis calculation as a tabular
@@ -2265,31 +2265,31 @@ if (any(!main_x_axis_balanced_qa$passed)) {
   stop("Balanced x-axis QA failed.", call. = FALSE)
 }
 
-write.csv(curves, file.path(dirs$source, "Figure1_termcentred_curve_source_data.csv"), row.names = FALSE)
-write.csv(histograms, file.path(dirs$source, "Figure1_histogram_source_data.csv"), row.names = FALSE)
-write.csv(rug_data, file.path(dirs$source, "Figure1_rug_observations_source_data.csv"), row.names = FALSE)
-write.csv(partial_raw, file.path(dirs$source, "Figure1_adjusted_partial_residual_observations.csv"), row.names = FALSE)
-write.csv(partial_bins, file.path(dirs$source, "Figure1_adjusted_partial_residual_bins.csv"), row.names = FALSE)
-write.csv(sensitivity_curves, file.path(dirs$source, "Figure1_influence_excluded_sensitivity_curves.csv"), row.names = FALSE)
-write.csv(support, file.path(dirs$tables, "Figure1_panel_minmax_P2_5_P97_5_and_model_statistics.csv"), row.names = FALSE)
-write.csv(strict_thresholds, file.path(dirs$tables, "Figure1_v3_strict_thresholds_with_physical_crosswalk_and_local_support.csv"), row.names = FALSE)
-write.csv(display_thresholds, file.path(dirs$tables, "Figure1_displayed_all_objectively_detected_turning_points.csv"), row.names = FALSE)
-write.csv(bootstrap_turning_points, file.path(dirs$tables, "Figure1_all_observed_turning_points_with_1000_refit_support.csv"), row.names = FALSE)
-write.csv(turning_point_panel_audit, file.path(dirs$tables, "Figure1_turning_point_detection_status_for_all_24_panels.csv"), row.names = FALSE)
-write.csv(wet_days_gmax_grid_audit, file.path(dirs$diagnostics, "Figure1_wet_days_117d_GMax_grid_and_scaled_location_audit.csv"), row.names = FALSE)
-write.csv(crpa_temperature_edf_curve_audit, file.path(dirs$diagnostics, "Figure1_CR_Pa_temperature_EDF_curve_term_consistency_audit.csv"), row.names = FALSE)
-write.csv(main_y_axis_five_tick_qa, file.path(dirs$diagnostics, "Figure1_main_y_axis_exactly_five_ticks_QA.csv"), row.names = FALSE)
-write.csv(main_x_axis_balanced_qa, file.path(dirs$diagnostics, "Figure1_balanced_physical_x_axis_QA.csv"), row.names = FALSE)
-write.csv(turning_point_label_precision_qa, file.path(dirs$diagnostics, "Figure1_turning_point_label_two_decimal_QA.csv"), row.names = FALSE)
+write.csv(curves, file.path(dirs$source, "Figure2_termcentred_curve_source_data.csv"), row.names = FALSE)
+write.csv(histograms, file.path(dirs$source, "Figure2_histogram_source_data.csv"), row.names = FALSE)
+write.csv(rug_data, file.path(dirs$source, "Figure2_rug_observations_source_data.csv"), row.names = FALSE)
+write.csv(partial_raw, file.path(dirs$source, "Figure2_adjusted_partial_residual_observations.csv"), row.names = FALSE)
+write.csv(partial_bins, file.path(dirs$source, "Figure2_adjusted_partial_residual_bins.csv"), row.names = FALSE)
+write.csv(sensitivity_curves, file.path(dirs$source, "Figure2_influence_excluded_sensitivity_curves.csv"), row.names = FALSE)
+write.csv(support, file.path(dirs$tables, "Figure2_panel_minmax_P2_5_P97_5_and_model_statistics.csv"), row.names = FALSE)
+write.csv(strict_thresholds, file.path(dirs$tables, "Figure2_v3_strict_thresholds_with_physical_crosswalk_and_local_support.csv"), row.names = FALSE)
+write.csv(display_thresholds, file.path(dirs$tables, "Figure2_displayed_all_objectively_detected_turning_points.csv"), row.names = FALSE)
+write.csv(bootstrap_turning_points, file.path(dirs$tables, "Figure2_all_observed_turning_points_with_1000_refit_support.csv"), row.names = FALSE)
+write.csv(turning_point_panel_audit, file.path(dirs$tables, "Figure2_turning_point_detection_status_for_all_24_panels.csv"), row.names = FALSE)
+write.csv(wet_days_gmax_grid_audit, file.path(dirs$diagnostics, "Figure2_wet_days_117d_GMax_grid_and_scaled_location_audit.csv"), row.names = FALSE)
+write.csv(crpa_temperature_edf_curve_audit, file.path(dirs$diagnostics, "Figure2_CR_Pa_temperature_EDF_curve_term_consistency_audit.csv"), row.names = FALSE)
+write.csv(main_y_axis_five_tick_qa, file.path(dirs$diagnostics, "Figure2_main_y_axis_exactly_five_ticks_QA.csv"), row.names = FALSE)
+write.csv(main_x_axis_balanced_qa, file.path(dirs$diagnostics, "Figure2_balanced_physical_x_axis_QA.csv"), row.names = FALSE)
+write.csv(turning_point_label_precision_qa, file.path(dirs$diagnostics, "Figure2_turning_point_label_two_decimal_QA.csv"), row.names = FALSE)
 write.csv(supplementary_curve_features, file.path(dirs$tables, "Supplementary_curve_features_Chg_Stb_and_T_flags.csv"), row.names = FALSE)
 write.csv(supplementary_full_feature_catalog, file.path(dirs$tables, "Supplementary_full_threshold_and_curve_feature_catalog.csv"), row.names = FALSE)
-write.csv(physical_mapping, file.path(dirs$tables, "Figure1_climate_zone_specific_physical_axis_crosswalk.csv"), row.names = FALSE)
-write.csv(influence_observations, file.path(dirs$diagnostics, "Figure1_observation_level_leverage_and_influence.csv"), row.names = FALSE)
-write.csv(influence_summary, file.path(dirs$diagnostics, "Figure1_influence_summary_by_phenotype.csv"), row.names = FALSE)
-write.csv(sensitivity_curve_qa, file.path(dirs$diagnostics, "Figure1_influence_excluded_curve_comparison.csv"), row.names = FALSE)
-write.csv(physical_mapping_qa, file.path(dirs$diagnostics, "Figure1_physical_axis_mapping_QA.csv"), row.names = FALSE)
-write.csv(partial_qa, file.path(dirs$diagnostics, "Figure1_partial_residual_QA.csv"), row.names = FALSE)
-write.csv(curve_qa, file.path(dirs$diagnostics, "Figure1_frozen_curve_preservation_QA.csv"), row.names = FALSE)
+write.csv(physical_mapping, file.path(dirs$tables, "Figure2_climate_zone_specific_physical_axis_crosswalk.csv"), row.names = FALSE)
+write.csv(influence_observations, file.path(dirs$diagnostics, "Figure2_observation_level_leverage_and_influence.csv"), row.names = FALSE)
+write.csv(influence_summary, file.path(dirs$diagnostics, "Figure2_influence_summary_by_phenotype.csv"), row.names = FALSE)
+write.csv(sensitivity_curve_qa, file.path(dirs$diagnostics, "Figure2_influence_excluded_curve_comparison.csv"), row.names = FALSE)
+write.csv(physical_mapping_qa, file.path(dirs$diagnostics, "Figure2_physical_axis_mapping_QA.csv"), row.names = FALSE)
+write.csv(partial_qa, file.path(dirs$diagnostics, "Figure2_partial_residual_QA.csv"), row.names = FALSE)
+write.csv(curve_qa, file.path(dirs$diagnostics, "Figure2_frozen_curve_preservation_QA.csv"), row.names = FALSE)
 
 wb <- createWorkbook()
 workbook_data <- list(
@@ -2328,7 +2328,7 @@ for (nm in names(workbook_data)) {
 }
 saveWorkbook(
   wb,
-  file.path(dirs$source, "SourceData_Figure1_threshold_ORCI_and_supplementary_features_v9_two_decimal_turning_point_labels.xlsx"),
+  file.path(dirs$source, "SourceData_Figure2_threshold_ORCI_and_supplementary_features_v9_two_decimal_turning_point_labels.xlsx"),
   overwrite = TRUE
 )
 
@@ -2361,14 +2361,14 @@ contract_text <- c(
   "",
   "Reviewer risk controlled: tail estimates are visually distinguished; sample support is explicit; adjusted observations remain available in a dedicated evidence version; model-parameter uncertainty is not mislabelled as a prediction interval."
 )
-writeLines(contract_text, file.path(dirs$contract, "Figure1_physical_axes_thresholds_influence_contract.md"))
+writeLines(contract_text, file.path(dirs$contract, "Figure2_physical_axes_thresholds_influence_contract.md"))
 
 legend_text <- paste0(
-  "Fig. 1 | Climate–AMR exposure–response associations and data support. ",
+  "Fig. 2 | Climate–AMR exposure–response associations and data support. ",
   "a, Term-centred odds-ratio (OR) curves from the frozen fully adjusted Model C generalized additive models for six AMR phenotypes and four lagged climatic factors. Fitted curves retain the observed minimum-to-maximum range of each exact model input; display-only limits extend slightly where needed to provide round physical-unit ticks and balanced terminal axis segments. Each panel uses a phenotype-specific temperate-zone physical-equivalent axis; crosswalks for all climate zones are supplied in Source Data. Solid coloured curves and pointwise model-based 95% intervals show P2.5–P97.5; pale grey dashed curves and bands show the limited-support tails. Lower subpanels show 16-bin histograms and country-year rugs; red rug marks identify observations meeting the fixed influence-screening rule. Red long-dashed lines denote internal turning points identified among terms with EDF>1.05 by first-derivative sign changes within P2.5–P97.5. Labels give the turning-point type, physical-equivalent location and term-centred pointwise OR (95% interval); this interval is not a confidence interval for turning-point location. Filled and open red markers indicate whether the fixed 900-of-1,000 bootstrap-stability criterion was or was not met, respectively. All objectively detected candidates are displayed; exact bootstrap support, conditional location intervals and local observation and country counts are reported in Source Data. Panels with EDF<=1.05 use a common OR scale of 0.5–1.5. Terms with EDF<0.10 are labelled as shrunk towards zero; other low-complexity terms are labelled approximately linear unless a derivative sign change remains visible. Shallow geometric candidates below the fixed complexity gate, including the CR-Pa temperature candidate, are not declared as turning points and are reported in Source Data. ",
   "b, F statistics and effective degrees of freedom (EDF) for the four climatic smooths; symbol size is proportional to EDF. n denotes country-year observations. P values are approximate overall smooth-term tests returned by mgcv; *P<0.05, **P<0.01 and ***P<0.001. Source data are provided as a Source Data file."
 )
-writeLines(legend_text, file.path(dirs$report, "Figure1_proposed_legend.txt"))
+writeLines(legend_text, file.path(dirs$report, "Figure2_proposed_legend.txt"))
 
 reviewer_evidence_legend <- paste0(
   legend_text,
@@ -2376,7 +2376,7 @@ reviewer_evidence_legend <- paste0(
 )
 writeLines(
   reviewer_evidence_legend,
-  file.path(dirs$report, "Figure1_reviewer_evidence_companion_legend.txt")
+  file.path(dirs$report, "Figure2_reviewer_evidence_companion_legend.txt")
 )
 
 supplementary_influence_legend <- paste0(
@@ -2401,15 +2401,15 @@ writeLines(
 )
 
 methods_text <- c(
-  "Physical-axis, adjusted partial-residual and influence-sensitivity display for Figure 1",
+  "Physical-axis, adjusted partial-residual and influence-sensitivity display for Figure 2",
   "",
   "The primary models were not refitted. Because climatic exposures entered Model C after standardization within climate zone, a unique pooled global conversion from the model-input scale to physical units does not exist. For display only, each phenotype-specific x axis was labelled using the exact intercept and slope linking the standardized and lagged physical exposure within the temperate-zone observations of that analytical sample; crosswalks for polar, temperate and tropical observations were retained in Source Data. For each frozen Model C fit and climatic smooth j, observation-level adjusted partial residuals were calculated on the Gaussian identity (logit-resistance) scale as r_ij = f_j(x_ij) + e_i, where f_j(x_ij) is the fitted term-centred smooth contribution and e_i is the response residual from the complete multivariable model. Observations were divided into ten equal-frequency bins using the empirical distribution of the exact standardized model input. Open circles show exp(mean(r_ij)) at the mean exposure in each bin. Observation-level leverage was calculated as diag[X Vp X' W]/sigma2 using the model lpmatrix and conditional penalized coefficient covariance. Internally studentized residuals and approximate penalized Cook distances were then calculated, and a fixed sensitivity rule excluded observations with |studentized residual| > 3 or Cook distance > 4/n. Six diagnostic sensitivity models were fitted with the original formula, Gaussian identity family, REML and select=TRUE; these fits were not used in the primary curve, threshold detection or downstream Results 2–3. Sensitivity curves were aligned to the frozen curve at the panel median exposure to compare shape. Primary curves retain the original term-centred OR and conditional pointwise interval calculations."
 )
-writeLines(methods_text, file.path(dirs$report, "Figure1_adjusted_partial_residual_methods.txt"))
+writeLines(methods_text, file.path(dirs$report, "Figure2_adjusted_partial_residual_methods.txt"))
 
 result1_wording <- c(
   paste0(
-    "Across the 24 phenotype–climate exposure–response functions, the objective derivative-based procedure identified 24 internal turning-point estimates in 16 panels within the phenotype-specific P2.5–P97.5 exposure ranges. Seven estimates met the fixed 900-of-1,000 parametric-bootstrap stability criterion. For transparent reporting, this criterion was applied as a labelling rather than exclusion rule: lower-support estimates were retained in Fig. 1 to represent fitted-curve geometry but were not interpreted as bootstrap-supported turning points. Labels report term-centred pointwise ORs and model-based 95% intervals, whereas exact bootstrap support and conditional location intervals are reported separately in Supplementary Table X. Panels with EDF<=1.05 were displayed on a common OR scale. Terms with EDF<0.10 were described as shrunk towards zero; terms with 0.10<=EDF<=1.05 were described as approximately linear only in the absence of an internal derivative sign change. The CR-Pa temperature term (EDF=0.996) contained a shallow derivative sign change and was therefore described as a low-complexity curved fit, but it was not assigned a nonlinear turning point under the fixed EDF gate."
+    "Across the 24 phenotype–climate exposure–response functions, the objective derivative-based procedure identified 24 internal turning-point estimates in 16 panels within the phenotype-specific P2.5–P97.5 exposure ranges. Seven estimates met the fixed 900-of-1,000 parametric-bootstrap stability criterion. For transparent reporting, this criterion was applied as a labelling rather than exclusion rule: lower-support estimates were retained in Fig. 2 to represent fitted-curve geometry but were not interpreted as bootstrap-supported turning points. Labels report term-centred pointwise ORs and model-based 95% intervals, whereas exact bootstrap support and conditional location intervals are reported separately in Supplementary Table X. Panels with EDF<=1.05 were displayed on a common OR scale. Terms with EDF<0.10 were described as shrunk towards zero; terms with 0.10<=EDF<=1.05 were described as approximately linear only in the absence of an internal derivative sign change. The CR-Pa temperature term (EDF=0.996) contained a shallow derivative sign change and was therefore described as a low-complexity curved fit, but it was not assigned a nonlinear turning point under the fixed EDF gate."
   ),
   "",
   paste0(
@@ -2441,7 +2441,7 @@ writeLines(
 )
 
 audit_text <- c(
-  "# Figure 1 physical-axis and influence-sensitivity audit",
+  "# Figure 2 physical-axis and influence-sensitivity audit",
   "",
   "## Frozen inferential objects",
   "",
@@ -2469,10 +2469,10 @@ audit_text <- c(
   "",
   "The uncluttered primary export omits adjusted partial-residual circles. The reviewer-evidence companion retains them as descriptive adjusted response summaries; they are not validation confidence intervals and are not expected to lie inside the shaded term-wise confidence band. Parametric-bootstrap support is conditional on the original observed data configuration and is not a test of resistance to influential observations; the separately reported influence-exclusion refits address that distinct question. Formal claims about clustered uncertainty still require the separate country-cluster sensitivity analysis."
 )
-writeLines(audit_text, file.path(dirs$report, "Figure1_physical_axes_thresholds_influence_scientific_audit.md"))
+writeLines(audit_text, file.path(dirs$report, "Figure2_physical_axes_thresholds_influence_scientific_audit.md"))
 
 threshold_axis_audit <- c(
-  "# Figure 1 axis and threshold audit",
+  "# Figure 2 axis and threshold audit",
   "",
   "## Phenotype-exposure prediction domains",
   "",
@@ -2498,7 +2498,7 @@ threshold_axis_audit <- c(
 )
 writeLines(
   threshold_axis_audit,
-  file.path(dirs$report, "Figure1_axis_and_threshold_method_audit.md")
+  file.path(dirs$report, "Figure2_axis_and_threshold_method_audit.md")
 )
 
 replacement_s2_path <- file.path(
@@ -2572,21 +2572,21 @@ writeLines(
   file.path(dirs$report, "S2_retention_to_labelling_change_for_response_letter.txt")
 )
 readme_text <- c(
-  "# Figure 1 equal-panel, balanced physical-axis redraw",
+  "# Figure 2 equal-panel, balanced physical-axis redraw",
   "",
   "## Recommended primary file",
   "",
-  "`02_figures/Figure1_main_turning_points_ORCI_without_partial_residual_bins.pdf`",
+  "`02_figures/Figure2_main_turning_points_ORCI_without_partial_residual_bins.pdf`",
   "",
   "This version is recommended for the manuscript main figure. It shows every objectively detected internal turning point using a uniform red long-dashed line and reports the physical-equivalent location to two decimal places together with the term-centred pointwise OR (95% interval). Filled versus open red markers indicate whether the original 900/1,000 stability criterion was met; numerical bootstrap support is retained in Source Data and no secondary display cutoff is imposed. Every curve panel has exactly five y-axis ticks. Panels with EDF<=1.05 use a common 0.5–1.5 OR scale, with separate annotations for terms shrunk towards zero, approximately linear terms and low-complexity curved fits.",
   "",
-  "The fitted x range remains the observed panel-specific minimum-to-maximum range. Display-only limits use round physical-unit ticks and either equal terminal gaps or natural zero-bounded endpoints; no curve is extrapolated. The full 24-panel axis audit is saved in `05_diagnostics/Figure1_balanced_physical_x_axis_QA.csv`.",
+  "The fitted x range remains the observed panel-specific minimum-to-maximum range. Display-only limits use round physical-unit ticks and either equal terminal gaps or natural zero-bounded endpoints; no curve is extrapolated. The full 24-panel axis audit is saved in `05_diagnostics/Figure2_balanced_physical_x_axis_QA.csv`.",
   "",
   "The phenotype/sample-size/OR label is placed in a dedicated row-label column rather than inside the Temperature plot. Consequently, all four climate-response viewports have the same physical width and height within every phenotype row.",
   "",
   "## Companion clean file",
   "",
-  "`02_figures/Figure1_turning_points_termcentred_OR_95CI_with_support_symbols.pdf`",
+  "`02_figures/Figure2_turning_points_termcentred_OR_95CI_with_support_symbols.pdf`",
   "",
   "This reviewer-evidence companion retains turning-point labels and adjusted partial-residual bin means. The supplementary feature catalogue implements Chg and Stb using phenotype-agnostic rules; a T prefix records pointwise P>=0.10, while Rap/Tre aliases are discontinued.",
   "",
@@ -2594,7 +2594,7 @@ readme_text <- c(
   "",
   "The six frozen primary Model C objects were not refitted, and all 24 primary curves and confidence limits reproduce v3 to numerical precision. Six separately identified influence-excluded models are diagnostic sensitivity fits only and do not feed threshold detection or Results 2–3.",
   "",
-  "The influence-diagnostic and influence-excluded curve-comparison figures are supplied separately in `02_figures` so that substantial sensitivity in selected panels is visible without compressing or obscuring the primary Figure 1 curves.",
+  "The influence-diagnostic and influence-excluded curve-comparison figures are supplied separately in `02_figures` so that substantial sensitivity in selected panels is visible without compressing or obscuring the primary Figure 2 curves.",
   "",
   "See `04_tables/Supplementary_full_threshold_and_curve_feature_catalog.csv` for the complete extrema/Chg/Stb/T catalogue, `05_diagnostics` for numerical QA (including the CR-Pa EDF/curve term-consistency check and the two 117-d wet-days grid audit), and `06_report` for the proposed legend, methods text and scientific audit."
 )
@@ -2612,8 +2612,8 @@ input_files <- c(
   list.files(dirs$input_models, full.names = TRUE),
   list.files(dirs$input_data, full.names = TRUE),
   file.path(dirs$inputs, "bacteria_four_factors_lag_summary.csv"),
-  file.path(dirs$inputs, "Figure1_v3_main_figure_strict_thresholds_max2.csv"),
-  file.path(dirs$inputs, "Figure1_v3_bootstrap_support_for_observed_turning_points.csv")
+  file.path(dirs$inputs, "Figure2_v3_main_figure_strict_thresholds_max2.csv"),
+  file.path(dirs$inputs, "Figure2_v3_bootstrap_support_for_observed_turning_points.csv")
 )
 input_fingerprint <- tibble(
   file = basename(input_files),
@@ -2621,11 +2621,11 @@ input_fingerprint <- tibble(
   md5 = unname(tools::md5sum(input_files)),
   size_bytes = file.info(input_files)$size
 )
-write.csv(input_fingerprint, file.path(dirs$diagnostics, "Figure1_frozen_input_fingerprints.csv"), row.names = FALSE)
+write.csv(input_fingerprint, file.path(dirs$diagnostics, "Figure2_frozen_input_fingerprints.csv"), row.names = FALSE)
 
 manifest_paths <- setdiff(
   list.files(output_root, recursive = TRUE, all.files = FALSE),
-  c("MANIFEST.csv", "07_logs/Figure1_threshold_ORCI_supplementary_features_v9_two_decimal_turning_point_labels_run.log")
+  c("MANIFEST.csv", "07_logs/Figure2_threshold_ORCI_supplementary_features_v9_two_decimal_turning_point_labels_run.log")
 )
 manifest <- tibble(
   relative_path = manifest_paths,
@@ -2635,6 +2635,6 @@ manifest <- tibble(
 write.csv(manifest, file.path(output_root, "MANIFEST.csv"), row.names = FALSE)
 
 cat("\nCompleted:", format(Sys.time()), "\n")
-cat("Recommended threshold-preserving Figure 1:", paste0(stem_combined_thresholds_no_partial_bins, ".pdf"), "\n")
-cat("Reviewer-evidence companion Figure 1:", paste0(stem_combined_thresholds, ".pdf"), "\n")
+cat("Recommended threshold-preserving Figure 2:", paste0(stem_combined_thresholds_no_partial_bins, ".pdf"), "\n")
+cat("Reviewer-evidence companion Figure 2:", paste0(stem_combined_thresholds, ".pdf"), "\n")
 cat("Output bundle:", output_root, "\n")

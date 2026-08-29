@@ -1,4 +1,4 @@
-######## Model C Figure 2B Climate-Zone Plot (Legacy Style, Optimal-K, updated data) ########
+######## Model C Figure 3B Climate-Zone Plot (Legacy Style, Optimal-K, updated data) ########
 
 suppressPackageStartupMessages({
   required_packages <- c("ggplot2", "dplyr", "cowplot", "png", "scales", "grid")
@@ -14,35 +14,35 @@ script_file <- sub("^--file=", "", script_args[grep("^--file=", script_args)][1]
 script_dir <- dirname(normalizePath(script_file))
 repo_root <- normalizePath(file.path(script_dir, "..", ".."), mustWork = TRUE)
 revision_root <- Sys.getenv("CLIMATE_AMR_WORKSPACE_ROOT", unset = repo_root)
-figure2_root <- file.path(
+figure3_root <- file.path(
   revision_root,
   "outputs/historical_associations",
-  "figure2_spatial_heterogeneity_optimal_k"
+  "figure3_spatial_heterogeneity_optimal_k"
 )
 
 input_csv <- file.path(
-  figure2_root,
-  "03_Figure2B_climate_zone_associations",
-  "ModelC_Figure2B_climate_zone_effects.csv"
+  figure3_root,
+  "03_Figure3B_climate_zone_associations",
+  "ModelC_Figure3B_climate_zone_effects.csv"
 )
 
-figure2a_png <- file.path(
-  figure2_root,
-  "02_Figure2A_spatial_heatmaps",
-  "ModelC_Figure2A_spatial_heterogeneity_heatmaps_optimal_k.png"
+figure3a_png <- file.path(
+  figure3_root,
+  "02_Figure3A_spatial_heatmaps",
+  "ModelC_Figure3A_spatial_heterogeneity_heatmaps_optimal_k.png"
 )
 
-figure2c_png <- file.path(
-  figure2_root,
-  "04_Figure2C_gap_statistic_selection",
-  "ModelC_Figure2C_gap_statistic_selection.png"
+figure3c_png <- file.path(
+  figure3_root,
+  "04_Figure3C_gap_statistic_selection",
+  "ModelC_Figure3C_gap_statistic_selection.png"
 )
 
-output_dir <- file.path(figure2_root, "03_Figure2B_climate_zone_associations_oldstyle")
+output_dir <- file.path(figure3_root, "03_Figure3B_climate_zone_associations_oldstyle")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 if (!file.exists(input_csv)) {
-  stop("Figure 2B climate-zone effect file not found: ", input_csv, call. = FALSE)
+  stop("Figure 3B climate-zone effect file not found: ", input_csv, call. = FALSE)
 }
 
 climate_effects <- read.csv(input_csv, stringsAsFactors = FALSE) %>%
@@ -91,7 +91,7 @@ bar_plot <- ggplot(climate_effects, aes(x = Climate_Zone, y = OR, fill = Climate
     x = "Climate Zone",
     y = "Odds Ratio (OR)",
     fill = "Climate Zone",
-    title = "Figure 2B. Climate zone associations with AMR strains"
+    title = "Figure 3B. Climate zone associations with AMR strains"
   ) +
   theme_bw(base_size = 10) +
   theme(
@@ -134,7 +134,7 @@ forest_plot <- ggplot(climate_effects, aes(x = OR, y = Climate_Zone, color = Cli
     x = "Odds Ratio (OR)",
     y = NULL,
     color = "Climate Zone",
-    title = "Figure 2B (Alternative forest-style view)"
+    title = "Figure 3B (Alternative forest-style view)"
   ) +
   theme_bw(base_size = 10) +
   theme(
@@ -150,18 +150,18 @@ forest_plot <- ggplot(climate_effects, aes(x = OR, y = Climate_Zone, color = Cli
     plot.margin = margin(4, 10, 4, 4, unit = "pt")
   )
 
-ggsave(file.path(output_dir, "ModelC_Figure2B_climate_zone_barplot_oldstyle_optimal_k.pdf"), bar_plot, width = 12, height = 4.8, dpi = 320)
-ggsave(file.path(output_dir, "ModelC_Figure2B_climate_zone_barplot_oldstyle_optimal_k.png"), bar_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_barplot_oldstyle_optimal_k.pdf"), bar_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_barplot_oldstyle_optimal_k.png"), bar_plot, width = 12, height = 4.8, dpi = 320)
 
-ggsave(file.path(output_dir, "ModelC_Figure2B_climate_zone_forest_oldstyle_optimal_k.pdf"), forest_plot, width = 12, height = 4.8, dpi = 320)
-ggsave(file.path(output_dir, "ModelC_Figure2B_climate_zone_forest_oldstyle_optimal_k.png"), forest_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_forest_oldstyle_optimal_k.pdf"), forest_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_forest_oldstyle_optimal_k.png"), forest_plot, width = 12, height = 4.8, dpi = 320)
 
-if (file.exists(figure2a_png)) {
-  fig2a_raster <- png::readPNG(figure2a_png)
-  fig2a_grob <- grid::rasterGrob(fig2a_raster, interpolate = TRUE)
+if (file.exists(figure3a_png)) {
+  fig3a_raster <- png::readPNG(figure3a_png)
+  fig3a_grob <- grid::rasterGrob(fig3a_raster, interpolate = TRUE)
 
   panel_a <- cowplot::ggdraw() +
-    cowplot::draw_grob(fig2a_grob) +
+    cowplot::draw_grob(fig3a_grob) +
     cowplot::draw_label("A", x = 0.01, y = 0.99, hjust = 0, vjust = 1, size = 26, fontface = "bold")
 
   panel_b <- cowplot::ggdraw() +
@@ -170,24 +170,24 @@ if (file.exists(figure2a_png)) {
 
   combined_ab <- cowplot::plot_grid(panel_a, panel_b, ncol = 1, rel_heights = c(1.9, 0.82))
 
-  ggsave(file.path(output_dir, "ModelC_Figure2_spatial_heterogeneity_panels_oldstyleB_optimal_k.pdf"), combined_ab, width = 18, height = 24, dpi = 320)
-  ggsave(file.path(output_dir, "ModelC_Figure2_spatial_heterogeneity_panels_oldstyleB_optimal_k.png"), combined_ab, width = 18, height = 24, dpi = 320)
+  ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleB_optimal_k.pdf"), combined_ab, width = 18, height = 24, dpi = 320)
+  ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleB_optimal_k.png"), combined_ab, width = 18, height = 24, dpi = 320)
 
-  if (file.exists(figure2c_png)) {
-    fig2c_raster <- png::readPNG(figure2c_png)
-    fig2c_grob <- grid::rasterGrob(fig2c_raster, interpolate = TRUE)
+  if (file.exists(figure3c_png)) {
+    fig3c_raster <- png::readPNG(figure3c_png)
+    fig3c_grob <- grid::rasterGrob(fig3c_raster, interpolate = TRUE)
 
     panel_c <- cowplot::ggdraw() +
-      cowplot::draw_grob(fig2c_grob) +
+      cowplot::draw_grob(fig3c_grob) +
       cowplot::draw_label("C", x = 0.01, y = 0.98, hjust = 0, vjust = 1, size = 24, fontface = "bold")
 
     combined_abc <- cowplot::plot_grid(panel_a, cowplot::plot_grid(panel_b, panel_c, ncol = 2, rel_widths = c(1.2, 1)), ncol = 1, rel_heights = c(1.9, 0.85))
 
-    ggsave(file.path(output_dir, "ModelC_Figure2_spatial_heterogeneity_panels_oldstyleBC_optimal_k.pdf"), combined_abc, width = 18, height = 26, dpi = 320)
-    ggsave(file.path(output_dir, "ModelC_Figure2_spatial_heterogeneity_panels_oldstyleBC_optimal_k.png"), combined_abc, width = 18, height = 26, dpi = 320)
+    ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleBC_optimal_k.pdf"), combined_abc, width = 18, height = 26, dpi = 320)
+    ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleBC_optimal_k.png"), combined_abc, width = 18, height = 26, dpi = 320)
   }
 }
 
-write.csv(climate_effects, file.path(output_dir, "ModelC_Figure2B_climate_zone_oldstyle_optimal_k_plot_ready_data.csv"), row.names = FALSE)
+write.csv(climate_effects, file.path(output_dir, "ModelC_Figure3B_climate_zone_oldstyle_optimal_k_plot_ready_data.csv"), row.names = FALSE)
 
-message("Old-style optimal-k Figure 2B outputs completed: ", output_dir)
+message("Old-style optimal-k Figure 3B outputs completed: ", output_dir)
