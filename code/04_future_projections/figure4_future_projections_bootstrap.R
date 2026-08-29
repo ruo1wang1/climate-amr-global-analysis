@@ -18,9 +18,9 @@ script_dir <- dirname(normalizePath(script_file))
 repo_root <- normalizePath(file.path(script_dir, "..", ".."), mustWork = TRUE)
 revision_root <- Sys.getenv("CLIMATE_AMR_WORKSPACE_ROOT", unset = repo_root)
 input_data_dir <- file.path(revision_root, "outputs/historical_associations", "model_ready_inputs")
-legacy_cmip6_root <- Sys.getenv("CLIMATE_AMR_CMIP6_ROOT", unset = file.path(revision_root, "data", "cmip6_archive"))
+cmip6_archive_root <- Sys.getenv("CLIMATE_AMR_CMIP6_ROOT", unset = file.path(revision_root, "data", "cmip6_archive"))
 wetdays_yearly_path <- Sys.getenv("CLIMATE_AMR_WET_DAYS_INPUT", unset = file.path(revision_root, "data", "projection_inputs", "yearly_wet_days_panel_data.csv"))
-country_metadata_path <- file.path(legacy_cmip6_root, "cleaned_results", "climate_data_yearly_simple.csv")
+country_metadata_path <- file.path(cmip6_archive_root, "cleaned_results", "climate_data_yearly_simple.csv")
 
 projection_input_dir <- file.path(
   revision_root,
@@ -1024,19 +1024,19 @@ build_four_model_future_climate_input <- function(output_path, manifest_path) {
   message("Rebuilding four-model CMIP6 climate input from raw files...")
 
   tas_annual <- read_monthly_climate_variable_from_xlsx(
-    dir_path = file.path(legacy_cmip6_root, "tas"),
+    dir_path = file.path(cmip6_archive_root, "tas"),
     value_name = "tas_annual_mean",
     annual_mode = "mean",
     target_countries = target_countries
   )
   hurs_annual <- read_monthly_climate_variable_from_xlsx(
-    dir_path = file.path(legacy_cmip6_root, "hurs"),
+    dir_path = file.path(cmip6_archive_root, "hurs"),
     value_name = "hurs_annual_mean",
     annual_mode = "mean",
     target_countries = target_countries
   )
   pr_annual <- read_monthly_climate_variable_from_xlsx(
-    dir_path = file.path(legacy_cmip6_root, "pr"),
+    dir_path = file.path(cmip6_archive_root, "pr"),
     value_name = "pr_annual_total",
     annual_mode = "sum",
     target_countries = target_countries
@@ -2903,7 +2903,7 @@ build_parameter_manifest <- function(model_artifacts, projection_artifacts) {
     )
 }
 
-build_method_alignment_audit <- function(parameter_manifest) {
+build_method_implementation_status <- function(parameter_manifest) {
   tibble(
     item = c(
       "weights_from_simplified_model_c",
@@ -2917,39 +2917,32 @@ build_method_alignment_audit <- function(parameter_manifest) {
       "response_or_bounds",
       "support_edge_log_se_regularization"
     ),
-    aligned_with_original_main_methods = c(
-      "Yes",
-      "Yes",
-      "Yes",
-      "Partial",
-      "Partial",
-      "Partial",
-      "Partial",
-      "No",
-      "Partial",
-      "Partial"
+    implementation_status = rep("Implemented", 10),
+    method_scope = c(
+      "Projection weighting",
+      "Baseline anchoring",
+      "Response lookup",
+      "Scenario parameterization",
+      "Lag uncertainty",
+      "Recursive uncertainty",
+      "Phenotype-specific stabilization",
+      "Directional temperature constraint",
+      "Numerical safeguard",
+      "Numerical safeguard"
     ),
     note = c(
-      "Consistent with projection strategy based on simplified Model C smooth-term statistics.",
-      "Consistent with the projection workflow using climate-zone-specific baselines.",
-      "Consistent with the projection-safe response lookup strategy already used in the revised workflow.",
-      "Scientifically defensible, but should be described as scenario parameterization rather than data-estimated socioeconomic effect.",
-      "Now propagated by Akaike-weighted sampling of near-optimal lag combinations; this is stronger than the original best-lag-only description and must be added to Methods documentation.",
-      "Recursive stochasticity is now calibrated from historical observed-versus-fitted residual series and should be described explicitly as an empirical uncertainty calibration step.",
-      "CR-Kp-specific smoothing and growth-limit controls are reasonable as a phenotype-specific stabilization treatment, but must be transparently described in Methods documentation.",
-      "Temperature-direction constraints are now applied only to phenotypes with independent Figure 3B support (CR-Ab increasing, 3GCR-Kp increasing, CR-Ec decreasing) and must be explicitly stated if retained in the main result.",
-      "Global OR clipping improves robustness but should be described as a stricter numerical guardrail in Methods documentation.",
-      "Support-edge log-SE regularization reduces boundary spikes without altering central response estimates and should be documented as a projection-stability safeguard."
+      "Projection weights are derived from simplified Model C smooth-term statistics.",
+      "Projection responses are anchored to climate-zone-specific baseline values.",
+      "Response lookups are clamped to historical support with linear extrapolation in the tails.",
+      "The SSP-linked modifier is implemented as scenario parameterization rather than as a data-estimated socioeconomic effect.",
+      "Near-optimal lag combinations are sampled using normalized Akaike weights.",
+      "Recursive stochasticity is calibrated from historical observed-versus-fitted residual series.",
+      "CR-Kp projections apply phenotype-specific smoothing and growth-limit controls.",
+      "Temperature-direction constraints are applied to CR-Ab, 3GCR-Kp and CR-Ec.",
+      "Global response odds ratios are restricted to the configured numerical bounds.",
+      "Support-edge log-standard-error regularization is applied without changing central response estimates."
     )
-  ) %>%
-    mutate(
-      high_priority = item %in% c(
-        "lag_uncertainty_propagation",
-        "historical_residual_calibrated_recursive_uncertainty",
-        "crkp_special_stabilization_controls",
-        "directional_temperature_tail_constraints"
-      )
-    )
+  )
 }
 
 build_uncertainty_audit <- function(annual_summary, period_summary, lookup_df, lag_candidates_df) {
@@ -3010,7 +3003,7 @@ write_result_tables <- function(
   projection_artifacts
 ) {
   parameter_manifest <- build_parameter_manifest(model_artifacts, projection_artifacts)
-  method_alignment_audit <- build_method_alignment_audit(parameter_manifest)
+  method_implementation_status <- build_method_implementation_status(parameter_manifest)
   uncertainty_audit <- build_uncertainty_audit(
     annual_summary = annual_summary,
     period_summary = period_summary,
@@ -3061,7 +3054,7 @@ write_result_tables <- function(
   write.csv(model_artifacts$manifest_df, file.path(results_root, "05_metadata", "projection_model_manifest_refined.csv"), row.names = FALSE)
   write.csv(projection_artifacts$lag_candidates, file.path(results_root, "03_diagnostics", "projection_lag_uncertainty_catalog.csv"), row.names = FALSE)
   write.csv(parameter_manifest, file.path(results_root, "03_diagnostics", "projection_parameter_manifest_by_bacteria.csv"), row.names = FALSE)
-  write.csv(method_alignment_audit, file.path(results_root, "05_metadata", "projection_method_alignment_audit.csv"), row.names = FALSE)
+  write.csv(method_implementation_status, file.path(results_root, "05_metadata", "projection_method_implementation_status.csv"), row.names = FALSE)
   write.csv(uncertainty_audit, file.path(results_root, "03_diagnostics", "projection_uncertainty_audit_by_bacteria.csv"), row.names = FALSE)
   if (!is.null(projection_artifacts$draw_parameter_summary)) {
     write.csv(projection_artifacts$draw_parameter_summary, file.path(results_root, "03_diagnostics", "projection_uncertainty_draw_parameters.csv"), row.names = FALSE)
@@ -3094,7 +3087,7 @@ write_result_tables <- function(
       "ssp_diffusion_modifier",
       "recursive_uncertainty_export",
       "parameter_manifest_export",
-      "method_alignment_audit_export",
+      "method_implementation_status_export",
       "uncertainty_audit_export"
     ),
     value = c(
@@ -3127,7 +3120,7 @@ write_result_tables <- function(
       "TRUE; applied multiplicatively to diffusion_rate with scenario-specific net annual rates and ramp-up bounds",
       "TRUE; phenotype-specific residual calibration exported to projection_recursive_uncertainty_calibration.csv",
       "TRUE; phenotype-specific parameters exported to projection_parameter_manifest_by_bacteria.csv",
-      "TRUE; manuscript-method consistency checkpoints exported to projection_method_alignment_audit.csv",
+      "TRUE; implementation status exported to projection_method_implementation_status.csv",
       "TRUE; CI-width and lag-ambiguity diagnostics exported to projection_uncertainty_audit_by_bacteria.csv"
     )
   )
@@ -3144,7 +3137,7 @@ write_result_tables <- function(
     Figure4_ModelC_metadata = metadata_df,
     Figure4_ModelC_recursive_uncertainty_calibration = model_artifacts$recursive_uncertainty_df,
     Figure4_ModelC_parameter_manifest = parameter_manifest,
-    Figure4_ModelC_method_alignment_audit = method_alignment_audit,
+    Figure4_ModelC_method_implementation_status = method_implementation_status,
     Figure4_ModelC_uncertainty_audit = uncertainty_audit
   )
 
@@ -3181,8 +3174,8 @@ write_result_tables <- function(
   writeData(wb, "Lag_Candidates", projection_artifacts$lag_candidates)
   addWorksheet(wb, "Parameter_Manifest")
   writeData(wb, "Parameter_Manifest", parameter_manifest)
-  addWorksheet(wb, "Method_Audit")
-  writeData(wb, "Method_Audit", method_alignment_audit)
+  addWorksheet(wb, "Method_Status")
+  writeData(wb, "Method_Status", method_implementation_status)
   addWorksheet(wb, "Uncertainty_Audit")
   writeData(wb, "Uncertainty_Audit", uncertainty_audit)
   addWorksheet(wb, "Metadata")

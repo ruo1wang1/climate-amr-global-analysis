@@ -6,7 +6,7 @@ Files in `01_csv/` include:
 - annual trajectories
 - 2100 labels
 - period-change summaries
-- metadata and audit tables
+- metadata, implementation-status and uncertainty-audit tables
 - recursive-uncertainty calibration summaries
 - climate-zone and GCM-spread companion exports
 

@@ -155,7 +155,27 @@ Most scripts detect the repository root automatically. If needed, the following 
 
 ## Instructions for use
 
-### Reproducing the provided manuscript outputs
+### Reproduction scope and required inputs
+
+The repository reproduces the analytical steps and manuscript-oriented outputs for which the required inputs are available locally. Some surveillance-derived inputs are not redistributed here; the corresponding scripts identify the required file through environment variables and validate its structure before analysis. Access conditions for upstream data are described in the manuscript Data Availability statement.
+
+Figure 1 requires a country–year–phenotype CSV supplied through `FIGURE1_INPUT_FILE`. The file is expected to contain 4,502 unique records spanning six phenotypes, 101 country or region identifiers and 1999–2022. Its required variables are:
+
+| Variable | Definition |
+| --- | --- |
+| `phenotype` | AMR phenotype label used by the Figure 1 panels. |
+| `year` | Surveillance year. |
+| `country` | Country or region label used for grouping and display. |
+| `iso3` | Three-character map identifier. |
+| `longitude` | Country or region representative longitude in decimal degrees. |
+| `latitude` | Country or region representative latitude in decimal degrees. |
+| `latitude_defined_zone` | Latitude-defined category: `Temperate`, `Tropical` or `Polar`. |
+| `reported_resistance_proportion` | Reported resistance proportion on the 0–1 scale. |
+| `resistance_pct` | Resistance among tested isolates on the 0–100 scale. |
+| `tested_isolates` | Number of tested isolates for the record. |
+| `estimated_resistant_isolate_records` | Estimated number of resistant isolate records used for country-period pooling. |
+
+The Figure 1 workflow writes derived plotting tables to its local output directory. These generated tables are not included in the public repository.
 
 The repository is organised by analytical module:
 

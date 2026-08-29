@@ -1022,7 +1022,7 @@ if (nrow(turning_point_stability) > 0L) {
   )
 }
 
-# Targeted CR-Ab temperature diagnostic requested by the reviewer context.
+# Targeted CR-Ab temperature influence diagnostic.
 crab_rank <- country_influence_ranking %>%
   filter(phenotype == "CR-Ab", climate == "Temperature") %>%
   arrange(influence_rank)
@@ -1181,14 +1181,14 @@ contract_text <- c(
   "Turning points were redetected with the same fixed geometry and EDF rules used for Figure 2 and matched to full-sample extrema by direction within 10% of the fixed P2.5–P97.5 search width. The LOCO match fraction is a deterministic deletion diagnostic, not a P value or bootstrap probability.",
   "",
   "## Interpretation limits",
-  "The country-deletion envelope is descriptive and must not be called a confidence interval. LOCO influence analysis does not replace clustered uncertainty estimation, observation-level leverage diagnostics, residual checks or external predictive validation."
+  "The country-deletion envelope is a descriptive influence range rather than a confidence interval. LOCO influence analysis does not replace clustered uncertainty estimation, observation-level leverage diagnostics, residual checks or external predictive validation."
 )
 writeLines(contract_text, file.path(dirs$contract, "ModelC_LOCO_analysis_contract.md"))
 
 methods_text <- paste0(
   "We assessed country-level influence using a leave-one-country-out refitting analysis. For each AMR phenotype, all country-year observations from one country were sequentially excluded and the complete Model C GAMM was re-estimated using the same preprocessed inputs, model formula, basis dimensions, Gaussian identity family, REML smoothing-parameter estimation and selection penalties as in the primary analysis. Climatic smooths from each restricted fit were evaluated over the corresponding full-sample phenotype–exposure-specific 2.5th–97.5th percentile range. Because penalized smooths are centred separately in each fit, curves were aligned to the complete-sample curve at the full-sample median exposure for shape comparisons; raw term-centred differences were retained separately. We summarized the maximum absolute change in fitted log odds, curve correlation, changes in effective degrees of freedom and overall smooth-term P values, and the preservation of full-sample turning points. Turning points were redetected using the same derivative-based procedure and matched by extremum direction within 10% of the fixed search range. Country-deletion envelopes and turning-point match fractions were treated as descriptive influence diagnostics rather than confidence intervals or probabilities."
 )
-writeLines(methods_text, file.path(dirs$report, "Recommended_Methods_ModelC_LOCO_sensitivity.txt"))
+writeLines(methods_text, file.path(dirs$report, "Methods_ModelC_LOCO_sensitivity.txt"))
 
 crab_summary <- panel_summary %>%
   filter(phenotype == "CR-Ab", climate == "Temperature")
@@ -1232,20 +1232,6 @@ result_text <- c(
   "These descriptive results must be interpreted together with the detailed panel table and the targeted CR-Ab figure. A high full-model R-squared is not validated merely by LOCO stability; the model-fit table only shows whether that statistic depends strongly on one country."
 )
 writeLines(result_text, file.path(dirs$report, "ModelC_LOCO_results_summary.md"))
-
-paper_assessment <- c(
-  "# Applicability of the published malaria-study hold-out strategy",
-  "",
-  "The malaria study uses hold-out analyses for two related but distinct purposes. Its published modelling supplement reports ordinary five-fold and sequential entire-survey hold-out validation for predictive performance, and compares learned fixed-effect coefficients across restricted fits. Its peer-review history additionally reports leave-one-country, leave-one-year and leave-one-month influence analyses in which the statistical model was re-estimated and the distributions of temperature coefficients and P values were compared with the full-sample estimates.",
-  "",
-  "The second use is directly transferable to the climate–AMR reviewer question because countries are the natural clustering unit and the concern is whether one country drives a fitted relationship. A direct coefficient comparison is not sufficient for Model C, however, because each climatic association is a penalized smooth rather than a single linear or quadratic coefficient. The present analysis therefore compares the complete smooth function, its EDF and overall test, and the locations of internal turning points.",
-  "",
-  "This LOCO refitting analysis is intentionally not labelled cross-validation because it does not score predictions for the omitted country. It diagnoses country-level influence on the fitted associations and complements, but does not replace, observation-level leverage/Cook-distance diagnostics, residual assessment or country-cluster uncertainty analyses."
-)
-writeLines(
-  paper_assessment,
-  file.path(dirs$report, "Scientific_assessment_of_malaria_paper_LOCO_applicability.md")
-)
 
 qa_summary <- tibble(
   check = c(

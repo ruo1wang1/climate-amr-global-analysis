@@ -427,7 +427,7 @@ region_colors <- c(
 )
 
 existing_input_candidates <- list(
-  legacy_results_aliases = c(
+  existing_results_layout = c(
     file.path(existing_results_root, "01_country_effect_tables", "ModelC_all_bacteria_country_level_climate_effects_with_or_ci.csv"),
     file.path(existing_results_root, "03_Figure3B_climate_zone_associations", "ModelC_Figure3B_climate_zone_effects.csv"),
     file.path(existing_results_root, "05_metadata", "ModelC_Figure3_model_metadata.csv")

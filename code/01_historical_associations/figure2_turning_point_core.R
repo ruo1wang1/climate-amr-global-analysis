@@ -88,7 +88,7 @@ v3_prepare_data <- function(path, phenotype, lag_settings) {
       across(c(TMP, PREC, HUM, WET), ~ as.vector(scale(.x)), .names = "{.col}_scaled")
     ) %>%
     group_by(location_id) %>%
-    # Preserve the exact legacy preprocessing order: arrange by year while
+    # Preserve the preprocessing order used by the fitted model: arrange by year while
     # grouped, without .by_group=TRUE.
     arrange(year) %>%
     mutate(

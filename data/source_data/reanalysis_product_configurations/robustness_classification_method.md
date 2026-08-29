@@ -78,7 +78,7 @@ Assigned to all remaining cases in which the primary association is supported, b
 
 - `Robust` or `Robust (minor variation)` supports retaining the original interpretation.
 - `Attenuated` supports keeping the direction of the finding while softening the wording.
-- `Product-sensitive (lost)` or `Product-sensitive (reversal)` indicates that the finding should be described as source-sensitive and interpreted cautiously.
+- `Product-sensitive (lost)` or `Product-sensitive (reversal)` classifies the finding as source-sensitive.
 
 ## Rationale
 

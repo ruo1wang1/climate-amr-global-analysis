@@ -876,7 +876,7 @@ for (spec in bact_specs) {
         prep<-prepare_data(fp,bt,src,mode); md<-prep$data; sp<-prep$scale_params
         model<-build_gamm(md,bt)
 
-        # ── Save model summary (FIX: was missing in v5) ──
+        # ── Save model summary ──
         save_model_summary(model, bt, src, mode, prep, dirs$summaries)
 
         ss<-get_smooth(model); ss$Bacteria<-bt; ss$Source<-src; ss$Mode<-mode

@@ -1,4 +1,4 @@
-######## Model C Figure 3B Climate-Zone Plot (Legacy Style, Optimal-K, updated data) ########
+######## Model C Figure 3B Climate-Zone Associations (Publication Style) ########
 
 suppressPackageStartupMessages({
   required_packages <- c("ggplot2", "dplyr", "cowplot", "png", "scales", "grid")
@@ -38,7 +38,7 @@ figure3c_png <- file.path(
   "ModelC_Figure3C_gap_statistic_selection.png"
 )
 
-output_dir <- file.path(figure3_root, "03_Figure3B_climate_zone_associations_oldstyle")
+output_dir <- file.path(figure3_root, "03_Figure3B_climate_zone_associations_publication_style")
 dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 if (!file.exists(input_csv)) {
@@ -150,11 +150,11 @@ forest_plot <- ggplot(climate_effects, aes(x = OR, y = Climate_Zone, color = Cli
     plot.margin = margin(4, 10, 4, 4, unit = "pt")
   )
 
-ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_barplot_oldstyle_optimal_k.pdf"), bar_plot, width = 12, height = 4.8, dpi = 320)
-ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_barplot_oldstyle_optimal_k.png"), bar_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_barplot_publication_style.pdf"), bar_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_barplot_publication_style.png"), bar_plot, width = 12, height = 4.8, dpi = 320)
 
-ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_forest_oldstyle_optimal_k.pdf"), forest_plot, width = 12, height = 4.8, dpi = 320)
-ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_forest_oldstyle_optimal_k.png"), forest_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_forest_alternative_display.pdf"), forest_plot, width = 12, height = 4.8, dpi = 320)
+ggsave(file.path(output_dir, "ModelC_Figure3B_climate_zone_forest_alternative_display.png"), forest_plot, width = 12, height = 4.8, dpi = 320)
 
 if (file.exists(figure3a_png)) {
   fig3a_raster <- png::readPNG(figure3a_png)
@@ -170,8 +170,8 @@ if (file.exists(figure3a_png)) {
 
   combined_ab <- cowplot::plot_grid(panel_a, panel_b, ncol = 1, rel_heights = c(1.9, 0.82))
 
-  ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleB_optimal_k.pdf"), combined_ab, width = 18, height = 24, dpi = 320)
-  ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleB_optimal_k.png"), combined_ab, width = 18, height = 24, dpi = 320)
+  ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_publication_style_B.pdf"), combined_ab, width = 18, height = 24, dpi = 320)
+  ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_publication_style_B.png"), combined_ab, width = 18, height = 24, dpi = 320)
 
   if (file.exists(figure3c_png)) {
     fig3c_raster <- png::readPNG(figure3c_png)
@@ -183,11 +183,11 @@ if (file.exists(figure3a_png)) {
 
     combined_abc <- cowplot::plot_grid(panel_a, cowplot::plot_grid(panel_b, panel_c, ncol = 2, rel_widths = c(1.2, 1)), ncol = 1, rel_heights = c(1.9, 0.85))
 
-    ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleBC_optimal_k.pdf"), combined_abc, width = 18, height = 26, dpi = 320)
-    ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_oldstyleBC_optimal_k.png"), combined_abc, width = 18, height = 26, dpi = 320)
+    ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_publication_style_BC.pdf"), combined_abc, width = 18, height = 26, dpi = 320)
+    ggsave(file.path(output_dir, "ModelC_Figure3_spatial_heterogeneity_panels_publication_style_BC.png"), combined_abc, width = 18, height = 26, dpi = 320)
   }
 }
 
-write.csv(climate_effects, file.path(output_dir, "ModelC_Figure3B_climate_zone_oldstyle_optimal_k_plot_ready_data.csv"), row.names = FALSE)
+write.csv(climate_effects, file.path(output_dir, "ModelC_Figure3B_climate_zone_associations_plot_ready_data.csv"), row.names = FALSE)
 
-message("Old-style optimal-k Figure 3B outputs completed: ", output_dir)
+message("Figure 3B climate-zone association outputs completed: ", output_dir)

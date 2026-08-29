@@ -8,7 +8,7 @@ This folder groups the analysis scripts by study component:
 - `03_sensitivity_analyses`
 - `04_future_projections`
 
-Current revision-specific scripts include:
+Key scripts include:
 
 - `00_descriptive_landscape/figure1_descriptive_landscape.R`: Figure 1 global geographical and temporal summaries.
 - `01_historical_associations/figure2_turning_point_analysis.R`: Figure 2 turning-point and observation-level influence workflow.
